@@ -2,29 +2,29 @@ syntax = "proto3";
 
 package api;
 
-option go_package = "github.com/brocaar/chirpstack-api/go/v3/as/external/api";
+option go_package = "github.com/iBrick/chirpstack-api/go/v3/as/external/api";
 
 import "google/api/annotations.proto";
 import "google/protobuf/timestamp.proto";
 import "google/protobuf/empty.proto";
 
-// OrganizationService - управление доступом организации.
+// OrganizationService - СѓРїСЂР°РІР»РµРЅРёРµ РґРѕСЃС‚СѓРїРѕРј РѕСЂРіР°РЅРёР·Р°С†РёРё.
 service OrganizationService {
-	// Get - возвращает список организаций.
+	// Get - РІРѕР·РІСЂР°С‰Р°РµС‚ СЃРїРёСЃРѕРє РѕСЂРіР°РЅРёР·Р°С†РёР№.
 	rpc List(ListOrganizationRequest) returns (ListOrganizationResponse) {
 		option(google.api.http) = {
 			get: "/api/organizations"
 		};
 	}
 
-	// Get получает данные о указанной организации.
+	// Get РїРѕР»СѓС‡Р°РµС‚ РґР°РЅРЅС‹Рµ Рѕ СѓРєР°Р·Р°РЅРЅРѕР№ РѕСЂРіР°РЅРёР·Р°С†РёРё.
 	rpc Get(GetOrganizationRequest) returns (GetOrganizationResponse) {
 		option(google.api.http) = {
 			get: "/api/organizations/{id}"
 		};
 	}
 
-	// Create - создает новую организацию.
+	// Create - СЃРѕР·РґР°РµС‚ РЅРѕРІСѓСЋ РѕСЂРіР°РЅРёР·Р°С†РёСЋ.
 	rpc Create(CreateOrganizationRequest) returns (CreateOrganizationResponse) {
 		option(google.api.http) = {
 			post: "/api/organizations"
@@ -32,7 +32,7 @@ service OrganizationService {
 		};
 	}
 
-	// Update - обновляет существующую организацию.
+	// Update - РѕР±РЅРѕРІР»СЏРµС‚ СЃСѓС‰РµСЃС‚РІСѓСЋС‰СѓСЋ РѕСЂРіР°РЅРёР·Р°С†РёСЋ.
 	rpc Update(UpdateOrganizationRequest) returns (google.protobuf.Empty) {
 		option(google.api.http) = {
 			put: "/api/organizations/{organization.id}"
@@ -40,28 +40,28 @@ service OrganizationService {
 		};
 	}
 
-	// Delete - удаляет организацию.
+	// Delete - СѓРґР°Р»СЏРµС‚ РѕСЂРіР°РЅРёР·Р°С†РёСЋ.
 	rpc Delete(DeleteOrganizationRequest) returns (google.protobuf.Empty) {
 		option(google.api.http) = {
 			delete: "/api/organizations/{id}"
 		};
 	}
 
-	// Возвращает список пользователей организации.
+	// Р’РѕР·РІСЂР°С‰Р°РµС‚ СЃРїРёСЃРѕРє РїРѕР»СЊР·РѕРІР°С‚РµР»РµР№ РѕСЂРіР°РЅРёР·Р°С†РёРё.
 	rpc ListUsers(ListOrganizationUsersRequest) returns (ListOrganizationUsersResponse) {
 		option(google.api.http) = {
 			get: "/api/organizations/{organization_id}/users"
 		};
 	}
 
-	// Возвращает данные о пользователе.
+	// Р’РѕР·РІСЂР°С‰Р°РµС‚ РґР°РЅРЅС‹Рµ Рѕ РїРѕР»СЊР·РѕРІР°С‚РµР»Рµ.
 	rpc GetUser(GetOrganizationUserRequest) returns (GetOrganizationUserResponse) {
 		option(google.api.http) = {
 			get: "/api/organizations/{organization_id}/users/{user_id}"
 		};
 	}
 
-	// Добавляет нового пользователя.
+	// Р”РѕР±Р°РІР»СЏРµС‚ РЅРѕРІРѕРіРѕ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ.
 	rpc AddUser(AddOrganizationUserRequest) returns (google.protobuf.Empty) {
 		option(google.api.http) = {
 			post: "/api/organizations/{organization_user.organization_id}/users"
@@ -69,7 +69,7 @@ service OrganizationService {
 		};
 	}
 
-	// Обновляет пользователя в организации.
+	// РћР±РЅРѕРІР»СЏРµС‚ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ РІ РѕСЂРіР°РЅРёР·Р°С†РёРё.
 	rpc UpdateUser(UpdateOrganizationUserRequest) returns (google.protobuf.Empty) {
 		option(google.api.http) = {
 			put: "/api/organizations/{organization_user.organization_id}/users/{organization_user.user_id}"
@@ -77,7 +77,7 @@ service OrganizationService {
 		};
 	}
 
-	// Удаляет пользователя из организации.
+	// РЈРґР°Р»СЏРµС‚ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ РёР· РѕСЂРіР°РЅРёР·Р°С†РёРё.
 	rpc DeleteUser(DeleteOrganizationUserRequest) returns (google.protobuf.Empty) {
 		option(google.api.http) = {
 			delete: "/api/organizations/{organization_id}/users/{user_id}"
@@ -86,188 +86,188 @@ service OrganizationService {
 }
 
 message Organization {
-	// ID организации.
+	// ID РѕСЂРіР°РЅРёР·Р°С†РёРё.
 	int64 id = 1;
 	
-	// Название организации (на латинице).
+	// РќР°Р·РІР°РЅРёРµ РѕСЂРіР°РЅРёР·Р°С†РёРё (РЅР° Р»Р°С‚РёРЅРёС†Рµ).
 	string name = 2;
 
-	// Отображаемое название организации.
+	// РћС‚РѕР±СЂР°Р¶Р°РµРјРѕРµ РЅР°Р·РІР°РЅРёРµ РѕСЂРіР°РЅРёР·Р°С†РёРё.
 	string display_name = 3;
 
-	//Может ли организация создавать шлюзы?
+	//РњРѕР¶РµС‚ Р»Рё РѕСЂРіР°РЅРёР·Р°С†РёСЏ СЃРѕР·РґР°РІР°С‚СЊ С€Р»СЋР·С‹?
 	bool can_have_gateways = 4;
 }
 
 message OrganizationListItem {
-	// ID организации.
+	// ID РѕСЂРіР°РЅРёР·Р°С†РёРё.
 	int64 id = 1;
 	
-	// Название организации.
+	// РќР°Р·РІР°РЅРёРµ РѕСЂРіР°РЅРёР·Р°С†РёРё.
 	string name = 2;
 
-	// Отображаемое название организации.
+	// РћС‚РѕР±СЂР°Р¶Р°РµРјРѕРµ РЅР°Р·РІР°РЅРёРµ РѕСЂРіР°РЅРёР·Р°С†РёРё.
 	string display_name = 3;
 
-	// Может ли организация создавать шлюзы?
+	// РњРѕР¶РµС‚ Р»Рё РѕСЂРіР°РЅРёР·Р°С†РёСЏ СЃРѕР·РґР°РІР°С‚СЊ С€Р»СЋР·С‹?
 	bool can_have_gateways = 4;
 
-	// Временная метка создания.
+	// Р’СЂРµРјРµРЅРЅР°СЏ РјРµС‚РєР° СЃРѕР·РґР°РЅРёСЏ.
 	google.protobuf.Timestamp created_at = 5;
 
-	// Временная метка последнего обновления.
+	// Р’СЂРµРјРµРЅРЅР°СЏ РјРµС‚РєР° РїРѕСЃР»РµРґРЅРµРіРѕ РѕР±РЅРѕРІР»РµРЅРёСЏ.
 	google.protobuf.Timestamp updated_at = 6;
 }
 
 message GetOrganizationRequest {
-	// ID организации.
+	// ID РѕСЂРіР°РЅРёР·Р°С†РёРё.
 	int64 id = 1;
 }
 
 message GetOrganizationResponse {
-	// Объект организация.
+	// РћР±СЉРµРєС‚ РѕСЂРіР°РЅРёР·Р°С†РёСЏ.
 	Organization organization = 1;
 
-	// Временная метка создания.
+	// Р’СЂРµРјРµРЅРЅР°СЏ РјРµС‚РєР° СЃРѕР·РґР°РЅРёСЏ.
 	google.protobuf.Timestamp created_at = 2;
 
-	//Временная метка последнего обновления.
+	//Р’СЂРµРјРµРЅРЅР°СЏ РјРµС‚РєР° РїРѕСЃР»РµРґРЅРµРіРѕ РѕР±РЅРѕРІР»РµРЅРёСЏ.
 	google.protobuf.Timestamp updated_at = 3;
 }
 
 message CreateOrganizationRequest {
-	// Объект организации для создания.
+	// РћР±СЉРµРєС‚ РѕСЂРіР°РЅРёР·Р°С†РёРё РґР»СЏ СЃРѕР·РґР°РЅРёСЏ.
 	Organization organization = 1;
 }
 
 message CreateOrganizationResponse {
-	// ID организации.
+	// ID РѕСЂРіР°РЅРёР·Р°С†РёРё.
 	int64 id = 1;
 }
 
 message UpdateOrganizationRequest {
-	// Объект организация для обновления.
+	// РћР±СЉРµРєС‚ РѕСЂРіР°РЅРёР·Р°С†РёСЏ РґР»СЏ РѕР±РЅРѕРІР»РµРЅРёСЏ.
 	Organization organization = 1;
 }
 
 message DeleteOrganizationRequest {
-	// ID организации.
+	// ID РѕСЂРіР°РЅРёР·Р°С†РёРё.
 	int64 id = 1;
 }
 
 message ListOrganizationRequest {
-	// Ограничить макс. число организаций в выдаче результатов.
+	// РћРіСЂР°РЅРёС‡РёС‚СЊ РјР°РєСЃ. С‡РёСЃР»Рѕ РѕСЂРіР°РЅРёР·Р°С†РёР№ РІ РІС‹РґР°С‡Рµ СЂРµР·СѓР»СЊС‚Р°С‚РѕРІ.
 	int64 limit = 1;
 
-	// Смещение в наборе результатов (для нумерации страниц).
+	// РЎРјРµС‰РµРЅРёРµ РІ РЅР°Р±РѕСЂРµ СЂРµР·СѓР»СЊС‚Р°С‚РѕРІ (РґР»СЏ РЅСѓРјРµСЂР°С†РёРё СЃС‚СЂР°РЅРёС†).
 	int64 offset = 2;
 
-	// Когда заполнено, данная строка будет использоваться для поиска по отображаемому названию.
+	// РљРѕРіРґР° Р·Р°РїРѕР»РЅРµРЅРѕ, РґР°РЅРЅР°СЏ СЃС‚СЂРѕРєР° Р±СѓРґРµС‚ РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊСЃСЏ РґР»СЏ РїРѕРёСЃРєР° РїРѕ РѕС‚РѕР±СЂР°Р¶Р°РµРјРѕРјСѓ РЅР°Р·РІР°РЅРёСЋ.
 	string search = 3;
 }
 
 message ListOrganizationResponse {
-	// Общее число организаций.
+	// РћР±С‰РµРµ С‡РёСЃР»Рѕ РѕСЂРіР°РЅРёР·Р°С†РёР№.
 	int64 total_count = 1;
 
 	repeated OrganizationListItem result = 2;
 }
 
 message OrganizationUser {
-	// ID организации.
+	// ID РѕСЂРіР°РЅРёР·Р°С†РёРё.
 	int64 organization_id = 1 [json_name = "organizationID"];
 
-	// ID пользователя.
+	// ID РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ.
 	int64 user_id = 2 [json_name = "userID"];
 
-	// Пользователь является администратором в контексте организации.
+	// РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ СЏРІР»СЏРµС‚СЃСЏ Р°РґРјРёРЅРёСЃС‚СЂР°С‚РѕСЂРѕРј РІ РєРѕРЅС‚РµРєСЃС‚Рµ РѕСЂРіР°РЅРёР·Р°С†РёРё.
 	bool is_admin = 3;
 
-    // Пользователь является администратором устройств.
+    // РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ СЏРІР»СЏРµС‚СЃСЏ Р°РґРјРёРЅРёСЃС‚СЂР°С‚РѕСЂРѕРј СѓСЃС‚СЂРѕР№СЃС‚РІ.
     bool is_device_admin = 5;
 
-    // Пользователь является администратором базовых станций.
+    // РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ СЏРІР»СЏРµС‚СЃСЏ Р°РґРјРёРЅРёСЃС‚СЂР°С‚РѕСЂРѕРј Р±Р°Р·РѕРІС‹С… СЃС‚Р°РЅС†РёР№.
     bool is_gateway_admin = 6;
 
-	// Имя пользователя (используется только при get запросе).
+	// РРјСЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ (РёСЃРїРѕР»СЊР·СѓРµС‚СЃСЏ С‚РѕР»СЊРєРѕ РїСЂРё get Р·Р°РїСЂРѕСЃРµ).
 	string username = 4;
 }
 
 message OrganizationUserListItem {
-	// ID пользователя.
+	// ID РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ.
 	int64 user_id = 1 [json_name = "userID"];
 
-	// Имя пользователя.
+	// РРјСЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ.
 	string username = 2;
 
-	// Пользователь является администратором в контексте организации.
+	// РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ СЏРІР»СЏРµС‚СЃСЏ Р°РґРјРёРЅРёСЃС‚СЂР°С‚РѕСЂРѕРј РІ РєРѕРЅС‚РµРєСЃС‚Рµ РѕСЂРіР°РЅРёР·Р°С†РёРё.
 	bool is_admin = 3;
 
-    // Пользователь является администратором устройств.
+    // РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ СЏРІР»СЏРµС‚СЃСЏ Р°РґРјРёРЅРёСЃС‚СЂР°С‚РѕСЂРѕРј СѓСЃС‚СЂРѕР№СЃС‚РІ.
     bool is_device_admin = 6;
 
-    // Пользователь является администратором базовых станций.
+    // РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ СЏРІР»СЏРµС‚СЃСЏ Р°РґРјРёРЅРёСЃС‚СЂР°С‚РѕСЂРѕРј Р±Р°Р·РѕРІС‹С… СЃС‚Р°РЅС†РёР№.
     bool is_gateway_admin = 7;
 
 	// Created at timestamp.
 	google.protobuf.Timestamp created_at = 4;
 
-	// Временная метка последнего обновления.
+	// Р’СЂРµРјРµРЅРЅР°СЏ РјРµС‚РєР° РїРѕСЃР»РµРґРЅРµРіРѕ РѕР±РЅРѕРІР»РµРЅРёСЏ.
 	google.protobuf.Timestamp updated_at = 5;
 }
 
 message AddOrganizationUserRequest {
-	// Объект пользователь организации для создания.
+	// РћР±СЉРµРєС‚ РїРѕР»СЊР·РѕРІР°С‚РµР»СЊ РѕСЂРіР°РЅРёР·Р°С†РёРё РґР»СЏ СЃРѕР·РґР°РЅРёСЏ.
 	OrganizationUser organization_user = 1;
 }
 
 message UpdateOrganizationUserRequest {
-	// Объект пользователь организации для обновления.
+	// РћР±СЉРµРєС‚ РїРѕР»СЊР·РѕРІР°С‚РµР»СЊ РѕСЂРіР°РЅРёР·Р°С†РёРё РґР»СЏ РѕР±РЅРѕРІР»РµРЅРёСЏ.
 	OrganizationUser organization_user = 1;
 }
 
 message DeleteOrganizationUserRequest {
-	// ID организации.
+	// ID РѕСЂРіР°РЅРёР·Р°С†РёРё.
 	int64 organization_id = 1 [json_name = "organizationID"];
 	
-	// ID пользователя.
+	// ID РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ.
 	int64 user_id = 2 [json_name = "userID"];
 }
 
 message ListOrganizationUsersRequest {
-	// ID организации.
+	// ID РѕСЂРіР°РЅРёР·Р°С†РёРё.
 	int64 organization_id = 1 [json_name = "organizationID"];
 	
-	// Ограничить макс. число пользователей в выдаче результатов.
+	// РћРіСЂР°РЅРёС‡РёС‚СЊ РјР°РєСЃ. С‡РёСЃР»Рѕ РїРѕР»СЊР·РѕРІР°С‚РµР»РµР№ РІ РІС‹РґР°С‡Рµ СЂРµР·СѓР»СЊС‚Р°С‚РѕРІ.
 	int32 limit = 2;
 
-	// Смещение в наборе результатов (для нумерации страниц).
+	// РЎРјРµС‰РµРЅРёРµ РІ РЅР°Р±РѕСЂРµ СЂРµР·СѓР»СЊС‚Р°С‚РѕРІ (РґР»СЏ РЅСѓРјРµСЂР°С†РёРё СЃС‚СЂР°РЅРёС†).
 	int32 offset = 3;
 }
 
 message ListOrganizationUsersResponse {
-	// Общее число пользователей организации.
+	// РћР±С‰РµРµ С‡РёСЃР»Рѕ РїРѕР»СЊР·РѕРІР°С‚РµР»РµР№ РѕСЂРіР°РЅРёР·Р°С†РёРё.
 	int64 total_count = 1;
 	
 	repeated OrganizationUserListItem result = 2;
 }
 
 message GetOrganizationUserRequest {
-	// ID организации.
+	// ID РѕСЂРіР°РЅРёР·Р°С†РёРё.
 	int64 organization_id = 1 [json_name = "organizationID"];
 
-	// ID пользователя.
+	// ID РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ.
 	int64 user_id = 2 [json_name = "userID"];
 }
 
-// Ответ для пользователя в организации
+// РћС‚РІРµС‚ РґР»СЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ РІ РѕСЂРіР°РЅРёР·Р°С†РёРё
 message GetOrganizationUserResponse {
-	// Объект - организация пользователя.
+	// РћР±СЉРµРєС‚ - РѕСЂРіР°РЅРёР·Р°С†РёСЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ.
 	OrganizationUser organization_user = 1;
 
-	// Временная метка создания.
+	// Р’СЂРµРјРµРЅРЅР°СЏ РјРµС‚РєР° СЃРѕР·РґР°РЅРёСЏ.
 	google.protobuf.Timestamp created_at = 2;
 
-	// Временная метка последнего обновления.
+	// Р’СЂРµРјРµРЅРЅР°СЏ РјРµС‚РєР° РїРѕСЃР»РµРґРЅРµРіРѕ РѕР±РЅРѕРІР»РµРЅРёСЏ.
 	google.protobuf.Timestamp updated_at = 3;
 }

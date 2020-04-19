@@ -2,15 +2,15 @@ syntax = "proto3";
 
 package api;
 
-option go_package = "github.com/brocaar/chirpstack-api/go/v3/as/external/api";
+option go_package = "github.com/iBrick/chirpstack-api/go/v3/as/external/api";
 
 import "google/api/annotations.proto";
 import "google/protobuf/empty.proto";
 
 
-// DeviceQueueService - сервис, управляющий очередью на отправку сообщений downlink.
+// DeviceQueueService - СЃРµСЂРІРёСЃ, СѓРїСЂР°РІР»СЏСЋС‰РёР№ РѕС‡РµСЂРµРґСЊСЋ РЅР° РѕС‚РїСЂР°РІРєСѓ СЃРѕРѕР±С‰РµРЅРёР№ downlink.
 service DeviceQueueService {
-    // Enqueue - добавляет указанный элемент в очередь устройства.
+    // Enqueue - РґРѕР±Р°РІР»СЏРµС‚ СѓРєР°Р·Р°РЅРЅС‹Р№ СЌР»РµРјРµРЅС‚ РІ РѕС‡РµСЂРµРґСЊ СѓСЃС‚СЂРѕР№СЃС‚РІР°.
     rpc Enqueue(EnqueueDeviceQueueItemRequest) returns (EnqueueDeviceQueueItemResponse) {
         option(google.api.http) = {
             post: "/api/devices/{device_queue_item.dev_eui}/queue"
@@ -18,14 +18,14 @@ service DeviceQueueService {
         };
     }
 
-    // Flush обнуляет очередь устройства.
+    // Flush РѕР±РЅСѓР»СЏРµС‚ РѕС‡РµСЂРµРґСЊ СѓСЃС‚СЂРѕР№СЃС‚РІР°.
     rpc Flush(FlushDeviceQueueRequest) returns (google.protobuf.Empty) {
         option(google.api.http) = {
             delete: "/api/devices/{dev_eui}/queue"
         };
     }
 
-    // List - выводит элементы в очереди устройств.
+    // List - РІС‹РІРѕРґРёС‚ СЌР»РµРјРµРЅС‚С‹ РІ РѕС‡РµСЂРµРґРё СѓСЃС‚СЂРѕР№СЃС‚РІ.
     rpc List(ListDeviceQueueItemsRequest) returns (ListDeviceQueueItemsResponse) {
         option(google.api.http) = {
             get: "/api/devices/{dev_eui}/queue"
@@ -34,57 +34,57 @@ service DeviceQueueService {
 }
 
 message DeviceQueueItem {
-    // EUI устройства (в HEX).
+    // EUI СѓСЃС‚СЂРѕР№СЃС‚РІР° (РІ HEX).
     string dev_eui = 1 [json_name = "devEUI"];
 
-    // Установите для этого параметра значение true, если требуется подтверждение от устройства.
-    // Не является гарантией доставки сообщения.
+    // РЈСЃС‚Р°РЅРѕРІРёС‚Рµ РґР»СЏ СЌС‚РѕРіРѕ РїР°СЂР°РјРµС‚СЂР° Р·РЅР°С‡РµРЅРёРµ true, РµСЃР»Рё С‚СЂРµР±СѓРµС‚СЃСЏ РїРѕРґС‚РІРµСЂР¶РґРµРЅРёРµ РѕС‚ СѓСЃС‚СЂРѕР№СЃС‚РІР°.
+    // РќРµ СЏРІР»СЏРµС‚СЃСЏ РіР°СЂР°РЅС‚РёРµР№ РґРѕСЃС‚Р°РІРєРё СЃРѕРѕР±С‰РµРЅРёСЏ.
     bool confirmed = 2;
 
-    // Счетчик Downlink пакетов.
-    // Будет автоматически установлено при добавлении в очередь.
+    // РЎС‡РµС‚С‡РёРє Downlink РїР°РєРµС‚РѕРІ.
+    // Р‘СѓРґРµС‚ Р°РІС‚РѕРјР°С‚РёС‡РµСЃРєРё СѓСЃС‚Р°РЅРѕРІР»РµРЅРѕ РїСЂРё РґРѕР±Р°РІР»РµРЅРёРё РІ РѕС‡РµСЂРµРґСЊ.
     uint32 f_cnt = 6;
 
-    // Значение FPort (должно быть > 0)
+    // Р—РЅР°С‡РµРЅРёРµ FPort (РґРѕР»Р¶РЅРѕ Р±С‹С‚СЊ > 0)
     uint32 f_port = 3;
 
-    // Данные в Base64.
-    // Или используйте поле json_object, когда кодек приложения настроен.
+    // Р”Р°РЅРЅС‹Рµ РІ Base64.
+    // РР»Рё РёСЃРїРѕР»СЊР·СѓР№С‚Рµ РїРѕР»Рµ json_object, РєРѕРіРґР° РєРѕРґРµРє РїСЂРёР»РѕР¶РµРЅРёСЏ РЅР°СЃС‚СЂРѕРµРЅ.
     bytes data = 4;
 
-    // JSON объект (string).
-    // Используйте это тогда, когда настроен кодек приложения, преобразующий этот объект в 
-    // бинарную форму.
+    // JSON РѕР±СЉРµРєС‚ (string).
+    // РСЃРїРѕР»СЊР·СѓР№С‚Рµ СЌС‚Рѕ С‚РѕРіРґР°, РєРѕРіРґР° РЅР°СЃС‚СЂРѕРµРЅ РєРѕРґРµРє РїСЂРёР»РѕР¶РµРЅРёСЏ, РїСЂРµРѕР±СЂР°Р·СѓСЋС‰РёР№ СЌС‚РѕС‚ РѕР±СЉРµРєС‚ РІ 
+    // Р±РёРЅР°СЂРЅСѓСЋ С„РѕСЂРјСѓ.
     string json_object = 5;
 }
 
 message EnqueueDeviceQueueItemRequest {
-    // Объект Queue-item для добавления в очередь.
+    // РћР±СЉРµРєС‚ Queue-item РґР»СЏ РґРѕР±Р°РІР»РµРЅРёСЏ РІ РѕС‡РµСЂРµРґСЊ.
     DeviceQueueItem device_queue_item = 1;
 }
 
 message EnqueueDeviceQueueItemResponse {
-    // Счетчик пакетов для отправки данных в очередь.
+    // РЎС‡РµС‚С‡РёРє РїР°РєРµС‚РѕРІ РґР»СЏ РѕС‚РїСЂР°РІРєРё РґР°РЅРЅС‹С… РІ РѕС‡РµСЂРµРґСЊ.
     uint32 f_cnt = 1;
 }
 
 message FlushDeviceQueueRequest {
-    // EUI устройства (в HEX).
+    // EUI СѓСЃС‚СЂРѕР№СЃС‚РІР° (РІ HEX).
     string dev_eui = 1 [json_name = "devEUI"];
 }
 
 message ListDeviceQueueItemsRequest {
-    // EUI устройства (в HEX).
+    // EUI СѓСЃС‚СЂРѕР№СЃС‚РІР° (РІ HEX).
     string dev_eui = 1 [json_name = "devEUI"];
 
-    // Вернуть только количество, а не полный набор результатов.
+    // Р’РµСЂРЅСѓС‚СЊ С‚РѕР»СЊРєРѕ РєРѕР»РёС‡РµСЃС‚РІРѕ, Р° РЅРµ РїРѕР»РЅС‹Р№ РЅР°Р±РѕСЂ СЂРµР·СѓР»СЊС‚Р°С‚РѕРІ.
     bool count_only = 2;
 }
 
 message ListDeviceQueueItemsResponse {
-    // Элементы очереди на отправку устройству.
+    // Р­Р»РµРјРµРЅС‚С‹ РѕС‡РµСЂРµРґРё РЅР° РѕС‚РїСЂР°РІРєСѓ СѓСЃС‚СЂРѕР№СЃС‚РІСѓ.
     repeated DeviceQueueItem device_queue_items = 1;
 
-    // Общее число элементов в очереди.
+    // РћР±С‰РµРµ С‡РёСЃР»Рѕ СЌР»РµРјРµРЅС‚РѕРІ РІ РѕС‡РµСЂРµРґРё.
     uint32 total_count = 2;
 }

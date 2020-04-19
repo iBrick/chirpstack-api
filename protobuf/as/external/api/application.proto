@@ -2,14 +2,14 @@ syntax = "proto3";
 
 package api;
 
-option go_package = "github.com/brocaar/chirpstack-api/go/v3/as/external/api";
+option go_package = "github.com/iBrick/chirpstack-api/go/v3/as/external/api";
 
 import "google/api/annotations.proto";
 import "google/protobuf/empty.proto";
 
-// ApplicationService - управление приложениями.
+// ApplicationService - СѓРїСЂР°РІР»РµРЅРёРµ РїСЂРёР»РѕР¶РµРЅРёСЏРјРё.
 service ApplicationService {
-	// Create - создает указанное приложение.
+	// Create - СЃРѕР·РґР°РµС‚ СѓРєР°Р·Р°РЅРЅРѕРµ РїСЂРёР»РѕР¶РµРЅРёРµ.
 	rpc Create(CreateApplicationRequest) returns (CreateApplicationResponse) {
 		option(google.api.http) = {
 			post: "/api/applications"
@@ -17,14 +17,14 @@ service ApplicationService {
 		};
 	}
 
-	// Get - возвращает запрошенное приложение.
+	// Get - РІРѕР·РІСЂР°С‰Р°РµС‚ Р·Р°РїСЂРѕС€РµРЅРЅРѕРµ РїСЂРёР»РѕР¶РµРЅРёРµ.
 	rpc Get(GetApplicationRequest) returns (GetApplicationResponse) {
 		option(google.api.http) = {
 			get: "/api/applications/{id}"
 		};
 	}
 
-	// Update - обновляет указанное приложение.
+	// Update - РѕР±РЅРѕРІР»СЏРµС‚ СѓРєР°Р·Р°РЅРЅРѕРµ РїСЂРёР»РѕР¶РµРЅРёРµ.
 	rpc Update(UpdateApplicationRequest) returns (google.protobuf.Empty) {
 		option(google.api.http) = {
 			put: "/api/applications/{application.id}"
@@ -32,21 +32,21 @@ service ApplicationService {
 		};
 	}
 
-	// Delete - удаляет указанное приложение.
+	// Delete - СѓРґР°Р»СЏРµС‚ СѓРєР°Р·Р°РЅРЅРѕРµ РїСЂРёР»РѕР¶РµРЅРёРµ.
 	rpc Delete(DeleteApplicationRequest) returns (google.protobuf.Empty) {
 		option(google.api.http) = {
 			delete: "/api/applications/{id}"
 		};
 	}
 
-	// List - выводит список доступных приложений.
+	// List - РІС‹РІРѕРґРёС‚ СЃРїРёСЃРѕРє РґРѕСЃС‚СѓРїРЅС‹С… РїСЂРёР»РѕР¶РµРЅРёР№.
 	rpc List(ListApplicationRequest) returns (ListApplicationResponse) {
 		option(google.api.http) = {
 			get: "/api/applications"
 		};
 	}
 
-	// CreateHTTPIntegration создает HTTP интеграцию приложения.
+	// CreateHTTPIntegration СЃРѕР·РґР°РµС‚ HTTP РёРЅС‚РµРіСЂР°С†РёСЋ РїСЂРёР»РѕР¶РµРЅРёСЏ.
 	rpc CreateHTTPIntegration(CreateHTTPIntegrationRequest) returns (google.protobuf.Empty) {
 		option(google.api.http) = {
 			post: "/api/applications/{integration.application_id}/integrations/http"
@@ -54,14 +54,14 @@ service ApplicationService {
 		};
 	}
 
-	// GetHTTPIntegration возвращает приложения с HTTP-интеграцией.
+	// GetHTTPIntegration РІРѕР·РІСЂР°С‰Р°РµС‚ РїСЂРёР»РѕР¶РµРЅРёСЏ СЃ HTTP-РёРЅС‚РµРіСЂР°С†РёРµР№.
 	rpc GetHTTPIntegration(GetHTTPIntegrationRequest) returns (GetHTTPIntegrationResponse) {
 		option(google.api.http) = {
 			get: "/api/applications/{application_id}/integrations/http"
 		};
 	}
 
-	// UpdateHTTPIntegration обновляет HTTP интеграцию приложения.
+	// UpdateHTTPIntegration РѕР±РЅРѕРІР»СЏРµС‚ HTTP РёРЅС‚РµРіСЂР°С†РёСЋ РїСЂРёР»РѕР¶РµРЅРёСЏ.
 	rpc UpdateHTTPIntegration(UpdateHTTPIntegrationRequest) returns (google.protobuf.Empty) {
 		option(google.api.http) = {
 			put: "/api/applications/{integration.application_id}/integrations/http"
@@ -69,14 +69,14 @@ service ApplicationService {
 		};
 	}
 
-	// DeleteIntegration удаляет HTTP-интеграцию приложения.
+	// DeleteIntegration СѓРґР°Р»СЏРµС‚ HTTP-РёРЅС‚РµРіСЂР°С†РёСЋ РїСЂРёР»РѕР¶РµРЅРёСЏ.
 	rpc DeleteHTTPIntegration(DeleteHTTPIntegrationRequest) returns (google.protobuf.Empty) {
 		option(google.api.http) = {
 			delete: "/api/applications/{application_id}/integrations/http"
 		};
 	}
 
-	// CreateInfluxDBIntegration создает интеграцию приложения в InfluxDB.
+	// CreateInfluxDBIntegration СЃРѕР·РґР°РµС‚ РёРЅС‚РµРіСЂР°С†РёСЋ РїСЂРёР»РѕР¶РµРЅРёСЏ РІ InfluxDB.
 	rpc CreateInfluxDBIntegration(CreateInfluxDBIntegrationRequest) returns (google.protobuf.Empty) {
 		option(google.api.http) = {
 			post: "/api/applications/{integration.application_id}/integrations/influxdb"
@@ -84,14 +84,14 @@ service ApplicationService {
 		};
 	}
 
-	// GetInfluxDBIntegration возвращает приложения с интеграцией в InfluxDB.
+	// GetInfluxDBIntegration РІРѕР·РІСЂР°С‰Р°РµС‚ РїСЂРёР»РѕР¶РµРЅРёСЏ СЃ РёРЅС‚РµРіСЂР°С†РёРµР№ РІ InfluxDB.
 	rpc GetInfluxDBIntegration(GetInfluxDBIntegrationRequest) returns (GetInfluxDBIntegrationResponse) {
 		option(google.api.http) = {
 			get: "/api/applications/{application_id}/integrations/influxdb"
 		};
 	}
 
-	// UpdateInfluxDBIntegration обновляет интеграцию приложения в InfluxDB.
+	// UpdateInfluxDBIntegration РѕР±РЅРѕРІР»СЏРµС‚ РёРЅС‚РµРіСЂР°С†РёСЋ РїСЂРёР»РѕР¶РµРЅРёСЏ РІ InfluxDB.
 	rpc UpdateInfluxDBIntegration(UpdateInfluxDBIntegrationRequest) returns (google.protobuf.Empty) {
 		option(google.api.http) = {
 			put: "/api/applications/{integration.application_id}/integrations/influxdb"
@@ -99,14 +99,14 @@ service ApplicationService {
 		};
 	}
 
-	// DeleteInfluxDBIntegration удаляет интеграцию InfluxDB приложения.
+	// DeleteInfluxDBIntegration СѓРґР°Р»СЏРµС‚ РёРЅС‚РµРіСЂР°С†РёСЋ InfluxDB РїСЂРёР»РѕР¶РµРЅРёСЏ.
 	rpc DeleteInfluxDBIntegration(DeleteInfluxDBIntegrationRequest) returns (google.protobuf.Empty) {
 		option(google.api.http) = {
 			delete: "/api/applications/{application_id}/integrations/influxdb"
 		};
 	}
 
-    // CreateThingsBoardIntegration создает интеграцию приложения с Thingsbord.
+    // CreateThingsBoardIntegration СЃРѕР·РґР°РµС‚ РёРЅС‚РµРіСЂР°С†РёСЋ РїСЂРёР»РѕР¶РµРЅРёСЏ СЃ Thingsbord.
     rpc CreateThingsBoardIntegration(CreateThingsBoardIntegrationRequest) returns (google.protobuf.Empty) {
         option(google.api.http) = {
             post: "/api/applications/{integration.application_id}/integrations/thingsboard"
@@ -114,14 +114,14 @@ service ApplicationService {
         };
     }
 
-    // GetThingsBoardIntegration возвращает приложения с интеграцией c Thingsboard.
+    // GetThingsBoardIntegration РІРѕР·РІСЂР°С‰Р°РµС‚ РїСЂРёР»РѕР¶РµРЅРёСЏ СЃ РёРЅС‚РµРіСЂР°С†РёРµР№ c Thingsboard.
     rpc GetThingsBoardIntegration(GetThingsBoardIntegrationRequest) returns (GetThingsBoardIntegrationResponse) {
         option(google.api.http) = {
             get: "/api/applications/{application_id}/integrations/thingsboard"
         };
     }
 
-    // UpdateThingsBoardIntegration обновляет интеграцию приложения c Thingsbord.
+    // UpdateThingsBoardIntegration РѕР±РЅРѕРІР»СЏРµС‚ РёРЅС‚РµРіСЂР°С†РёСЋ РїСЂРёР»РѕР¶РµРЅРёСЏ c Thingsbord.
     rpc UpdateThingsBoardIntegration(UpdateThingsBoardIntegrationRequest) returns (google.protobuf.Empty) {
         option(google.api.http) = {
             put: "/api/applications/{integration.application_id}/integrations/thingsboard"
@@ -129,14 +129,14 @@ service ApplicationService {
         };
     }
 
-    // DeleteThingsBoardIntegration удаляет интеграцию Thingsbord приложения.
+    // DeleteThingsBoardIntegration СѓРґР°Р»СЏРµС‚ РёРЅС‚РµРіСЂР°С†РёСЋ Thingsbord РїСЂРёР»РѕР¶РµРЅРёСЏ.
     rpc DeleteThingsBoardIntegration(DeleteThingsBoardIntegrationRequest) returns (google.protobuf.Empty) {
         option(google.api.http) = {
             delete: "/api/applications/{application_id}/integrations/thingsboard"
         };
     }
 
-    // CreateMyDevicesIntegration создает интеграцию приложения с MyDevices.
+    // CreateMyDevicesIntegration СЃРѕР·РґР°РµС‚ РёРЅС‚РµРіСЂР°С†РёСЋ РїСЂРёР»РѕР¶РµРЅРёСЏ СЃ MyDevices.
     rpc CreateMyDevicesIntegration(CreateMyDevicesIntegrationRequest) returns (google.protobuf.Empty) {
         option(google.api.http) = {
             post: "/api/applications/{integration.application_id}/integrations/mydevices"
@@ -144,14 +144,14 @@ service ApplicationService {
         };
     }
 
-    // GetMyDevicesIntegration rвозвращает приложения с интеграцией c MyDevices.
+    // GetMyDevicesIntegration rРІРѕР·РІСЂР°С‰Р°РµС‚ РїСЂРёР»РѕР¶РµРЅРёСЏ СЃ РёРЅС‚РµРіСЂР°С†РёРµР№ c MyDevices.
     rpc GetMyDevicesIntegration(GetMyDevicesIntegrationRequest) returns (GetMyDevicesIntegrationResponse) {
         option(google.api.http) = {
             get: "/api/applications/{application_id}/integrations/mydevices"
         };
     }
 
-    // UpdateMyDevicesIntegration обновляет интеграцию приложения c MyDevices.
+    // UpdateMyDevicesIntegration РѕР±РЅРѕРІР»СЏРµС‚ РёРЅС‚РµРіСЂР°С†РёСЋ РїСЂРёР»РѕР¶РµРЅРёСЏ c MyDevices.
     rpc UpdateMyDevicesIntegration(UpdateMyDevicesIntegrationRequest) returns (google.protobuf.Empty) {
         option(google.api.http) = {
             put: "/api/applications/{integration.application_id}/integrations/mydevices"
@@ -159,7 +159,7 @@ service ApplicationService {
         };
     }
 
-    // DeleteMyDevicesIntegration удаляет интеграцию MyDevices приложения.
+    // DeleteMyDevicesIntegration СѓРґР°Р»СЏРµС‚ РёРЅС‚РµРіСЂР°С†РёСЋ MyDevices РїСЂРёР»РѕР¶РµРЅРёСЏ.
     rpc DeleteMyDevicesIntegration(DeleteMyDevicesIntegrationRequest) returns (google.protobuf.Empty) {
         option(google.api.http) = {
             delete: "/api/applications/{application_id}/integrations/mydevices"
@@ -167,7 +167,7 @@ service ApplicationService {
     }
 
 
-	// ListIntegrations перечисляет все настроенные интеграции.
+	// ListIntegrations РїРµСЂРµС‡РёСЃР»СЏРµС‚ РІСЃРµ РЅР°СЃС‚СЂРѕРµРЅРЅС‹Рµ РёРЅС‚РµРіСЂР°С†РёРё.
 	rpc ListIntegrations(ListIntegrationRequest) returns (ListIntegrationResponse) {
 		option(google.api.http) = {
 			get: "/api/applications/{application_id}/integrations"
@@ -183,185 +183,185 @@ enum IntegrationKind {
 }
 
 message Application {
-	// ID приложения.
-	// Будет автоматически назначено при создании.
+	// ID РїСЂРёР»РѕР¶РµРЅРёСЏ.
+	// Р‘СѓРґРµС‚ Р°РІС‚РѕРјР°С‚РёС‡РµСЃРєРё РЅР°Р·РЅР°С‡РµРЅРѕ РїСЂРё СЃРѕР·РґР°РЅРёРё.
 	int64 id = 1;
 
-	// Название приложения (должно быть уникально).
+	// РќР°Р·РІР°РЅРёРµ РїСЂРёР»РѕР¶РµРЅРёСЏ (РґРѕР»Р¶РЅРѕ Р±С‹С‚СЊ СѓРЅРёРєР°Р»СЊРЅРѕ).
 	string name = 2;
 
-	// Описание приложения.
+	// РћРїРёСЃР°РЅРёРµ РїСЂРёР»РѕР¶РµРЅРёСЏ.
 	string description = 3;
 
-	// ID организации, к которой присвоено приложение.
+	// ID РѕСЂРіР°РЅРёР·Р°С†РёРё, Рє РєРѕС‚РѕСЂРѕР№ РїСЂРёСЃРІРѕРµРЅРѕ РїСЂРёР»РѕР¶РµРЅРёРµ.
 	int64 organization_id = 4 [json_name = "organizationID"];
 
-	// ID сервис-профиля.
+	// ID СЃРµСЂРІРёСЃ-РїСЂРѕС„РёР»СЏ.
 	string service_profile_id = 5 [json_name = "serviceProfileID"];
 
-	// Кодек данных. Deprecated. Перенесено в профиль устройства и будет удалено 
-в следующих релизах. Настройки из профиля устройств имеют больший приоритет.
+	// РљРѕРґРµРє РґР°РЅРЅС‹С…. Deprecated. РџРµСЂРµРЅРµСЃРµРЅРѕ РІ РїСЂРѕС„РёР»СЊ СѓСЃС‚СЂРѕР№СЃС‚РІР° Рё Р±СѓРґРµС‚ СѓРґР°Р»РµРЅРѕ 
+	// РІ СЃР»РµРґСѓСЋС‰РёС… СЂРµР»РёР·Р°С…. РќР°СЃС‚СЂРѕР№РєРё РёР· РїСЂРѕС„РёР»СЏ СѓСЃС‚СЂРѕР№СЃС‚РІ РёРјРµСЋС‚ Р±РѕР»СЊС€РёР№ РїСЂРёРѕСЂРёС‚РµС‚.
 	string payload_codec = 6;
 
-	// Скрипт кодера данных. Deprecated. Перенесено в профиль устройства и будет удалено 
-в следующих релизах. Настройки из профиля устройств имеют больший приоритет.
+	// РЎРєСЂРёРїС‚ РєРѕРґРµСЂР° РґР°РЅРЅС‹С…. Deprecated. РџРµСЂРµРЅРµСЃРµРЅРѕ РІ РїСЂРѕС„РёР»СЊ СѓСЃС‚СЂРѕР№СЃС‚РІР° Рё Р±СѓРґРµС‚ СѓРґР°Р»РµРЅРѕ 
+	// РІ СЃР»РµРґСѓСЋС‰РёС… СЂРµР»РёР·Р°С…. РќР°СЃС‚СЂРѕР№РєРё РёР· РїСЂРѕС„РёР»СЏ СѓСЃС‚СЂРѕР№СЃС‚РІ РёРјРµСЋС‚ Р±РѕР»СЊС€РёР№ РїСЂРёРѕСЂРёС‚РµС‚.
 	string payload_encoder_script = 7;
 
-	// Скрипт декодера данных. Deprecated. Перенесено в профиль устройства и будет удалено 
-в следующих релизах. Настройки из профиля устройств имеют больший приоритет.
+	// РЎРєСЂРёРїС‚ РґРµРєРѕРґРµСЂР° РґР°РЅРЅС‹С…. Deprecated. РџРµСЂРµРЅРµСЃРµРЅРѕ РІ РїСЂРѕС„РёР»СЊ СѓСЃС‚СЂРѕР№СЃС‚РІР° Рё Р±СѓРґРµС‚ СѓРґР°Р»РµРЅРѕ 
+	// РІ СЃР»РµРґСѓСЋС‰РёС… СЂРµР»РёР·Р°С…. РќР°СЃС‚СЂРѕР№РєРё РёР· РїСЂРѕС„РёР»СЏ СѓСЃС‚СЂРѕР№СЃС‚РІ РёРјРµСЋС‚ Р±РѕР»СЊС€РёР№ РїСЂРёРѕСЂРёС‚РµС‚.
 	string payload_decoder_script = 8;
 }
 
 message ApplicationListItem {
-	// ID приложения.
+	// ID РїСЂРёР»РѕР¶РµРЅРёСЏ.
 	int64 id = 1;
 
-	// Название приложения.
+	// РќР°Р·РІР°РЅРёРµ РїСЂРёР»РѕР¶РµРЅРёСЏ.
 	string name = 2;
 
-	// Описание приложения.
+	// РћРїРёСЃР°РЅРёРµ РїСЂРёР»РѕР¶РµРЅРёСЏ.
 	string description = 3;
 
-	// ID организации, которой присвоено приложение.
+	// ID РѕСЂРіР°РЅРёР·Р°С†РёРё, РєРѕС‚РѕСЂРѕР№ РїСЂРёСЃРІРѕРµРЅРѕ РїСЂРёР»РѕР¶РµРЅРёРµ.
 	int64 organization_id = 4 [json_name = "organizationID"];
 
-	// ID сервис-профиля.
+	// ID СЃРµСЂРІРёСЃ-РїСЂРѕС„РёР»СЏ.
 	string service_profile_id = 5 [json_name = "serviceProfileID"];
 
-	// Название сервис-профиля.
+	// РќР°Р·РІР°РЅРёРµ СЃРµСЂРІРёСЃ-РїСЂРѕС„РёР»СЏ.
 	string service_profile_name = 6;
 }
 
 
 message CreateApplicationRequest {
-	// Объект Приложения для создания.
+	// РћР±СЉРµРєС‚ РџСЂРёР»РѕР¶РµРЅРёСЏ РґР»СЏ СЃРѕР·РґР°РЅРёСЏ.
 	Application application = 1;
 }
 
 message CreateApplicationResponse {
-	// ID приложения.
+	// ID РїСЂРёР»РѕР¶РµРЅРёСЏ.
 	int64 id = 1;
 }
 
 message GetApplicationRequest {
-	// ID приложения.
+	// ID РїСЂРёР»РѕР¶РµРЅРёСЏ.
 	int64 id = 1;
 }
 
 message GetApplicationResponse {
-	// Объект Приложение.
+	// РћР±СЉРµРєС‚ РџСЂРёР»РѕР¶РµРЅРёРµ.
 	Application application = 1;
 }
 
 message UpdateApplicationRequest {
-	// Объект Приложение для обновления.
+	// РћР±СЉРµРєС‚ РџСЂРёР»РѕР¶РµРЅРёРµ РґР»СЏ РѕР±РЅРѕРІР»РµРЅРёСЏ.
 	Application application = 1;
 }
 
 message DeleteApplicationRequest {
-	// ID приложения.
+	// ID РїСЂРёР»РѕР¶РµРЅРёСЏ.
 	int64 id = 1;
 }
 
 message ListApplicationRequest {
-	// Ограничить максимальное число приложений в выдаче результатов.
+	// РћРіСЂР°РЅРёС‡РёС‚СЊ РјР°РєСЃРёРјР°Р»СЊРЅРѕРµ С‡РёСЃР»Рѕ РїСЂРёР»РѕР¶РµРЅРёР№ РІ РІС‹РґР°С‡Рµ СЂРµР·СѓР»СЊС‚Р°С‚РѕРІ.
 	int64 limit = 1;
 
-	// Смещение в наборе результатов (для нумерации страниц).
+	// РЎРјРµС‰РµРЅРёРµ РІ РЅР°Р±РѕСЂРµ СЂРµР·СѓР»СЊС‚Р°С‚РѕРІ (РґР»СЏ РЅСѓРјРµСЂР°С†РёРё СЃС‚СЂР°РЅРёС†).
 	int64 offset = 2;
 
-	// ID приложения для применения фильтра.
+	// ID РїСЂРёР»РѕР¶РµРЅРёСЏ РґР»СЏ РїСЂРёРјРµРЅРµРЅРёСЏ С„РёР»СЊС‚СЂР°.
 	int64 organization_id = 3 [json_name = "organizationID"];
 
-	// Поиск по названию (необязательно).
+	// РџРѕРёСЃРє РїРѕ РЅР°Р·РІР°РЅРёСЋ (РЅРµРѕР±СЏР·Р°С‚РµР»СЊРЅРѕ).
 	string search = 4;
 }
 
 message ListApplicationResponse {
-	// Общее число приложений в результатах.
+	// РћР±С‰РµРµ С‡РёСЃР»Рѕ РїСЂРёР»РѕР¶РµРЅРёР№ РІ СЂРµР·СѓР»СЊС‚Р°С‚Р°С….
 	int64 total_count = 1;
 	
-	// Приложения в результатах.
+	// РџСЂРёР»РѕР¶РµРЅРёСЏ РІ СЂРµР·СѓР»СЊС‚Р°С‚Р°С….
 	repeated ApplicationListItem result = 2;
 }
 
 message HTTPIntegrationHeader {
-	// Ключ
+	// РљР»СЋС‡
 	string key = 1;
 
-	// Значение
+	// Р—РЅР°С‡РµРЅРёРµ
 	string value = 2;
 }
 
 message HTTPIntegration {
-	// ID приложения.
+	// ID РїСЂРёР»РѕР¶РµРЅРёСЏ.
 	int64 application_id = 1 [json_name = "applicationID"];
 
-	// Заголовки для выполнения HTTP callback функций.
+	// Р—Р°РіРѕР»РѕРІРєРё РґР»СЏ РІС‹РїРѕР»РЅРµРЅРёСЏ HTTP callback С„СѓРЅРєС†РёР№.
 	repeated HTTPIntegrationHeader headers = 2;
 
-	// URL для запроса восходящих данных.
+	// URL РґР»СЏ Р·Р°РїСЂРѕСЃР° РІРѕСЃС…РѕРґСЏС‰РёС… РґР°РЅРЅС‹С….
 	string uplink_data_url = 3 [json_name = "uplinkDataURL"];
 
-	// URL для запроса join уведомлений.
+	// URL РґР»СЏ Р·Р°РїСЂРѕСЃР° join СѓРІРµРґРѕРјР»РµРЅРёР№.
 	string join_notification_url = 4 [json_name = "joinNotificationURL"];
 
-	// URL для запроса ACK уведомлений (для подтверждаемых downlink сообщений).
+	// URL РґР»СЏ Р·Р°РїСЂРѕСЃР° ACK СѓРІРµРґРѕРјР»РµРЅРёР№ (РґР»СЏ РїРѕРґС‚РІРµСЂР¶РґР°РµРјС‹С… downlink СЃРѕРѕР±С‰РµРЅРёР№).
 	string ack_notification_url = 5 [json_name = "ackNotificationURL"];
 
-	// URL для запроса уведомлений об ошибках.
+	// URL РґР»СЏ Р·Р°РїСЂРѕСЃР° СѓРІРµРґРѕРјР»РµРЅРёР№ РѕР± РѕС€РёР±РєР°С….
 	string error_notification_url = 6 [json_name = "errorNotificationURL"];
 
-	// URL для запроса уведомлений о состоянии устройств.
+	// URL РґР»СЏ Р·Р°РїСЂРѕСЃР° СѓРІРµРґРѕРјР»РµРЅРёР№ Рѕ СЃРѕСЃС‚РѕСЏРЅРёРё СѓСЃС‚СЂРѕР№СЃС‚РІ.
 	string status_notification_url = 7 [json_name = "statusNotificationURL"];
 
-	// URL для запроса уведомлений о местоположении.
+	// URL РґР»СЏ Р·Р°РїСЂРѕСЃР° СѓРІРµРґРѕРјР»РµРЅРёР№ Рѕ РјРµСЃС‚РѕРїРѕР»РѕР¶РµРЅРёРё.
 	string location_notification_url = 8 [json_name = "locationNotificationURL"];
 
-    // URL для запроса tx ack подтверждений (базовой станция подтвердила передачу downlink сообщения устройству).
+    // URL РґР»СЏ Р·Р°РїСЂРѕСЃР° tx ack РїРѕРґС‚РІРµСЂР¶РґРµРЅРёР№ (Р±Р°Р·РѕРІРѕР№ СЃС‚Р°РЅС†РёСЏ РїРѕРґС‚РІРµСЂРґРёР»Р° РїРµСЂРµРґР°С‡Сѓ downlink СЃРѕРѕР±С‰РµРЅРёСЏ СѓСЃС‚СЂРѕР№СЃС‚РІСѓ).
     string tx_ack_notification_url = 9 [json_name = "txAckNotificationURL"];
 }
 
 message CreateHTTPIntegrationRequest {
-	// Объект интеграции для создания.
+	// РћР±СЉРµРєС‚ РёРЅС‚РµРіСЂР°С†РёРё РґР»СЏ СЃРѕР·РґР°РЅРёСЏ.
 	HTTPIntegration integration = 1;
 }
 
 message GetHTTPIntegrationRequest {
-	// ID приложения.
+	// ID РїСЂРёР»РѕР¶РµРЅРёСЏ.
 	int64 application_id = 1 [json_name = "applicationID"];
 }
 
 message GetHTTPIntegrationResponse {
-	// Объект интеграции.
+	// РћР±СЉРµРєС‚ РёРЅС‚РµРіСЂР°С†РёРё.
 	HTTPIntegration integration = 1;
 }
 
 message UpdateHTTPIntegrationRequest {
-	// Объект интеграции для обновления.
+	// РћР±СЉРµРєС‚ РёРЅС‚РµРіСЂР°С†РёРё РґР»СЏ РѕР±РЅРѕРІР»РµРЅРёСЏ.
 	HTTPIntegration integration = 1;
 }
 
 message DeleteHTTPIntegrationRequest {
-	// ID приложения.
+	// ID РїСЂРёР»РѕР¶РµРЅРёСЏ.
 	int64 application_id = 1 [json_name = "applicationID"];
 }
 
 message ListIntegrationRequest {
-	//ID приложения.
+	//ID РїСЂРёР»РѕР¶РµРЅРёСЏ.
 	int64 application_id = 1 [json_name = "applicationID"];
 }
 
 message IntegrationListItem {
-	// Тип интеграции.
+	// РўРёРї РёРЅС‚РµРіСЂР°С†РёРё.
 	IntegrationKind kind = 1;
 }
 
 message ListIntegrationResponse {
-	// Общее количество доступных интеграций в результатах.
+	// РћР±С‰РµРµ РєРѕР»РёС‡РµСЃС‚РІРѕ РґРѕСЃС‚СѓРїРЅС‹С… РёРЅС‚РµРіСЂР°С†РёР№ РІ СЂРµР·СѓР»СЊС‚Р°С‚Р°С….
 	int64 total_count = 1;
 
-	// Интеграции.
+	// РРЅС‚РµРіСЂР°С†РёРё.
 	repeated IntegrationListItem result = 2;
 }
 
@@ -375,50 +375,50 @@ enum InfluxDBPrecision {
 }
 
 message InfluxDBIntegration {
-	// ID приложения.
+	// ID РїСЂРёР»РѕР¶РµРЅРёСЏ.
 	int64 application_id = 1 [json_name = "applicationID"];
 
-	// Конечная точка записи API InfluxDB (например http://localhost:8086/write).
+	// РљРѕРЅРµС‡РЅР°СЏ С‚РѕС‡РєР° Р·Р°РїРёСЃРё API InfluxDB (РЅР°РїСЂРёРјРµСЂ http://localhost:8086/write).
 	string endpoint = 2;
 
-	// InfluxDB - название БД.
+	// InfluxDB - РЅР°Р·РІР°РЅРёРµ Р‘Р”.
 	string db = 3;
 
-	// InfluxDB - имя пользователя.
+	// InfluxDB - РёРјСЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ.
 	string username = 4;
 
-	// InfluxDB - пароль.
+	// InfluxDB - РїР°СЂРѕР»СЊ.
 	string password = 5;
 
-	// InfluxDB - название retention policy.
+	// InfluxDB - РЅР°Р·РІР°РЅРёРµ retention policy.
 	string retention_policy_name = 6;
 
-	// Точность отметки времени InfluxDB.
+	// РўРѕС‡РЅРѕСЃС‚СЊ РѕС‚РјРµС‚РєРё РІСЂРµРјРµРЅРё InfluxDB.
 	InfluxDBPrecision precision = 7;
 }
 
 message CreateInfluxDBIntegrationRequest {
-	// Объект интеграции для создания.
+	// РћР±СЉРµРєС‚ РёРЅС‚РµРіСЂР°С†РёРё РґР»СЏ СЃРѕР·РґР°РЅРёСЏ.
 	InfluxDBIntegration integration = 1;
 }
 
 message GetInfluxDBIntegrationRequest {
-	// ID приложения.
+	// ID РїСЂРёР»РѕР¶РµРЅРёСЏ.
 	int64 application_id = 1 [json_name = "applicationID"];
 }
 
 message GetInfluxDBIntegrationResponse {
-	// Объект интеграции.
+	// РћР±СЉРµРєС‚ РёРЅС‚РµРіСЂР°С†РёРё.
 	InfluxDBIntegration integration = 1;
 }
 
 message UpdateInfluxDBIntegrationRequest {
-	// Объект интеграции.
+	// РћР±СЉРµРєС‚ РёРЅС‚РµРіСЂР°С†РёРё.
 	InfluxDBIntegration integration = 1;
 }
 
 message DeleteInfluxDBIntegrationRequest {
-	// ID приложения.
+	// ID РїСЂРёР»РѕР¶РµРЅРёСЏ.
 	int64 application_id = 1 [json_name = "applicationID"];
 }
 

@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package api;
 
-option go_package = "github.com/brocaar/chirpstack-api/go/v3/as/external/api";
+option go_package = "github.com/iBrick/chirpstack-api/go/v3/as/external/api";
 
 import "google/api/annotations.proto";
 import "google/protobuf/timestamp.proto";
@@ -10,9 +10,9 @@ import "google/protobuf/empty.proto";
 import "common/common.proto";
 
 
-// GatewayProfileService - сервис, управляющий профилями базовой станции.
+// GatewayProfileService - СЃРµСЂРІРёСЃ, СѓРїСЂР°РІР»СЏСЋС‰РёР№ РїСЂРѕС„РёР»СЏРјРё Р±Р°Р·РѕРІРѕР№ СЃС‚Р°РЅС†РёРё.
 service GatewayProfileService {
-	// Create создает указанный профиль базовой станции.
+	// Create СЃРѕР·РґР°РµС‚ СѓРєР°Р·Р°РЅРЅС‹Р№ РїСЂРѕС„РёР»СЊ Р±Р°Р·РѕРІРѕР№ СЃС‚Р°РЅС†РёРё.
 	rpc Create(CreateGatewayProfileRequest) returns (CreateGatewayProfileResponse) {
 		option (google.api.http) = {
 			post: "/api/gateway-profiles"
@@ -20,14 +20,14 @@ service GatewayProfileService {
 		};
 	}
 
-	// Get возвращает профиль базовой станции, соответствующий указанному ID.
+	// Get РІРѕР·РІСЂР°С‰Р°РµС‚ РїСЂРѕС„РёР»СЊ Р±Р°Р·РѕРІРѕР№ СЃС‚Р°РЅС†РёРё, СЃРѕРѕС‚РІРµС‚СЃС‚РІСѓСЋС‰РёР№ СѓРєР°Р·Р°РЅРЅРѕРјСѓ ID.
 	rpc Get(GetGatewayProfileRequest) returns (GetGatewayProfileResponse) {
 		option (google.api.http) = {
 			get: "/api/gateway-profiles/{id}"
 		};
 	}
 
-	// Update обновляет указанный профиль базовой станции.
+	// Update РѕР±РЅРѕРІР»СЏРµС‚ СѓРєР°Р·Р°РЅРЅС‹Р№ РїСЂРѕС„РёР»СЊ Р±Р°Р·РѕРІРѕР№ СЃС‚Р°РЅС†РёРё.
 	rpc Update(UpdateGatewayProfileRequest) returns (google.protobuf.Empty) {
 		option (google.api.http) = {
 			put: "/api/gateway-profiles/{gateway_profile.id}"
@@ -35,14 +35,14 @@ service GatewayProfileService {
 		};
 	}
 
-	// Delete удаляет профиль базовой станции по указанному id.
+	// Delete СѓРґР°Р»СЏРµС‚ РїСЂРѕС„РёР»СЊ Р±Р°Р·РѕРІРѕР№ СЃС‚Р°РЅС†РёРё РїРѕ СѓРєР°Р·Р°РЅРЅРѕРјСѓ id.
 	rpc Delete(DeleteGatewayProfileRequest) returns (google.protobuf.Empty) {
 		option (google.api.http) = {
 			delete: "/api/gateway-profiles/{id}"
 		};
 	}
 
-	// List возвращает существующие профили базовых станций.
+	// List РІРѕР·РІСЂР°С‰Р°РµС‚ СЃСѓС‰РµСЃС‚РІСѓСЋС‰РёРµ РїСЂРѕС„РёР»Рё Р±Р°Р·РѕРІС‹С… СЃС‚Р°РЅС†РёР№.
 	rpc List(ListGatewayProfilesRequest) returns (ListGatewayProfilesResponse) {
 		option (google.api.http) = {
 			get: "/api/gateway-profiles"
@@ -51,109 +51,109 @@ service GatewayProfileService {
 }
 
 message GatewayProfile {
-    // ID профиля базовых станций (строка UUID).
+    // ID РїСЂРѕС„РёР»СЏ Р±Р°Р·РѕРІС‹С… СЃС‚Р°РЅС†РёР№ (СЃС‚СЂРѕРєР° UUID).
     string id = 1;
 
-    // Название профиля базовой станции.
+    // РќР°Р·РІР°РЅРёРµ РїСЂРѕС„РёР»СЏ Р±Р°Р·РѕРІРѕР№ СЃС‚Р°РЅС†РёРё.
     string name = 2;
 
-    // ID сетевого сервера для профиля базовой станции.
+    // ID СЃРµС‚РµРІРѕРіРѕ СЃРµСЂРІРµСЂР° РґР»СЏ РїСЂРѕС„РёР»СЏ Р±Р°Р·РѕРІРѕР№ СЃС‚Р°РЅС†РёРё.
     int64 network_server_id = 3 [json_name = "networkServerID"];
 
-    // Каналы по умолчанию (каналы, указанные в спецификации региональных параметров LoRaWAN), включенные для этого профиля
+    // РљР°РЅР°Р»С‹ РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ (РєР°РЅР°Р»С‹, СѓРєР°Р·Р°РЅРЅС‹Рµ РІ СЃРїРµС†РёС„РёРєР°С†РёРё СЂРµРіРёРѕРЅР°Р»СЊРЅС‹С… РїР°СЂР°РјРµС‚СЂРѕРІ LoRaWAN), РІРєР»СЋС‡РµРЅРЅС‹Рµ РґР»СЏ СЌС‚РѕРіРѕ РїСЂРѕС„РёР»СЏ
     repeated uint32 channels = 4;
 
-    // В конфигурацию каналов добавлены дополнительные каналы (если регион LoRaWAN поддерживает добавление пользовательских каналов).
+    // Р’ РєРѕРЅС„РёРіСѓСЂР°С†РёСЋ РєР°РЅР°Р»РѕРІ РґРѕР±Р°РІР»РµРЅС‹ РґРѕРїРѕР»РЅРёС‚РµР»СЊРЅС‹Рµ РєР°РЅР°Р»С‹ (РµСЃР»Рё СЂРµРіРёРѕРЅ LoRaWAN РїРѕРґРґРµСЂР¶РёРІР°РµС‚ РґРѕР±Р°РІР»РµРЅРёРµ РїРѕР»СЊР·РѕРІР°С‚РµР»СЊСЃРєРёС… РєР°РЅР°Р»РѕРІ).
     repeated GatewayProfileExtraChannel extra_channels = 5;
 }
 
 message GatewayProfileListItem {
-    // ID профиля базовой станции (строка UUID).
+    // ID РїСЂРѕС„РёР»СЏ Р±Р°Р·РѕРІРѕР№ СЃС‚Р°РЅС†РёРё (СЃС‚СЂРѕРєР° UUID).
     string id = 1;
 
-    // Название профиля базовой станции.
+    // РќР°Р·РІР°РЅРёРµ РїСЂРѕС„РёР»СЏ Р±Р°Р·РѕРІРѕР№ СЃС‚Р°РЅС†РёРё.
     string name = 2;
 
-    // ID сетевого сервера для профиля базовой станции.
+    // ID СЃРµС‚РµРІРѕРіРѕ СЃРµСЂРІРµСЂР° РґР»СЏ РїСЂРѕС„РёР»СЏ Р±Р°Р·РѕРІРѕР№ СЃС‚Р°РЅС†РёРё.
     int64 network_server_id = 3 [json_name = "networkServerID"];
 
-    // Название сетевого сервера.
+    // РќР°Р·РІР°РЅРёРµ СЃРµС‚РµРІРѕРіРѕ СЃРµСЂРІРµСЂР°.
     string network_server_name = 7;
 
-    // Временная метка создания.
+    // Р’СЂРµРјРµРЅРЅР°СЏ РјРµС‚РєР° СЃРѕР·РґР°РЅРёСЏ.
     google.protobuf.Timestamp created_at = 5;
 
-    // Временная метка последнего обновления.
+    // Р’СЂРµРјРµРЅРЅР°СЏ РјРµС‚РєР° РїРѕСЃР»РµРґРЅРµРіРѕ РѕР±РЅРѕРІР»РµРЅРёСЏ.
     google.protobuf.Timestamp updated_at = 6;
 }
 
 message GatewayProfileExtraChannel {
-    // Модуляция.
+    // РњРѕРґСѓР»СЏС†РёСЏ.
     common.Modulation modulation = 1;
 
-    // Частота.
+    // Р§Р°СЃС‚РѕС‚Р°.
     uint32 frequency = 2;
 
-    // Полоса пропускания.
+    // РџРѕР»РѕСЃР° РїСЂРѕРїСѓСЃРєР°РЅРёСЏ.
     uint32 bandwidth = 3;
 
-    // Скорость соединения (в случае модуляции FSK).
+    // РЎРєРѕСЂРѕСЃС‚СЊ СЃРѕРµРґРёРЅРµРЅРёСЏ (РІ СЃР»СѓС‡Р°Рµ РјРѕРґСѓР»СЏС†РёРё FSK).
     uint32 bitrate = 4;
 
-    // Факторы расширения (в случае модуляции LoRa).
+    // Р¤Р°РєС‚РѕСЂС‹ СЂР°СЃС€РёСЂРµРЅРёСЏ (РІ СЃР»СѓС‡Р°Рµ РјРѕРґСѓР»СЏС†РёРё LoRa).
     repeated uint32 spreading_factors = 5;
 }
 
 message CreateGatewayProfileRequest {
-    // Объект Профиль базовой станции для создания.
+    // РћР±СЉРµРєС‚ РџСЂРѕС„РёР»СЊ Р±Р°Р·РѕРІРѕР№ СЃС‚Р°РЅС†РёРё РґР»СЏ СЃРѕР·РґР°РЅРёСЏ.
     GatewayProfile gateway_profile = 1;
 
 }
 
 message CreateGatewayProfileResponse {
-    // ID профиля базовой станции (строка UUID).
+    // ID РїСЂРѕС„РёР»СЏ Р±Р°Р·РѕРІРѕР№ СЃС‚Р°РЅС†РёРё (СЃС‚СЂРѕРєР° UUID).
     string id = 1;
 }
 
 message GetGatewayProfileRequest {
-    // ID профиля базовой станции (строка UUID).
+    // ID РїСЂРѕС„РёР»СЏ Р±Р°Р·РѕРІРѕР№ СЃС‚Р°РЅС†РёРё (СЃС‚СЂРѕРєР° UUID).
     string id = 1;
 }
 
 message GetGatewayProfileResponse {
-    // Объект профиля базовой станции.
+    // РћР±СЉРµРєС‚ РїСЂРѕС„РёР»СЏ Р±Р°Р·РѕРІРѕР№ СЃС‚Р°РЅС†РёРё.
     GatewayProfile gateway_profile = 1;
 
-    // Временная метка создания.
+    // Р’СЂРµРјРµРЅРЅР°СЏ РјРµС‚РєР° СЃРѕР·РґР°РЅРёСЏ.
     google.protobuf.Timestamp created_at = 2;
 
-    //Временная метка последнего обновления.
+    //Р’СЂРµРјРµРЅРЅР°СЏ РјРµС‚РєР° РїРѕСЃР»РµРґРЅРµРіРѕ РѕР±РЅРѕРІР»РµРЅРёСЏ.
     google.protobuf.Timestamp updated_at = 3;
 }
 
 message UpdateGatewayProfileRequest {
-    // Объект Профиль базовой станции для обновления.
+    // РћР±СЉРµРєС‚ РџСЂРѕС„РёР»СЊ Р±Р°Р·РѕРІРѕР№ СЃС‚Р°РЅС†РёРё РґР»СЏ РѕР±РЅРѕРІР»РµРЅРёСЏ.
     GatewayProfile gateway_profile = 1;
 }
 
 message DeleteGatewayProfileRequest {
-    //  ID профиля базовой станции (строка UUID).
+    //  ID РїСЂРѕС„РёР»СЏ Р±Р°Р·РѕРІРѕР№ СЃС‚Р°РЅС†РёРё (СЃС‚СЂРѕРєР° UUID).
     string id = 1;
 }
 
 message ListGatewayProfilesRequest {
-    // Максимальное число значений в ответе.
+    // РњР°РєСЃРёРјР°Р»СЊРЅРѕРµ С‡РёСЃР»Рѕ Р·РЅР°С‡РµРЅРёР№ РІ РѕС‚РІРµС‚Рµ.
     int64 limit = 1;
 
-    // Смещение в наборе результатов (для нумерации страниц).
+    // РЎРјРµС‰РµРЅРёРµ РІ РЅР°Р±РѕСЂРµ СЂРµР·СѓР»СЊС‚Р°С‚РѕРІ (РґР»СЏ РЅСѓРјРµСЂР°С†РёРё СЃС‚СЂР°РЅРёС†).
     int64 offset = 2;
 
-    // ID сетевого сервера для фильтрации (необязательное).
+    // ID СЃРµС‚РµРІРѕРіРѕ СЃРµСЂРІРµСЂР° РґР»СЏ С„РёР»СЊС‚СЂР°С†РёРё (РЅРµРѕР±СЏР·Р°С‚РµР»СЊРЅРѕРµ).
     int64 network_server_id = 3 [json_name = "networkServerID"];
 }
 
 message ListGatewayProfilesResponse {
-    // Общее число профилей базовых станций.
+    // РћР±С‰РµРµ С‡РёСЃР»Рѕ РїСЂРѕС„РёР»РµР№ Р±Р°Р·РѕРІС‹С… СЃС‚Р°РЅС†РёР№.
     int64 total_count = 1;
 
     repeated GatewayProfileListItem result = 2;

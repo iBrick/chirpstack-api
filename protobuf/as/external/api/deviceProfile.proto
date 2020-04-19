@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package api;
 
-option go_package = "github.com/brocaar/chirpstack-api/go/v3/as/external/api";
+option go_package = "github.com/iBrick/chirpstack-api/go/v3/as/external/api";
 
 import "google/api/annotations.proto";
 import "google/protobuf/timestamp.proto";
@@ -12,7 +12,7 @@ import "as/external/api/profiles.proto";
 
 // DeviceProfileService is the service managing device-profiles.
 service DeviceProfileService {
-    // Create - создает указанный профиль устройства.
+    // Create - СЃРѕР·РґР°РµС‚ СѓРєР°Р·Р°РЅРЅС‹Р№ РїСЂРѕС„РёР»СЊ СѓСЃС‚СЂРѕР№СЃС‚РІР°.
     rpc Create(CreateDeviceProfileRequest) returns (CreateDeviceProfileResponse) {
         option(google.api.http) = {
             post: "/api/device-profiles"
@@ -20,14 +20,14 @@ service DeviceProfileService {
         };
     }
 
-    // Get - возвращает профиль устройства по указанному ID.
+    // Get - РІРѕР·РІСЂР°С‰Р°РµС‚ РїСЂРѕС„РёР»СЊ СѓСЃС‚СЂРѕР№СЃС‚РІР° РїРѕ СѓРєР°Р·Р°РЅРЅРѕРјСѓ ID.
     rpc Get(GetDeviceProfileRequest) returns (GetDeviceProfileResponse) {
         option(google.api.http) = {
             get: "/api/device-profiles/{id}"
         };
     }
 
-    // Update - обновляет указанный профиль устройства.
+    // Update - РѕР±РЅРѕРІР»СЏРµС‚ СѓРєР°Р·Р°РЅРЅС‹Р№ РїСЂРѕС„РёР»СЊ СѓСЃС‚СЂРѕР№СЃС‚РІР°.
     rpc Update(UpdateDeviceProfileRequest) returns (google.protobuf.Empty) {
         option(google.api.http) = {
             put: "/api/device-profiles/{device_profile.id}"
@@ -35,14 +35,14 @@ service DeviceProfileService {
         };
     }
 
-    // Delete - удаляет профиль устройства по заданному ID.
+    // Delete - СѓРґР°Р»СЏРµС‚ РїСЂРѕС„РёР»СЊ СѓСЃС‚СЂРѕР№СЃС‚РІР° РїРѕ Р·Р°РґР°РЅРЅРѕРјСѓ ID.
     rpc Delete(DeleteDeviceProfileRequest) returns (google.protobuf.Empty) {
         option(google.api.http) = {
             delete: "/api/device-profiles/{id}"
         };
     }
 
-    // List - возвращает список доступных профилей устройств.
+    // List - РІРѕР·РІСЂР°С‰Р°РµС‚ СЃРїРёСЃРѕРє РґРѕСЃС‚СѓРїРЅС‹С… РїСЂРѕС„РёР»РµР№ СѓСЃС‚СЂРѕР№СЃС‚РІ.
     rpc List(ListDeviceProfileRequest) returns (ListDeviceProfileResponse) {
         option(google.api.http) = {
             get: "/api/device-profiles"
@@ -51,77 +51,77 @@ service DeviceProfileService {
 }
 
 message CreateDeviceProfileRequest {
-    // Профиль устройства для создания.
+    // РџСЂРѕС„РёР»СЊ СѓСЃС‚СЂРѕР№СЃС‚РІР° РґР»СЏ СЃРѕР·РґР°РЅРёСЏ.
     DeviceProfile device_profile = 1;
 }
 
 message CreateDeviceProfileResponse {
-    // ID профиля устройства (строка UUID).
+    // ID РїСЂРѕС„РёР»СЏ СѓСЃС‚СЂРѕР№СЃС‚РІР° (СЃС‚СЂРѕРєР° UUID).
     string id = 1;
 }
 
 message GetDeviceProfileRequest {
-    // ID профиля устройства (строка UUID).
+    // ID РїСЂРѕС„РёР»СЏ СѓСЃС‚СЂРѕР№СЃС‚РІР° (СЃС‚СЂРѕРєР° UUID).
     string id = 1;
 }
 
 message GetDeviceProfileResponse {
-    // Объект - Профиль устройства.
+    // РћР±СЉРµРєС‚ - РџСЂРѕС„РёР»СЊ СѓСЃС‚СЂРѕР№СЃС‚РІР°.
     DeviceProfile device_profile = 1;
 
-    // Временная метка создания.
+    // Р’СЂРµРјРµРЅРЅР°СЏ РјРµС‚РєР° СЃРѕР·РґР°РЅРёСЏ.
     google.protobuf.Timestamp created_at = 2;
 
-    // Временная метка последнего обновления.
+    // Р’СЂРµРјРµРЅРЅР°СЏ РјРµС‚РєР° РїРѕСЃР»РµРґРЅРµРіРѕ РѕР±РЅРѕРІР»РµРЅРёСЏ.
     google.protobuf.Timestamp updated_at = 3;
 }
 
 message UpdateDeviceProfileRequest {
-    // Объект - Профиль устройства для обновления.
+    // РћР±СЉРµРєС‚ - РџСЂРѕС„РёР»СЊ СѓСЃС‚СЂРѕР№СЃС‚РІР° РґР»СЏ РѕР±РЅРѕРІР»РµРЅРёСЏ.
     DeviceProfile device_profile = 1;
 }
 
 message DeleteDeviceProfileRequest {
-    // ID профиля устройства (строка UUID).
+    // ID РїСЂРѕС„РёР»СЏ СѓСЃС‚СЂРѕР№СЃС‚РІР° (СЃС‚СЂРѕРєР° UUID).
     string id = 1;
 }
 
 message DeviceProfileListItem {
-    // ID профиля устройства (строка UUID).
+    // ID РїСЂРѕС„РёР»СЏ СѓСЃС‚СЂРѕР№СЃС‚РІР° (СЃС‚СЂРѕРєР° UUID).
     string id = 1;
 
-    // Название профиля устройства.
+    // РќР°Р·РІР°РЅРёРµ РїСЂРѕС„РёР»СЏ СѓСЃС‚СЂРѕР№СЃС‚РІР°.
     string name = 2;
 
-    // ID организации, которой присваивается профиль устройства.
+    // ID РѕСЂРіР°РЅРёР·Р°С†РёРё, РєРѕС‚РѕСЂРѕР№ РїСЂРёСЃРІР°РёРІР°РµС‚СЃСЏ РїСЂРѕС„РёР»СЊ СѓСЃС‚СЂРѕР№СЃС‚РІР°.
     int64 organization_id = 3 [json_name = "organizationID"];
 
-    // ID сетевого сервера, на котором используется профиль устройства.
+    // ID СЃРµС‚РµРІРѕРіРѕ СЃРµСЂРІРµСЂР°, РЅР° РєРѕС‚РѕСЂРѕРј РёСЃРїРѕР»СЊР·СѓРµС‚СЃСЏ РїСЂРѕС„РёР»СЊ СѓСЃС‚СЂРѕР№СЃС‚РІР°.
     int64 network_server_id = 4 [json_name = "networkServerID"];
 
-    // Временная метка создания.
+    // Р’СЂРµРјРµРЅРЅР°СЏ РјРµС‚РєР° СЃРѕР·РґР°РЅРёСЏ.
     google.protobuf.Timestamp created_at = 5;
 
-    // Временная метка последнего обновления.
+    // Р’СЂРµРјРµРЅРЅР°СЏ РјРµС‚РєР° РїРѕСЃР»РµРґРЅРµРіРѕ РѕР±РЅРѕРІР»РµРЅРёСЏ.
     google.protobuf.Timestamp updated_at = 6;
 }
 
 message ListDeviceProfileRequest {
-    // Ограничивает число возвращаемых данных.
+    // РћРіСЂР°РЅРёС‡РёРІР°РµС‚ С‡РёСЃР»Рѕ РІРѕР·РІСЂР°С‰Р°РµРјС‹С… РґР°РЅРЅС‹С….
     int64 limit = 1;
 
-    // Смещение в наборе результатов (для нумерации страниц).
+    // РЎРјРµС‰РµРЅРёРµ РІ РЅР°Р±РѕСЂРµ СЂРµР·СѓР»СЊС‚Р°С‚РѕРІ (РґР»СЏ РЅСѓРјРµСЂР°С†РёРё СЃС‚СЂР°РЅРёС†).
     int64 offset = 2;
 
-    // ID организации для применения фильтра.
+    // ID РѕСЂРіР°РЅРёР·Р°С†РёРё РґР»СЏ РїСЂРёРјРµРЅРµРЅРёСЏ С„РёР»СЊС‚СЂР°.
     int64 organization_id = 3 [json_name = "organizationID"];
 
-    // ID приложения для применения фильтра.
+    // ID РїСЂРёР»РѕР¶РµРЅРёСЏ РґР»СЏ РїСЂРёРјРµРЅРµРЅРёСЏ С„РёР»СЊС‚СЂР°.
     int64 application_id = 4 [json_name = "applicationID"];
 }
 
 message ListDeviceProfileResponse {
-    // Всего профилей устройств.
+    // Р’СЃРµРіРѕ РїСЂРѕС„РёР»РµР№ СѓСЃС‚СЂРѕР№СЃС‚РІ.
     int64 total_count = 1;
 
     repeated DeviceProfileListItem result = 2;

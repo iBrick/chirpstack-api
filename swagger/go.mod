@@ -1,4 +1,4 @@
-module github.com/brocaar/chirpstack-api/swagger
+module github.com/iBrick/chirpstack-api/swagger
 
 go 1.13
 

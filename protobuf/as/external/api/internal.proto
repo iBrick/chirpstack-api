@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package api;
 
-option go_package = "github.com/brocaar/chirpstack-api/go/v3/as/external/api";
+option go_package = "github.com/iBrick/chirpstack-api/go/v3/as/external/api";
 
 import "google/api/annotations.proto";
 import "google/protobuf/timestamp.proto";
@@ -10,7 +10,7 @@ import "google/protobuf/empty.proto";
 import "as/external/api/user.proto";
 
 
-// InternalService - сервис, предоставляющий API для внутреннего использования.
+// InternalService - СЃРµСЂРІРёСЃ, РїСЂРµРґРѕСЃС‚Р°РІР»СЏСЋС‰РёР№ API РґР»СЏ РІРЅСѓС‚СЂРµРЅРЅРµРіРѕ РёСЃРїРѕР»СЊР·РѕРІР°РЅРёСЏ.
 service InternalService {
 	// Log in a user
 	rpc Login(LoginRequest) returns (LoginResponse) {
@@ -20,28 +20,28 @@ service InternalService {
 		};
 	}
 
-	// Получить профиль текущего пользователя 
+	// РџРѕР»СѓС‡РёС‚СЊ РїСЂРѕС„РёР»СЊ С‚РµРєСѓС‰РµРіРѕ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ 
 	rpc Profile(google.protobuf.Empty) returns (ProfileResponse) {
 		option(google.api.http) = {
 			get: "/api/internal/profile"
 		};
 	}
 
-	// Получить брендинг для пользовательского интерфейса
+	// РџРѕР»СѓС‡РёС‚СЊ Р±СЂРµРЅРґРёРЅРі РґР»СЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЊСЃРєРѕРіРѕ РёРЅС‚РµСЂС„РµР№СЃР°
 	rpc Branding(google.protobuf.Empty) returns (BrandingResponse) {
 		option(google.api.http) = {
 			get: "/api/internal/branding"
 		};
 	}
 
-	// Выполнить глобальный поиск.
+	// Р’С‹РїРѕР»РЅРёС‚СЊ РіР»РѕР±Р°Р»СЊРЅС‹Р№ РїРѕРёСЃРє.
 	rpc GlobalSearch(GlobalSearchRequest) returns (GlobalSearchResponse) {
 		option(google.api.http) = {
 			get: "/api/internal/search"
 		};
 	}
 
-    // CreateAPIKey - создает ключ API.
+    // CreateAPIKey - СЃРѕР·РґР°РµС‚ РєР»СЋС‡ API.
     rpc CreateAPIKey(CreateAPIKeyRequest) returns (CreateAPIKeyResponse) {
         option(google.api.http) = {
             post: "/api/internal/api-keys"
@@ -49,14 +49,14 @@ service InternalService {
         };
     }
 
-    // DeleteAPIKey удаляет ключ API.
+    // DeleteAPIKey СѓРґР°Р»СЏРµС‚ РєР»СЋС‡ API.
     rpc DeleteAPIKey(DeleteAPIKeyRequest) returns (google.protobuf.Empty) {
         option(google.api.http) = {
             delete: "/api/internal/api-keys/{id}"
         };
     }
 
-    // ListAPIKeys возвращает список доступных API ключей.
+    // ListAPIKeys РІРѕР·РІСЂР°С‰Р°РµС‚ СЃРїРёСЃРѕРє РґРѕСЃС‚СѓРїРЅС‹С… API РєР»СЋС‡РµР№.
     rpc ListAPIKeys(ListAPIKeysRequest) returns (ListAPIKeysResponse) {
         option(google.api.http) = {
             get: "/api/internal/api-keys"
@@ -65,22 +65,22 @@ service InternalService {
 }
 
 message APIKey {
-    // ID ключа API.
-    // Значение автоматически генерируется при создании.
+    // ID РєР»СЋС‡Р° API.
+    // Р—РЅР°С‡РµРЅРёРµ Р°РІС‚РѕРјР°С‚РёС‡РµСЃРєРё РіРµРЅРµСЂРёСЂСѓРµС‚СЃСЏ РїСЂРё СЃРѕР·РґР°РЅРёРё.
     string id = 1;
 
-    // Название.
+    // РќР°Р·РІР°РЅРёРµ.
     string name = 2;
 
-    // Ключ глобального администратора?
+    // РљР»СЋС‡ РіР»РѕР±Р°Р»СЊРЅРѕРіРѕ Р°РґРјРёРЅРёСЃС‚СЂР°С‚РѕСЂР°?
     bool is_admin = 3;
 
-    // ID организации.
-    // Если указано, то ключ API позволяет работать с ресурсами только внутри указанной организации.
+    // ID РѕСЂРіР°РЅРёР·Р°С†РёРё.
+    // Р•СЃР»Рё СѓРєР°Р·Р°РЅРѕ, С‚Рѕ РєР»СЋС‡ API РїРѕР·РІРѕР»СЏРµС‚ СЂР°Р±РѕС‚Р°С‚СЊ СЃ СЂРµСЃСѓСЂСЃР°РјРё С‚РѕР»СЊРєРѕ РІРЅСѓС‚СЂРё СѓРєР°Р·Р°РЅРЅРѕР№ РѕСЂРіР°РЅРёР·Р°С†РёРё.
     int64 organization_id = 4 [json_name = "organizationID"];
 
-    // ID приложения.
-    // Если указано, то ключ API позволяет работать с ресурсами только внутри указанного приложения.
+    // ID РїСЂРёР»РѕР¶РµРЅРёСЏ.
+    // Р•СЃР»Рё СѓРєР°Р·Р°РЅРѕ, С‚Рѕ РєР»СЋС‡ API РїРѕР·РІРѕР»СЏРµС‚ СЂР°Р±РѕС‚Р°С‚СЊ СЃ СЂРµСЃСѓСЂСЃР°РјРё С‚РѕР»СЊРєРѕ РІРЅСѓС‚СЂРё СѓРєР°Р·Р°РЅРЅРѕРіРѕ РїСЂРёР»РѕР¶РµРЅРёСЏ.
     int64 application_id = 5 [json_name = "applicationID"];
 }
 
@@ -103,92 +103,92 @@ message DeleteAPIKeyRequest {
 }
 
 message ListAPIKeysRequest {
-    // Ограничить макс. число API ключей в выдаче результатов..
+    // РћРіСЂР°РЅРёС‡РёС‚СЊ РјР°РєСЃ. С‡РёСЃР»Рѕ API РєР»СЋС‡РµР№ РІ РІС‹РґР°С‡Рµ СЂРµР·СѓР»СЊС‚Р°С‚РѕРІ..
     int64 limit = 1;
 
-    // Смещение в наборе результатов (для нумерации страниц).
+    // РЎРјРµС‰РµРЅРёРµ РІ РЅР°Р±РѕСЂРµ СЂРµР·СѓР»СЊС‚Р°С‚РѕРІ (РґР»СЏ РЅСѓРјРµСЂР°С†РёРё СЃС‚СЂР°РЅРёС†).
     int64 offset = 2;
 
-    // Является администратором.
+    // РЇРІР»СЏРµС‚СЃСЏ Р°РґРјРёРЅРёСЃС‚СЂР°С‚РѕСЂРѕРј.
     bool is_admin = 3;
 
-    // Фильтр по ID организации.
+    // Р¤РёР»СЊС‚СЂ РїРѕ ID РѕСЂРіР°РЅРёР·Р°С†РёРё.
     int64 organization_id = 4 [json_name = "organizationID"];
 
-    // Фильтр по ID приложения.
+    // Р¤РёР»СЊС‚СЂ РїРѕ ID РїСЂРёР»РѕР¶РµРЅРёСЏ.
     int64 application_id = 5 [json_name = "applicationID"];
 }
 
 message ListAPIKeysResponse {
-    // Общее число API ключей.
+    // РћР±С‰РµРµ С‡РёСЃР»Рѕ API РєР»СЋС‡РµР№.
     int64 total_count = 1;
 
     repeated APIKey result = 2;
 }
 
 message ProfileSettings {
-	// Существующие пользователи в системе не могут быть назначены организациям и
-        // приложениям и не могут быть назначены глобальными администраторами?
+	// РЎСѓС‰РµСЃС‚РІСѓСЋС‰РёРµ РїРѕР»СЊР·РѕРІР°С‚РµР»Рё РІ СЃРёСЃС‚РµРјРµ РЅРµ РјРѕРіСѓС‚ Р±С‹С‚СЊ РЅР°Р·РЅР°С‡РµРЅС‹ РѕСЂРіР°РЅРёР·Р°С†РёСЏРј Рё
+        // РїСЂРёР»РѕР¶РµРЅРёСЏРј Рё РЅРµ РјРѕРіСѓС‚ Р±С‹С‚СЊ РЅР°Р·РЅР°С‡РµРЅС‹ РіР»РѕР±Р°Р»СЊРЅС‹РјРё Р°РґРјРёРЅРёСЃС‚СЂР°С‚РѕСЂР°РјРё?
 	bool disable_assign_existing_users = 1;
 }
 
-// Определяет организацию, в которую входит пользователь.
+// РћРїСЂРµРґРµР»СЏРµС‚ РѕСЂРіР°РЅРёР·Р°С†РёСЋ, РІ РєРѕС‚РѕСЂСѓСЋ РІС…РѕРґРёС‚ РїРѕР»СЊР·РѕРІР°С‚РµР»СЊ.
 message OrganizationLink {
-    // ID организации.
+    // ID РѕСЂРіР°РЅРёР·Р°С†РёРё.
     int64 organization_id = 1 [json_name = "organizationID"];
     
-    // Название организации.
+    // РќР°Р·РІР°РЅРёРµ РѕСЂРіР°РЅРёР·Р°С†РёРё.
     string organization_name = 2;
     
-    // Пользователь является администратором данной организации.
+    // РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ СЏРІР»СЏРµС‚СЃСЏ Р°РґРјРёРЅРёСЃС‚СЂР°С‚РѕСЂРѕРј РґР°РЅРЅРѕР№ РѕСЂРіР°РЅРёР·Р°С†РёРё.
     // There is no need to set the is_device_admin and is_gateway_admin flags.
     bool is_admin = 3;
 
-    // Пользователь является администратором устройств.
+    // РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ СЏРІР»СЏРµС‚СЃСЏ Р°РґРјРёРЅРёСЃС‚СЂР°С‚РѕСЂРѕРј СѓСЃС‚СЂРѕР№СЃС‚РІ.
     bool is_device_admin = 6;
 
-    // Пользователь является администратором базовых станций.
+    // РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ СЏРІР»СЏРµС‚СЃСЏ Р°РґРјРёРЅРёСЃС‚СЂР°С‚РѕСЂРѕРј Р±Р°Р·РѕРІС‹С… СЃС‚Р°РЅС†РёР№.
     bool is_gateway_admin = 7;
     
-   // Временная метка создания.
+   // Р’СЂРµРјРµРЅРЅР°СЏ РјРµС‚РєР° СЃРѕР·РґР°РЅРёСЏ.
     google.protobuf.Timestamp created_at = 4;
     
-  // Временная метка последнего изменения.
+  // Р’СЂРµРјРµРЅРЅР°СЏ РјРµС‚РєР° РїРѕСЃР»РµРґРЅРµРіРѕ РёР·РјРµРЅРµРЅРёСЏ.
 	google.protobuf.Timestamp updated_at = 5;
 }
 
 message LoginRequest {
-	// Логин пользователя.
+	// Р›РѕРіРёРЅ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ.
 	string username = 1;
 
-	// Пароль пользователя.
+	// РџР°СЂРѕР»СЊ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ.
 	string password = 2;
 }
 
 message LoginResponse {
-	// Тег JWT, используемый для доступа к интерфейсам LoRa-app-server.
+	// РўРµРі JWT, РёСЃРїРѕР»СЊР·СѓРµРјС‹Р№ РґР»СЏ РґРѕСЃС‚СѓРїР° Рє РёРЅС‚РµСЂС„РµР№СЃР°Рј LoRa-app-server.
 	string jwt = 1;
 }
 
 message ProfileResponse {
-    // Объект - пользователь.
+    // РћР±СЉРµРєС‚ - РїРѕР»СЊР·РѕРІР°С‚РµР»СЊ.
     User user = 1;
     
-    // Организации, с которыми связан пользователь.
+    // РћСЂРіР°РЅРёР·Р°С†РёРё, СЃ РєРѕС‚РѕСЂС‹РјРё СЃРІСЏР·Р°РЅ РїРѕР»СЊР·РѕРІР°С‚РµР»СЊ.
     repeated OrganizationLink organizations = 3;
     
-    // Настройка профиля.
+    // РќР°СЃС‚СЂРѕР№РєР° РїСЂРѕС„РёР»СЏ.
 	ProfileSettings settings = 4;
 }
 
 message GlobalSearchRequest {
-	// Поисковый запрос.
+	// РџРѕРёСЃРєРѕРІС‹Р№ Р·Р°РїСЂРѕСЃ.
 	string search = 1;
 
-	// Ограничить макс. число ответов.
+	// РћРіСЂР°РЅРёС‡РёС‚СЊ РјР°РєСЃ. С‡РёСЃР»Рѕ РѕС‚РІРµС‚РѕРІ.
 	int64 limit = 2;
 
-	// Смещение в наборе результатов (для нумерации страниц).
+	// РЎРјРµС‰РµРЅРёРµ РІ РЅР°Р±РѕСЂРµ СЂРµР·СѓР»СЊС‚Р°С‚РѕРІ (РґР»СЏ РЅСѓРјРµСЂР°С†РёРё СЃС‚СЂР°РЅРёС†).
 	int64 offset = 3;
 }
 
@@ -197,34 +197,34 @@ message GlobalSearchResponse {
 }
 
 message GlobalSearchResult {
-	// Тип записи.
+	// РўРёРї Р·Р°РїРёСЃРё.
 	string kind = 1;
 
-	// Рейтинг в поиске.
+	// Р РµР№С‚РёРЅРі РІ РїРѕРёСЃРєРµ.
 	float score = 2;
 
-	// ID организации.
+	// ID РѕСЂРіР°РЅРёР·Р°С†РёРё.
 	int64 organization_id = 3 [json_name = "organizationID"];
 
-	// Название организации.
+	// РќР°Р·РІР°РЅРёРµ РѕСЂРіР°РЅРёР·Р°С†РёРё.
 	string organization_name = 4;
 
-	// ID приложения.
+	// ID РїСЂРёР»РѕР¶РµРЅРёСЏ.
 	int64 application_id = 5 [json_name = "applicationID"];
 
-	// Название приложения.
+	// РќР°Р·РІР°РЅРёРµ РїСЂРёР»РѕР¶РµРЅРёСЏ.
 	string application_name = 6;
 
-	// DevEUI устройства (в hex).
+	// DevEUI СѓСЃС‚СЂРѕР№СЃС‚РІР° (РІ hex).
 	string device_dev_eui = 7 [json_name = "deviceDevEUI"];
 
-	// Название устройства.
+	// РќР°Р·РІР°РЅРёРµ СѓСЃС‚СЂРѕР№СЃС‚РІР°.
 	string device_name = 8;
 
-	// MAC шлюза (в hex).
+	// MAC С€Р»СЋР·Р° (РІ hex).
 	string gateway_mac = 9 [json_name = "gatewayMAC"];
 
-	// Название шлюза.
+	// РќР°Р·РІР°РЅРёРµ С€Р»СЋР·Р°.
 	string gateway_name = 10;
 }
 

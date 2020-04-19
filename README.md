@@ -1,7 +1,7 @@
 # ChirpStack API
 
 This repository contains the [Protobuf](https://developers.google.com/protocol-buffers/)
-and [gRPC](https://grpc.io/) API definitions for the [ChirpStack](https://www.chirpstack.io)
+and [gRPC](https://grpc.io/) API definitions for the [LoRaWAN.Server I/Q]
 components.
 
 ## Protobuf / gRPC structure
@@ -18,28 +18,6 @@ protobuf             - Protobuf and gRPC source files
 ├── nc               - Network Controller definitions
 └── ns               - Network Server definitions
 ```
-
-## Supported languages
-
-### Go
-
-Documentation: https://godoc.org/github.com/brocaar/chirpstack-api/go
-
-```bash
-go get github.com/brocaar/chirpstack-api/go/v3
-```
-
-### JavaScript / Typescript
-
-See: https://www.npmjs.com/package/@chirpstack/chirpstack-api.
-
-### Python
-
-See: https://pypi.org/project/chirpstack-api/.
-
-### Rust
-
-See: https://crates.io/crates/chirpstack_api.
 
 ## Generating client libraries
 

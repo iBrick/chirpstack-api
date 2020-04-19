@@ -1,12 +1,12 @@
 [package]
 name = "chirpstack_api"
-description = "ChirpStack Protobuf / gRPC API definitions."
+description = "LoRaWAN.Server I/Q Protobuf / gRPC API definitions."
 version = "3.3.2"
-authors = ["Orne Brocaar <info@brocaar.com>"]
-license = "MIT"
-homepage = "https://www.chirpstack.io"
-repository = "https://github.com/brocaar/chirpstack-api"
-edition = "2018"
+authors = ["InnoLabs"]
+license = ""
+homepage = "http://lo-ra.net"
+repository = "https://github.com/iBrick/chirpstack-api"
+edition = "2020"
 
 [features]
 default = ["grpc_support", "rustfmt"]

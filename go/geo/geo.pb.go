@@ -6,8 +6,8 @@ package geo
 import (
 	context "context"
 	fmt "fmt"
-	common "github.com/brocaar/chirpstack-api/go/v3/common"
-	gw "github.com/brocaar/chirpstack-api/go/v3/gw"
+	common "github.com/iBrick/chirpstack-api/go/v3/common"
+	gw "github.com/iBrick/chirpstack-api/go/v3/gw"
 	proto "github.com/golang/protobuf/proto"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"

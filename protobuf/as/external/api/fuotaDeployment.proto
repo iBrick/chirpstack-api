@@ -2,14 +2,14 @@ syntax = "proto3";
 
 package api;
 
-option go_package = "github.com/brocaar/chirpstack-api/go/v3/as/external/api";
+option go_package = "github.com/iBrick/chirpstack-api/go/v3/as/external/api";
 
 import "google/api/annotations.proto";
 import "google/protobuf/timestamp.proto";
 import "google/protobuf/duration.proto";
 import "as/external/api/multicastGroup.proto";
 
-// FUOTADeploymentService - сервис, управляющий обновлениями FUOTA.
+// FUOTADeploymentService - СЃРµСЂРІРёСЃ, СѓРїСЂР°РІР»СЏСЋС‰РёР№ РѕР±РЅРѕРІР»РµРЅРёСЏРјРё FUOTA.
 service FUOTADeploymentService {
     // CreateForDevice - creates a deployment for the given DevEUI.
     rpc CreateForDevice(CreateFUOTADeploymentForDeviceRequest) returns (CreateFUOTADeploymentForDeviceResponse) {
@@ -19,28 +19,28 @@ service FUOTADeploymentService {
         };
     }
 
-    // Get - возвращает Deployment FUOTA для данного идентификатора.
+    // Get - РІРѕР·РІСЂР°С‰Р°РµС‚ Deployment FUOTA РґР»СЏ РґР°РЅРЅРѕРіРѕ РёРґРµРЅС‚РёС„РёРєР°С‚РѕСЂР°.
     rpc Get(GetFUOTADeploymentRequest) returns (GetFUOTADeploymentResponse) {
         option(google.api.http) = {
             get: "/api/fuota-deployments/{id}"
         };
     }
 
-    // List - выводит список Deployment FUOTA.
+    // List - РІС‹РІРѕРґРёС‚ СЃРїРёСЃРѕРє Deployment FUOTA.
     rpc List(ListFUOTADeploymentRequest) returns (ListFUOTADeploymentResponse) {
         option(google.api.http) = {
             get: "/api/fuota-deployments"
         };
     }
 
-    // GetDeploymentDevice - возвращает устройство, для которого производится обновление.
+    // GetDeploymentDevice - РІРѕР·РІСЂР°С‰Р°РµС‚ СѓСЃС‚СЂРѕР№СЃС‚РІРѕ, РґР»СЏ РєРѕС‚РѕСЂРѕРіРѕ РїСЂРѕРёР·РІРѕРґРёС‚СЃСЏ РѕР±РЅРѕРІР»РµРЅРёРµ.
     rpc GetDeploymentDevice(GetFUOTADeploymentDeviceRequest) returns (GetFUOTADeploymentDeviceResponse) {
         option(google.api.http) = {
             get: "/api/fuota-deployments/{fuota_deployment_id}/devices/{dev_eui}"
         };
     }
 
-    // ListDeploymentDevices - выводит список устройств и статус обновлений для заданного процесса Deployment ID.
+    // ListDeploymentDevices - РІС‹РІРѕРґРёС‚ СЃРїРёСЃРѕРє СѓСЃС‚СЂРѕР№СЃС‚РІ Рё СЃС‚Р°С‚СѓСЃ РѕР±РЅРѕРІР»РµРЅРёР№ РґР»СЏ Р·Р°РґР°РЅРЅРѕРіРѕ РїСЂРѕС†РµСЃСЃР° Deployment ID.
     rpc ListDeploymentDevices(ListFUOTADeploymentDevicesRequest) returns (ListFUOTADeploymentDevicesResponse) {
         option(google.api.http) = {
             get: "/api/fuota-deployments/{fuota_deployment_id}/devices"
@@ -60,102 +60,102 @@ enum FUOTADeploymentDeviceState {
 }
 
 message FUOTADeployment {
-    // ID процесса обновления Deployment (в формате строки UUID). Назначается автоматически.
+    // ID РїСЂРѕС†РµСЃСЃР° РѕР±РЅРѕРІР»РµРЅРёСЏ Deployment (РІ С„РѕСЂРјР°С‚Рµ СЃС‚СЂРѕРєРё UUID). РќР°Р·РЅР°С‡Р°РµС‚СЃСЏ Р°РІС‚РѕРјР°С‚РёС‡РµСЃРєРё.
     string id = 1;
 
-    // Название процесса обновления.
+    // РќР°Р·РІР°РЅРёРµ РїСЂРѕС†РµСЃСЃР° РѕР±РЅРѕРІР»РµРЅРёСЏ.
     string name = 2;
 
-    // Тип мультикаст. В текущием релизе поддерживается Class-C.
+    // РўРёРї РјСѓР»СЊС‚РёРєР°СЃС‚. Р’ С‚РµРєСѓС‰РёРµРј СЂРµР»РёР·Рµ РїРѕРґРґРµСЂР¶РёРІР°РµС‚СЃСЏ Class-C.
     MulticastGroupType group_type = 3;
 
-    // Скорость соединения DR.
+    // РЎРєРѕСЂРѕСЃС‚СЊ СЃРѕРµРґРёРЅРµРЅРёСЏ DR.
     uint32 dr = 4;
 
-    // Частота (Hz).
+    // Р§Р°СЃС‚РѕС‚Р° (Hz).
     uint32 frequency = 5;
 
-    // Данные.
+    // Р”Р°РЅРЅС‹Рµ.
     bytes payload = 6;
 
-    // Избыточность (число пакетов).
+    // РР·Р±С‹С‚РѕС‡РЅРѕСЃС‚СЊ (С‡РёСЃР»Рѕ РїР°РєРµС‚РѕРІ).
     uint32 redundancy = 7;
 
-    // Тайм-аут мультикаст передачи. Значение указано в спец-и Remote Multicast Setup и имеет разное значение для групп класса B и класса C
+    // РўР°Р№Рј-Р°СѓС‚ РјСѓР»СЊС‚РёРєР°СЃС‚ РїРµСЂРµРґР°С‡Рё. Р—РЅР°С‡РµРЅРёРµ СѓРєР°Р·Р°РЅРѕ РІ СЃРїРµС†-Рё Remote Multicast Setup Рё РёРјРµРµС‚ СЂР°Р·РЅРѕРµ Р·РЅР°С‡РµРЅРёРµ РґР»СЏ РіСЂСѓРїРї РєР»Р°СЃСЃР° B Рё РєР»Р°СЃСЃР° C
     uint32 multicast_timeout = 8;
 
-    // Таймаут одноадресной рассылки. Устанавливается ожидаемое время пакета от устройства. Механизм FUOTA ждать в течение заданного времени, прежде чем перейти к следующим процессам.
+    // РўР°Р№РјР°СѓС‚ РѕРґРЅРѕР°РґСЂРµСЃРЅРѕР№ СЂР°СЃСЃС‹Р»РєРё. РЈСЃС‚Р°РЅР°РІР»РёРІР°РµС‚СЃСЏ РѕР¶РёРґР°РµРјРѕРµ РІСЂРµРјСЏ РїР°РєРµС‚Р° РѕС‚ СѓСЃС‚СЂРѕР№СЃС‚РІР°. РњРµС…Р°РЅРёР·Рј FUOTA Р¶РґР°С‚СЊ РІ С‚РµС‡РµРЅРёРµ Р·Р°РґР°РЅРЅРѕРіРѕ РІСЂРµРјРµРЅРё, РїСЂРµР¶РґРµ С‡РµРј РїРµСЂРµР№С‚Рё Рє СЃР»РµРґСѓСЋС‰РёРј РїСЂРѕС†РµСЃСЃР°Рј.
     google.protobuf.Duration unicast_timeout = 9;
 
-    // Состояние процесса обновления.
-    // Это значение автоматически установлено при создании.
+    // РЎРѕСЃС‚РѕСЏРЅРёРµ РїСЂРѕС†РµСЃСЃР° РѕР±РЅРѕРІР»РµРЅРёСЏ.
+    // Р­С‚Рѕ Р·РЅР°С‡РµРЅРёРµ Р°РІС‚РѕРјР°С‚РёС‡РµСЃРєРё СѓСЃС‚Р°РЅРѕРІР»РµРЅРѕ РїСЂРё СЃРѕР·РґР°РЅРёРё.
     string state = 10;
 
-    // Следующий процесс после обновления.
-    // Это значение автоматически установлено при создании.
+    // РЎР»РµРґСѓСЋС‰РёР№ РїСЂРѕС†РµСЃСЃ РїРѕСЃР»Рµ РѕР±РЅРѕРІР»РµРЅРёСЏ.
+    // Р­С‚Рѕ Р·РЅР°С‡РµРЅРёРµ Р°РІС‚РѕРјР°С‚РёС‡РµСЃРєРё СѓСЃС‚Р°РЅРѕРІР»РµРЅРѕ РїСЂРё СЃРѕР·РґР°РЅРёРё.
     google.protobuf.Timestamp next_step_after = 11;
 }
 
 message FUOTADeploymentListItem {
-    // ID процесса обновления (в формате строки UUID).
+    // ID РїСЂРѕС†РµСЃСЃР° РѕР±РЅРѕРІР»РµРЅРёСЏ (РІ С„РѕСЂРјР°С‚Рµ СЃС‚СЂРѕРєРё UUID).
     string id = 1;
 
-    // Временная метка создания.
+    // Р’СЂРµРјРµРЅРЅР°СЏ РјРµС‚РєР° СЃРѕР·РґР°РЅРёСЏ.
     google.protobuf.Timestamp created_at = 2;
 
-    // Временная метка последнего обновления.
+    // Р’СЂРµРјРµРЅРЅР°СЏ РјРµС‚РєР° РїРѕСЃР»РµРґРЅРµРіРѕ РѕР±РЅРѕРІР»РµРЅРёСЏ.
     google.protobuf.Timestamp updated_at = 3;
 
-    // Название процесса обновления.
+    // РќР°Р·РІР°РЅРёРµ РїСЂРѕС†РµСЃСЃР° РѕР±РЅРѕРІР»РµРЅРёСЏ.
     string name = 4;
 
-    // Состояние процесса.
+    // РЎРѕСЃС‚РѕСЏРЅРёРµ РїСЂРѕС†РµСЃСЃР°.
     string state = 5;
 
-    // Следующий процесс после через заданное время.
+    // РЎР»РµРґСѓСЋС‰РёР№ РїСЂРѕС†РµСЃСЃ РїРѕСЃР»Рµ С‡РµСЂРµР· Р·Р°РґР°РЅРЅРѕРµ РІСЂРµРјСЏ.
     google.protobuf.Timestamp next_step_after = 6;
 }
 
 message CreateFUOTADeploymentForDeviceRequest {
-    // Device EUI (в HEX).
+    // Device EUI (РІ HEX).
     string dev_eui = 1 [json_name = "devEUI"];
 
-    // Процесс FUOTA.
+    // РџСЂРѕС†РµСЃСЃ FUOTA.
     FUOTADeployment fuota_deployment = 2;
 }
 
 message CreateFUOTADeploymentForDeviceResponse {
-    // ID созданного процесса (в формате строки UUID).
+    // ID СЃРѕР·РґР°РЅРЅРѕРіРѕ РїСЂРѕС†РµСЃСЃР° (РІ С„РѕСЂРјР°С‚Рµ СЃС‚СЂРѕРєРё UUID).
     string id = 1;
 }
 
 message GetFUOTADeploymentRequest {
-    // ID процесса (в формате строки UUID).
-    // Это значение автоматически установлено при создании.
+    // ID РїСЂРѕС†РµСЃСЃР° (РІ С„РѕСЂРјР°С‚Рµ СЃС‚СЂРѕРєРё UUID).
+    // Р­С‚Рѕ Р·РЅР°С‡РµРЅРёРµ Р°РІС‚РѕРјР°С‚РёС‡РµСЃРєРё СѓСЃС‚Р°РЅРѕРІР»РµРЅРѕ РїСЂРё СЃРѕР·РґР°РЅРёРё.
     string id = 1;
 }
 
 message GetFUOTADeploymentResponse {
     FUOTADeployment fuota_deployment = 1;
 
-    // Временная метка создания.
+    // Р’СЂРµРјРµРЅРЅР°СЏ РјРµС‚РєР° СЃРѕР·РґР°РЅРёСЏ.
     google.protobuf.Timestamp created_at = 2;
 
-    // Временная метка последнего обновления.
+    // Р’СЂРµРјРµРЅРЅР°СЏ РјРµС‚РєР° РїРѕСЃР»РµРґРЅРµРіРѕ РѕР±РЅРѕРІР»РµРЅРёСЏ.
     google.protobuf.Timestamp updated_at = 3;
 }
 
 message ListFUOTADeploymentRequest {
-    // Ограничить число процессов в выдаче результатов.
+    // РћРіСЂР°РЅРёС‡РёС‚СЊ С‡РёСЃР»Рѕ РїСЂРѕС†РµСЃСЃРѕРІ РІ РІС‹РґР°С‡Рµ СЂРµР·СѓР»СЊС‚Р°С‚РѕРІ.
     int64 limit = 1;
 
     // Offset in the result-set (for pagination).
     int64 offset = 2;
 
-    // Application ID для применения фильтра (необязательное).
+    // Application ID РґР»СЏ РїСЂРёРјРµРЅРµРЅРёСЏ С„РёР»СЊС‚СЂР° (РЅРµРѕР±СЏР·Р°С‚РµР»СЊРЅРѕРµ).
     int64 application_id = 3 [json_name = "applicationID"];
     
-    // Device EUI (в HEX) (необязательное).
+    // Device EUI (РІ HEX) (РЅРµРѕР±СЏР·Р°С‚РµР»СЊРЅРѕРµ).
     string dev_eui = 4 [json_name = "devEUI"];
 }
 
@@ -168,23 +168,23 @@ message ListFUOTADeploymentResponse {
 }
 
 message ListFUOTADeploymentDevicesRequest {
-    // ID процесса обновления (в формате строки UUID).
-    // Это значение автоматически установлено при создании.
+    // ID РїСЂРѕС†РµСЃСЃР° РѕР±РЅРѕРІР»РµРЅРёСЏ (РІ С„РѕСЂРјР°С‚Рµ СЃС‚СЂРѕРєРё UUID).
+    // Р­С‚Рѕ Р·РЅР°С‡РµРЅРёРµ Р°РІС‚РѕРјР°С‚РёС‡РµСЃРєРё СѓСЃС‚Р°РЅРѕРІР»РµРЅРѕ РїСЂРё СЃРѕР·РґР°РЅРёРё.
     string fuota_deployment_id = 1 [json_name = "fuotaDeploymentID"];
 
-    // Макс. число элементов в выдаче.
+    // РњР°РєСЃ. С‡РёСЃР»Рѕ СЌР»РµРјРµРЅС‚РѕРІ РІ РІС‹РґР°С‡Рµ.
     int64 limit = 2;
 
-    // Смещение в наборе результатов (для нумерации страниц).
+    // РЎРјРµС‰РµРЅРёРµ РІ РЅР°Р±РѕСЂРµ СЂРµР·СѓР»СЊС‚Р°С‚РѕРІ (РґР»СЏ РЅСѓРјРµСЂР°С†РёРё СЃС‚СЂР°РЅРёС†).
     int64 offset = 3;
 }
 
 message GetFUOTADeploymentDeviceRequest {
-    // ID процесса обновления (в формате строки UUID).
-    // Это значение автоматически установлено при создании.
+    // ID РїСЂРѕС†РµСЃСЃР° РѕР±РЅРѕРІР»РµРЅРёСЏ (РІ С„РѕСЂРјР°С‚Рµ СЃС‚СЂРѕРєРё UUID).
+    // Р­С‚Рѕ Р·РЅР°С‡РµРЅРёРµ Р°РІС‚РѕРјР°С‚РёС‡РµСЃРєРё СѓСЃС‚Р°РЅРѕРІР»РµРЅРѕ РїСЂРё СЃРѕР·РґР°РЅРёРё.
     string fuota_deployment_id = 1 [json_name = "fuotaDeploymentID"];
 
-    // Device EUI (в HEX ).
+    // Device EUI (РІ HEX ).
     string dev_eui = 2 [json_name = "devEUI"];
 }
 
@@ -193,28 +193,28 @@ message GetFUOTADeploymentDeviceResponse {
 }
 
 message ListFUOTADeploymentDevicesResponse {
-    // Общее число устройств для процесса FUOTA.
+    // РћР±С‰РµРµ С‡РёСЃР»Рѕ СѓСЃС‚СЂРѕР№СЃС‚РІ РґР»СЏ РїСЂРѕС†РµСЃСЃР° FUOTA.
     int64 total_count = 1;
 
     repeated FUOTADeploymentDeviceListItem result = 2;
 }
 
 message FUOTADeploymentDeviceListItem {
-    // Device EUI (в HEX).
+    // Device EUI (РІ HEX).
     string dev_eui = 1 [json_name = "devEUI"];
 
-    // Название устройства.
+    // РќР°Р·РІР°РЅРёРµ СѓСЃС‚СЂРѕР№СЃС‚РІР°.
     string device_name = 2;
 
-    // Состояние устройства.
+    // РЎРѕСЃС‚РѕСЏРЅРёРµ СѓСЃС‚СЂРѕР№СЃС‚РІР°.
     FUOTADeploymentDeviceState state = 3;
 
-    // Сообщение об ошибке (в случае ошибочного состояния).
+    // РЎРѕРѕР±С‰РµРЅРёРµ РѕР± РѕС€РёР±РєРµ (РІ СЃР»СѓС‡Р°Рµ РѕС€РёР±РѕС‡РЅРѕРіРѕ СЃРѕСЃС‚РѕСЏРЅРёСЏ).
     string error_message = 4;
 
-    // Временная метка создания.
+    // Р’СЂРµРјРµРЅРЅР°СЏ РјРµС‚РєР° СЃРѕР·РґР°РЅРёСЏ.
     google.protobuf.Timestamp created_at = 5;
 
-    // Временная метка последнего изменения.
+    // Р’СЂРµРјРµРЅРЅР°СЏ РјРµС‚РєР° РїРѕСЃР»РµРґРЅРµРіРѕ РёР·РјРµРЅРµРЅРёСЏ.
     google.protobuf.Timestamp updated_at = 6;
 }

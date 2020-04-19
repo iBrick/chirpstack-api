@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package api;
 
-option go_package = "github.com/brocaar/chirpstack-api/go/v3/as/external/api";
+option go_package = "github.com/iBrick/chirpstack-api/go/v3/as/external/api";
 
 import "google/api/annotations.proto";
 import "google/protobuf/timestamp.proto";
@@ -11,9 +11,9 @@ import "common/common.proto";
 import "as/external/api/frameLog.proto";
 
 
-// DeviceService - управление устройствами.
+// DeviceService - СѓРїСЂР°РІР»РµРЅРёРµ СѓСЃС‚СЂРѕР№СЃС‚РІР°РјРё.
 service DeviceService {
-    // Create - создает указанное устройство.
+    // Create - СЃРѕР·РґР°РµС‚ СѓРєР°Р·Р°РЅРЅРѕРµ СѓСЃС‚СЂРѕР№СЃС‚РІРѕ.
     rpc Create(CreateDeviceRequest) returns (google.protobuf.Empty) {
         option(google.api.http) = {
             post: "/api/devices"
@@ -21,28 +21,28 @@ service DeviceService {
         };
     }
 
-    // Get - возвращает устройство по указанному DevEUI.
+    // Get - РІРѕР·РІСЂР°С‰Р°РµС‚ СѓСЃС‚СЂРѕР№СЃС‚РІРѕ РїРѕ СѓРєР°Р·Р°РЅРЅРѕРјСѓ DevEUI.
     rpc Get(GetDeviceRequest) returns (GetDeviceResponse) {
         option (google.api.http) = {
             get: "/api/devices/{dev_eui}"
         };
     }
 
-    // List - возвращает список доступных устройств.
+    // List - РІРѕР·РІСЂР°С‰Р°РµС‚ СЃРїРёСЃРѕРє РґРѕСЃС‚СѓРїРЅС‹С… СѓСЃС‚СЂРѕР№СЃС‚РІ.
     rpc List(ListDeviceRequest) returns (ListDeviceResponse) {
         option (google.api.http) = {
             get: "/api/devices"
         };
     }
 
-    // Delete - удаляет устройство по DevEUI.
+    // Delete - СѓРґР°Р»СЏРµС‚ СѓСЃС‚СЂРѕР№СЃС‚РІРѕ РїРѕ DevEUI.
     rpc Delete(DeleteDeviceRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             delete: "/api/devices/{dev_eui}"
         };
     }
 
-    // Update обновляет устройство по DevEUI.
+    // Update РѕР±РЅРѕРІР»СЏРµС‚ СѓСЃС‚СЂРѕР№СЃС‚РІРѕ РїРѕ DevEUI.
     rpc Update(UpdateDeviceRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             put: "/api/devices/{device.dev_eui}"
@@ -50,7 +50,7 @@ service DeviceService {
         };
     }
 
-    // CreateKeys создает указанные ключи устройства.
+    // CreateKeys СЃРѕР·РґР°РµС‚ СѓРєР°Р·Р°РЅРЅС‹Рµ РєР»СЋС‡Рё СѓСЃС‚СЂРѕР№СЃС‚РІР°.
     rpc CreateKeys(CreateDeviceKeysRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/api/devices/{device_keys.dev_eui}/keys"
@@ -58,14 +58,14 @@ service DeviceService {
         };
     }
 
-    // GetKeys возвращает ключи устройства по DevEUI.
+    // GetKeys РІРѕР·РІСЂР°С‰Р°РµС‚ РєР»СЋС‡Рё СѓСЃС‚СЂРѕР№СЃС‚РІР° РїРѕ DevEUI.
     rpc GetKeys(GetDeviceKeysRequest) returns (GetDeviceKeysResponse) {
         option (google.api.http) = {
             get: "/api/devices/{dev_eui}/keys"
         };
     }
 
-    // UpdateKeys обновляет ключи устройства.
+    // UpdateKeys РѕР±РЅРѕРІР»СЏРµС‚ РєР»СЋС‡Рё СѓСЃС‚СЂРѕР№СЃС‚РІР°.
     rpc UpdateKeys(UpdateDeviceKeysRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             put: "/api/devices/{device_keys.dev_eui}/keys"
@@ -73,14 +73,14 @@ service DeviceService {
         };
     }
 
-    // DeleteKeys удаляет ключи устройства для указанного DevEUI.
+    // DeleteKeys СѓРґР°Р»СЏРµС‚ РєР»СЋС‡Рё СѓСЃС‚СЂРѕР№СЃС‚РІР° РґР»СЏ СѓРєР°Р·Р°РЅРЅРѕРіРѕ DevEUI.
     rpc DeleteKeys(DeleteDeviceKeysRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             delete: "/api/devices/{dev_eui}/keys"
         };
     };
 
-    // Активирует / переактивирует устройство (только для ABP).
+    // РђРєС‚РёРІРёСЂСѓРµС‚ / РїРµСЂРµР°РєС‚РёРІРёСЂСѓРµС‚ СѓСЃС‚СЂРѕР№СЃС‚РІРѕ (С‚РѕР»СЊРєРѕ РґР»СЏ ABP).
     rpc Activate(ActivateDeviceRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/api/devices/{device_activation.dev_eui}/activate"
@@ -88,39 +88,39 @@ service DeviceService {
         };
     }
 
-    // Deactivate - деактивирует устройство.
+    // Deactivate - РґРµР°РєС‚РёРІРёСЂСѓРµС‚ СѓСЃС‚СЂРѕР№СЃС‚РІРѕ.
     rpc Deactivate(DeactivateDeviceRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             delete: "/api/devices/{dev_eui}/activation"
         };
     }
 
-    // GetActivation - возвращает детали активации устройства (OTAA и ABP).
+    // GetActivation - РІРѕР·РІСЂР°С‰Р°РµС‚ РґРµС‚Р°Р»Рё Р°РєС‚РёРІР°С†РёРё СѓСЃС‚СЂРѕР№СЃС‚РІР° (OTAA Рё ABP).
     rpc GetActivation(GetDeviceActivationRequest) returns (GetDeviceActivationResponse) {
         option (google.api.http) = {
             get: "/api/devices/{dev_eui}/activation"
         };
     }
 
-    // GetRandomDevAddr возвращает случайно сгенерированный DevAddr на основе префикса NwkID.
+    // GetRandomDevAddr РІРѕР·РІСЂР°С‰Р°РµС‚ СЃР»СѓС‡Р°Р№РЅРѕ СЃРіРµРЅРµСЂРёСЂРѕРІР°РЅРЅС‹Р№ DevAddr РЅР° РѕСЃРЅРѕРІРµ РїСЂРµС„РёРєСЃР° NwkID.
     rpc GetRandomDevAddr(GetRandomDevAddrRequest) returns (GetRandomDevAddrResponse) {
         option (google.api.http) = {
             post: "/api/devices/{dev_eui}/getRandomDevAddr"
         };
     }
 
-    // StreamFrameLogs осуществляет потоковую передачу uplink и downlink кадров LoRaWAN для заданного DevEUI.
-	//   * Предназначено только для отладки.
-	//   * Не работает из веб-браузера.
+    // StreamFrameLogs РѕСЃСѓС‰РµСЃС‚РІР»СЏРµС‚ РїРѕС‚РѕРєРѕРІСѓСЋ РїРµСЂРµРґР°С‡Сѓ uplink Рё downlink РєР°РґСЂРѕРІ LoRaWAN РґР»СЏ Р·Р°РґР°РЅРЅРѕРіРѕ DevEUI.
+	//   * РџСЂРµРґРЅР°Р·РЅР°С‡РµРЅРѕ С‚РѕР»СЊРєРѕ РґР»СЏ РѕС‚Р»Р°РґРєРё.
+	//   * РќРµ СЂР°Р±РѕС‚Р°РµС‚ РёР· РІРµР±-Р±СЂР°СѓР·РµСЂР°.
     rpc StreamFrameLogs(StreamDeviceFrameLogsRequest) returns (stream StreamDeviceFrameLogsResponse) {
         option (google.api.http) = {
             get: "/api/devices/{dev_eui}/frames"
         };
     }
 
-    // StreamEventLogs осуществляет потоковую передачу событий устройства (uplink данные, ACK, join-запросы, ошибки).
-	//   * Предназначено только для отладки.
-	//   * Не работает из веб-браузера.
+    // StreamEventLogs РѕСЃСѓС‰РµСЃС‚РІР»СЏРµС‚ РїРѕС‚РѕРєРѕРІСѓСЋ РїРµСЂРµРґР°С‡Сѓ СЃРѕР±С‹С‚РёР№ СѓСЃС‚СЂРѕР№СЃС‚РІР° (uplink РґР°РЅРЅС‹Рµ, ACK, join-Р·Р°РїСЂРѕСЃС‹, РѕС€РёР±РєРё).
+	//   * РџСЂРµРґРЅР°Р·РЅР°С‡РµРЅРѕ С‚РѕР»СЊРєРѕ РґР»СЏ РѕС‚Р»Р°РґРєРё.
+	//   * РќРµ СЂР°Р±РѕС‚Р°РµС‚ РёР· РІРµР±-Р±СЂР°СѓР·РµСЂР°.
     rpc StreamEventLogs(StreamDeviceEventLogsRequest) returns (stream StreamDeviceEventLogsResponse) {
         option (google.api.http) = {
             get: "/api/devices/{dev_eui}/events"
@@ -129,184 +129,184 @@ service DeviceService {
 }
 
 message Device {
-    // DevEUI устройства (в HEX).
+    // DevEUI СѓСЃС‚СЂРѕР№СЃС‚РІР° (РІ HEX).
     string dev_eui = 1 [json_name = "devEUI"]; 
     
-    // Название устройства (если не заполнено, будет установлено в DevEUI).
+    // РќР°Р·РІР°РЅРёРµ СѓСЃС‚СЂРѕР№СЃС‚РІР° (РµСЃР»Рё РЅРµ Р·Р°РїРѕР»РЅРµРЅРѕ, Р±СѓРґРµС‚ СѓСЃС‚Р°РЅРѕРІР»РµРЅРѕ РІ DevEUI).
     string name = 2;
 
-    // ID приложения, в которое должно быть добавлено устройство. Перенос возможен при условии,
-что в приложениях используется одинаковый сервис-профиль.
+    // ID РїСЂРёР»РѕР¶РµРЅРёСЏ, РІ РєРѕС‚РѕСЂРѕРµ РґРѕР»Р¶РЅРѕ Р±С‹С‚СЊ РґРѕР±Р°РІР»РµРЅРѕ СѓСЃС‚СЂРѕР№СЃС‚РІРѕ. РџРµСЂРµРЅРѕСЃ РІРѕР·РјРѕР¶РµРЅ РїСЂРё СѓСЃР»РѕРІРёРё,
+    // С‡С‚Рѕ РІ РїСЂРёР»РѕР¶РµРЅРёСЏС… РёСЃРїРѕР»СЊР·СѓРµС‚СЃСЏ РѕРґРёРЅР°РєРѕРІС‹Р№ СЃРµСЂРІРёСЃ-РїСЂРѕС„РёР»СЊ.
     int64 application_id = 3 [json_name = "applicationID"];
 
-    // Описание устройства.
+    // РћРїРёСЃР°РЅРёРµ СѓСЃС‚СЂРѕР№СЃС‚РІР°.
     string description = 4;
 
-    // DeviceProfileID, присвоенный устройству.
+    // DeviceProfileID, РїСЂРёСЃРІРѕРµРЅРЅС‹Р№ СѓСЃС‚СЂРѕР№СЃС‚РІСѓ.
     string device_profile_id = 5 [json_name = "deviceProfileID"];
 
-    // Пропустить проверку счетчика пакетов (снижает уровень защиты, упрощает отладку).
+    // РџСЂРѕРїСѓСЃС‚РёС‚СЊ РїСЂРѕРІРµСЂРєСѓ СЃС‡РµС‚С‡РёРєР° РїР°РєРµС‚РѕРІ (СЃРЅРёР¶Р°РµС‚ СѓСЂРѕРІРµРЅСЊ Р·Р°С‰РёС‚С‹, СѓРїСЂРѕС‰Р°РµС‚ РѕС‚Р»Р°РґРєСѓ).
     bool skip_f_cnt_check = 6;
 
-    // Контрольная высота.
-    // При использовании геолокации эта высота будет использоваться 
-	// в качестве эталона(если поддерживается сервером геолокации) 
-	// для повышения точности
+    // РљРѕРЅС‚СЂРѕР»СЊРЅР°СЏ РІС‹СЃРѕС‚Р°.
+    // РџСЂРё РёСЃРїРѕР»СЊР·РѕРІР°РЅРёРё РіРµРѕР»РѕРєР°С†РёРё СЌС‚Р° РІС‹СЃРѕС‚Р° Р±СѓРґРµС‚ РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊСЃСЏ 
+	// РІ РєР°С‡РµСЃС‚РІРµ СЌС‚Р°Р»РѕРЅР°(РµСЃР»Рё РїРѕРґРґРµСЂР¶РёРІР°РµС‚СЃСЏ СЃРµСЂРІРµСЂРѕРј РіРµРѕР»РѕРєР°С†РёРё) 
+	// РґР»СЏ РїРѕРІС‹С€РµРЅРёСЏ С‚РѕС‡РЅРѕСЃС‚Рё
     double reference_altitude = 7;
 
-    // Переменные (определяются пользователем).
-    // Используются в интеграциях (например, для хранения токенов, индивидуальных 
-    // для каждого устройства) и не передаются внутри данных от устройства.
+    // РџРµСЂРµРјРµРЅРЅС‹Рµ (РѕРїСЂРµРґРµР»СЏСЋС‚СЃСЏ РїРѕР»СЊР·РѕРІР°С‚РµР»РµРј).
+    // РСЃРїРѕР»СЊР·СѓСЋС‚СЃСЏ РІ РёРЅС‚РµРіСЂР°С†РёСЏС… (РЅР°РїСЂРёРјРµСЂ, РґР»СЏ С…СЂР°РЅРµРЅРёСЏ С‚РѕРєРµРЅРѕРІ, РёРЅРґРёРІРёРґСѓР°Р»СЊРЅС‹С… 
+    // РґР»СЏ РєР°Р¶РґРѕРіРѕ СѓСЃС‚СЂРѕР№СЃС‚РІР°) Рё РЅРµ РїРµСЂРµРґР°СЋС‚СЃСЏ РІРЅСѓС‚СЂРё РґР°РЅРЅС‹С… РѕС‚ СѓСЃС‚СЂРѕР№СЃС‚РІР°.
     map<string, string> variables = 8;
 
-    // Тэги (определяются пользователем).
-    // Используются в интеграциях и передаются вместе с данными устройства.
-    // Например, для сохранения типа и подтипа устройства, подключенным сенсорам.
-    // Предназначены для агрегации и фильтрации.
+    // РўСЌРіРё (РѕРїСЂРµРґРµР»СЏСЋС‚СЃСЏ РїРѕР»СЊР·РѕРІР°С‚РµР»РµРј).
+    // РСЃРїРѕР»СЊР·СѓСЋС‚СЃСЏ РІ РёРЅС‚РµРіСЂР°С†РёСЏС… Рё РїРµСЂРµРґР°СЋС‚СЃСЏ РІРјРµСЃС‚Рµ СЃ РґР°РЅРЅС‹РјРё СѓСЃС‚СЂРѕР№СЃС‚РІР°.
+    // РќР°РїСЂРёРјРµСЂ, РґР»СЏ СЃРѕС…СЂР°РЅРµРЅРёСЏ С‚РёРїР° Рё РїРѕРґС‚РёРїР° СѓСЃС‚СЂРѕР№СЃС‚РІР°, РїРѕРґРєР»СЋС‡РµРЅРЅС‹Рј СЃРµРЅСЃРѕСЂР°Рј.
+    // РџСЂРµРґРЅР°Р·РЅР°С‡РµРЅС‹ РґР»СЏ Р°РіСЂРµРіР°С†РёРё Рё С„РёР»СЊС‚СЂР°С†РёРё.
     map<string, string> tags = 9;
 }
 
 message DeviceListItem {
-    // DevEUI устройства (в HEX).
+    // DevEUI СѓСЃС‚СЂРѕР№СЃС‚РІР° (РІ HEX).
     string dev_eui = 1 [json_name = "devEUI"]; 
     
-    // Название устройства.
+    // РќР°Р·РІР°РЅРёРµ СѓСЃС‚СЂРѕР№СЃС‚РІР°.
     string name = 2;
 
-    // ID приложения.
+    // ID РїСЂРёР»РѕР¶РµРЅРёСЏ.
     int64 application_id = 3 [json_name = "applicationID"];
 
-    // Описание устройства.
+    // РћРїРёСЃР°РЅРёРµ СѓСЃС‚СЂРѕР№СЃС‚РІР°.
     string description = 4;
 
-    // ID профиля устройства.
+    // ID РїСЂРѕС„РёР»СЏ СѓСЃС‚СЂРѕР№СЃС‚РІР°.
     string device_profile_id = 5 [json_name = "deviceProfileID"];
 
-    // Название профиля устройства.
+    // РќР°Р·РІР°РЅРёРµ РїСЂРѕС„РёР»СЏ СѓСЃС‚СЂРѕР№СЃС‚РІР°.
     string device_profile_name = 6;
 
-    // Состояние батарейки (deprecated, используйте device_status_battery_level).
+    // РЎРѕСЃС‚РѕСЏРЅРёРµ Р±Р°С‚Р°СЂРµР№РєРё (deprecated, РёСЃРїРѕР»СЊР·СѓР№С‚Рµ device_status_battery_level).
     // 0:      The end-device is connected to an external power source
     // 1..254: The battery level, 1 being at minimum and 254 being at maximum
     // 255:    The end-device was not able to measure the battery level
     // 256:    The device-status is not available.
     uint32 device_status_battery = 7;
 
-    // Состояние радиоканала
+    // РЎРѕСЃС‚РѕСЏРЅРёРµ СЂР°РґРёРѕРєР°РЅР°Р»Р°
     // -32..32: The demodulation SNR ration in dB
     // 256:     The device-status is not available.
     int32  device_status_margin = 8;
 
-    // Устройство подключено к внешнему источнику питания.
+    // РЈСЃС‚СЂРѕР№СЃС‚РІРѕ РїРѕРґРєР»СЋС‡РµРЅРѕ Рє РІРЅРµС€РЅРµРјСѓ РёСЃС‚РѕС‡РЅРёРєСѓ РїРёС‚Р°РЅРёСЏ.
     bool device_status_external_power_source = 10;
 
-    // Состояние батарейки устройства недоступно.
+    // РЎРѕСЃС‚РѕСЏРЅРёРµ Р±Р°С‚Р°СЂРµР№РєРё СѓСЃС‚СЂРѕР№СЃС‚РІР° РЅРµРґРѕСЃС‚СѓРїРЅРѕ.
     bool device_status_battery_level_unavailable = 11;
 
-    // Уровень заряда батарейки устройства в процентах.
+    // РЈСЂРѕРІРµРЅСЊ Р·Р°СЂСЏРґР° Р±Р°С‚Р°СЂРµР№РєРё СѓСЃС‚СЂРѕР№СЃС‚РІР° РІ РїСЂРѕС†РµРЅС‚Р°С….
     float device_status_battery_level = 12;
 
-    // Время последнего сообщения от устройства или пустая строка, 
-	// когда устройство никогда не отправляло никаких данных.
+    // Р’СЂРµРјСЏ РїРѕСЃР»РµРґРЅРµРіРѕ СЃРѕРѕР±С‰РµРЅРёСЏ РѕС‚ СѓСЃС‚СЂРѕР№СЃС‚РІР° РёР»Рё РїСѓСЃС‚Р°СЏ СЃС‚СЂРѕРєР°, 
+	// РєРѕРіРґР° СѓСЃС‚СЂРѕР№СЃС‚РІРѕ РЅРёРєРѕРіРґР° РЅРµ РѕС‚РїСЂР°РІР»СЏР»Рѕ РЅРёРєР°РєРёС… РґР°РЅРЅС‹С….
     google.protobuf.Timestamp last_seen_at = 9 [json_name = "lastSeenAt"];
 }
 
 message DeviceKeys {
-    // DevEUI устройства (в HEX).
+    // DevEUI СѓСЃС‚СЂРѕР№СЃС‚РІР° (РІ HEX).
     string dev_eui = 1 [json_name = "devEUI"];
 
-    // Network root key (в HEX).
+    // Network root key (РІ HEX).
     // Note: For LoRaWAN 1.0.x, use this field for the LoRaWAN 1.0.x 'AppKey`!
     string nwk_key = 2;
 
-    // Application root key (в HEX).
+    // Application root key (РІ HEX).
     // Note: This field only needs to be set for LoRaWAN 1.1.x devices!
     string app_key = 3;
 
-    // Gen application key (в HEX).
+    // Gen application key (РІ HEX).
     // This is an optional key that only must be set for LORaWAN 1.0.x devices
     // that implement the remote multicast setup specification.
     string gen_app_key = 4;
 }
 
 message CreateDeviceRequest {
-    // Объект Устройство для создания.
+    // РћР±СЉРµРєС‚ РЈСЃС‚СЂРѕР№СЃС‚РІРѕ РґР»СЏ СЃРѕР·РґР°РЅРёСЏ.
     Device device = 1;
 }
 
 message GetDeviceRequest {
-    // DevEUI устройства (в HEX).
+    // DevEUI СѓСЃС‚СЂРѕР№СЃС‚РІР° (РІ HEX).
     string dev_eui = 1 [json_name = "devEUI"];
 }
 
 message GetDeviceResponse {
-    // Объект Устройство.
+    // РћР±СЉРµРєС‚ РЈСЃС‚СЂРѕР№СЃС‚РІРѕ.
     Device device = 1;
 
     // Created at 2
     // Updated at 3
     // First seen at 4
 
-    // Время последнего пакета.
+    // Р’СЂРµРјСЏ РїРѕСЃР»РµРґРЅРµРіРѕ РїР°РєРµС‚Р°.
     google.protobuf.Timestamp last_seen_at = 5 [json_name = "lastSeenAt"];
 
-    // Состояние батарейки устройства
-    // 0:      Устройство подключено к внешнему питанию
-    // 1..254: Уровень заряда батареи, 1 - минимум, 254 - максимум
-    // 255:    Конечное устройство не может измерить уровень заряда
-    // 256:    Статус устройства не доступен.
+    // РЎРѕСЃС‚РѕСЏРЅРёРµ Р±Р°С‚Р°СЂРµР№РєРё СѓСЃС‚СЂРѕР№СЃС‚РІР°
+    // 0:      РЈСЃС‚СЂРѕР№СЃС‚РІРѕ РїРѕРґРєР»СЋС‡РµРЅРѕ Рє РІРЅРµС€РЅРµРјСѓ РїРёС‚Р°РЅРёСЋ
+    // 1..254: РЈСЂРѕРІРµРЅСЊ Р·Р°СЂСЏРґР° Р±Р°С‚Р°СЂРµРё, 1 - РјРёРЅРёРјСѓРј, 254 - РјР°РєСЃРёРјСѓРј
+    // 255:    РљРѕРЅРµС‡РЅРѕРµ СѓСЃС‚СЂРѕР№СЃС‚РІРѕ РЅРµ РјРѕР¶РµС‚ РёР·РјРµСЂРёС‚СЊ СѓСЂРѕРІРµРЅСЊ Р·Р°СЂСЏРґР°
+    // 256:    РЎС‚Р°С‚СѓСЃ СѓСЃС‚СЂРѕР№СЃС‚РІР° РЅРµ РґРѕСЃС‚СѓРїРµРЅ.
     uint32 device_status_battery = 6;
 
-    // Состояние радиоканала устройства
-    // -32..32: Соотношение сигнал/шум SNR в dB
-    // 256:     Статус устройства не доступен.
+    // РЎРѕСЃС‚РѕСЏРЅРёРµ СЂР°РґРёРѕРєР°РЅР°Р»Р° СѓСЃС‚СЂРѕР№СЃС‚РІР°
+    // -32..32: РЎРѕРѕС‚РЅРѕС€РµРЅРёРµ СЃРёРіРЅР°Р»/С€СѓРј SNR РІ dB
+    // 256:     РЎС‚Р°С‚СѓСЃ СѓСЃС‚СЂРѕР№СЃС‚РІР° РЅРµ РґРѕСЃС‚СѓРїРµРЅ.
     int32  device_status_margin = 20;
 
-    // Местоположени устройства.
+    // РњРµСЃС‚РѕРїРѕР»РѕР¶РµРЅРё СѓСЃС‚СЂРѕР№СЃС‚РІР°.
     // This will set when the network-server was able to resolve the location
     // using the geolocation-server.
     common.Location location = 21;
 }
 
 message ListDeviceRequest {
-    // Ограничить макс. число устройств в выдаче результатов.
+    // РћРіСЂР°РЅРёС‡РёС‚СЊ РјР°РєСЃ. С‡РёСЃР»Рѕ СѓСЃС‚СЂРѕР№СЃС‚РІ РІ РІС‹РґР°С‡Рµ СЂРµР·СѓР»СЊС‚Р°С‚РѕРІ.
     int64 limit = 1;
 
-    // Смещение в наборе результатов (для нумерации страниц).
+    // РЎРјРµС‰РµРЅРёРµ РІ РЅР°Р±РѕСЂРµ СЂРµР·СѓР»СЊС‚Р°С‚РѕРІ (РґР»СЏ РЅСѓРјРµСЂР°С†РёРё СЃС‚СЂР°РЅРёС†).
     int64 offset = 2;
 
-    // ID приложения для применения фильтра.
+    // ID РїСЂРёР»РѕР¶РµРЅРёСЏ РґР»СЏ РїСЂРёРјРµРЅРµРЅРёСЏ С„РёР»СЊС‚СЂР°.
     int64 application_id = 3 [json_name = "applicationID"];
 
-    // Поиск по названию или DevEUI.
+    // РџРѕРёСЃРє РїРѕ РЅР°Р·РІР°РЅРёСЋ РёР»Рё DevEUI.
     string search = 4;
 
-    // Multicast-group ID для применения фильтра (отформатированный UUID string).
+    // Multicast-group ID РґР»СЏ РїСЂРёРјРµРЅРµРЅРёСЏ С„РёР»СЊС‚СЂР° (РѕС‚С„РѕСЂРјР°С‚РёСЂРѕРІР°РЅРЅС‹Р№ UUID string).
     string multicast_group_id = 5 [json_name = "multicastGroupID"];
 
-    // ID Сервис-профиля ID для применения фильтра (отформатированный UUID string).
+    // ID РЎРµСЂРІРёСЃ-РїСЂРѕС„РёР»СЏ ID РґР»СЏ РїСЂРёРјРµРЅРµРЅРёСЏ С„РёР»СЊС‚СЂР° (РѕС‚С„РѕСЂРјР°С‚РёСЂРѕРІР°РЅРЅС‹Р№ UUID string).
     string service_profile_id = 6 [json_name = "serviceProfileID"];
 
-    // Тэги для фильтрации.
+    // РўСЌРіРё РґР»СЏ С„РёР»СЊС‚СЂР°С†РёРё.
     map<string, string> tags = 7;
 }
 
 message ListDeviceResponse {
-    // Общее число устройств в результатах.
+    // РћР±С‰РµРµ С‡РёСЃР»Рѕ СѓСЃС‚СЂРѕР№СЃС‚РІ РІ СЂРµР·СѓР»СЊС‚Р°С‚Р°С….
     int64 total_count = 1;
 
-    // Устройства в результатах.
+    // РЈСЃС‚СЂРѕР№СЃС‚РІР° РІ СЂРµР·СѓР»СЊС‚Р°С‚Р°С….
     repeated DeviceListItem result = 2;
 }
 
 message DeleteDeviceRequest {
-    // DevEUI устройства (в HEX).
+    // DevEUI СѓСЃС‚СЂРѕР№СЃС‚РІР° (РІ HEX).
     string dev_eui = 1 [json_name = "devEUI"];
 }
 
 
 message UpdateDeviceRequest {
-    // Объект Устройство для обновления.
+    // РћР±СЉРµРєС‚ РЈСЃС‚СЂРѕР№СЃС‚РІРѕ РґР»СЏ РѕР±РЅРѕРІР»РµРЅРёСЏ.
     Device device = 1;
 }
 
@@ -316,36 +316,36 @@ message CreateDeviceKeysRequest {
 }
 
 message GetDeviceKeysRequest {
-    // DevEUI устройства (в HEX).
+    // DevEUI СѓСЃС‚СЂРѕР№СЃС‚РІР° (РІ HEX).
     string dev_eui = 1 [json_name = "devEUI"];
 }
 
 message GetDeviceKeysResponse {
-    // Объект Ключи устройства.
+    // РћР±СЉРµРєС‚ РљР»СЋС‡Рё СѓСЃС‚СЂРѕР№СЃС‚РІР°.
     DeviceKeys device_keys = 1;
 }
 
 message UpdateDeviceKeysRequest {
-    // Объект Ключи устройства для обновления.
+    // РћР±СЉРµРєС‚ РљР»СЋС‡Рё СѓСЃС‚СЂРѕР№СЃС‚РІР° РґР»СЏ РѕР±РЅРѕРІР»РµРЅРёСЏ.
     DeviceKeys device_keys = 1;
 }
 
 message DeleteDeviceKeysRequest {
-    // DevEUI устройства (в HEX).
+    // DevEUI СѓСЃС‚СЂРѕР№СЃС‚РІР° (РІ HEX).
     string dev_eui = 1 [json_name = "devEUI"];
 }
 
 message DeviceActivation {
-    // DevEUI устройства (в HEX).
+    // DevEUI СѓСЃС‚СЂРѕР№СЃС‚РІР° (РІ HEX).
     string dev_eui = 1 [json_name = "devEUI"];
 
-    // DevAddr (в HEX).
+    // DevAddr (РІ HEX).
     string dev_addr = 2;
 
-    // Сессионный ключ приложения (в HEX).
+    // РЎРµСЃСЃРёРѕРЅРЅС‹Р№ РєР»СЋС‡ РїСЂРёР»РѕР¶РµРЅРёСЏ (РІ HEX).
     string app_s_key = 3;
 
-    // Сессионный сетевой ключ (в HEX).
+    // РЎРµСЃСЃРёРѕРЅРЅС‹Р№ СЃРµС‚РµРІРѕР№ РєР»СЋС‡ (РІ HEX).
     string nwk_s_enc_key = 4;
 
     // Serving network session integrity key (HEX encoded).
@@ -369,12 +369,12 @@ message ActivateDeviceRequest {
 }
 
 message DeactivateDeviceRequest {
-    // DevEUI устройства (в HEX).
+    // DevEUI СѓСЃС‚СЂРѕР№СЃС‚РІР° (РІ HEX).
     string dev_eui = 1 [json_name = "devEUI"];
 }
 
 message GetDeviceActivationRequest {
-    // DevEUI устройства (в HEX).
+    // DevEUI СѓСЃС‚СЂРѕР№СЃС‚РІР° (РІ HEX).
     string dev_eui = 1 [json_name = "devEUI"];
 }
 
@@ -384,17 +384,17 @@ message GetDeviceActivationResponse {
 }
 
 message GetRandomDevAddrRequest {
-    // DevEUI устройства (в HEX).
+    // DevEUI СѓСЃС‚СЂРѕР№СЃС‚РІР° (РІ HEX).
     string dev_eui = 1 [json_name = "devEUI"];
 }
 
 message GetRandomDevAddrResponse {
-    // Адрес устройства devAddr (в HEX).
+    // РђРґСЂРµСЃ СѓСЃС‚СЂРѕР№СЃС‚РІР° devAddr (РІ HEX).
     string dev_addr = 1;
 }
 
 message StreamDeviceFrameLogsRequest {
-    // DevEUI устройства (в HEX).
+    // DevEUI СѓСЃС‚СЂРѕР№СЃС‚РІР° (РІ HEX).
     string dev_eui = 1 [json_name = "devEUI"];
 }
 
@@ -409,12 +409,12 @@ message StreamDeviceFrameLogsResponse {
 }
 
 message StreamDeviceEventLogsRequest {
-    // DevEUI устройства (в HEX).
+    // DevEUI СѓСЃС‚СЂРѕР№СЃС‚РІР° (РІ HEX).
     string dev_eui = 1 [json_name = "devEUI"];
 }
 
 message StreamDeviceEventLogsResponse {
-    // Тип события.
+    // РўРёРї СЃРѕР±С‹С‚РёСЏ.
     string type = 1;
 
     // The event payload in JSON encoding.

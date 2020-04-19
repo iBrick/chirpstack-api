@@ -5,8 +5,8 @@ package integration
 
 import (
 	fmt "fmt"
-	common "github.com/brocaar/chirpstack-api/go/v3/common"
-	gw "github.com/brocaar/chirpstack-api/go/v3/gw"
+	common "github.com/iBrick/chirpstack-api/go/v3/common"
+	gw "github.com/iBrick/chirpstack-api/go/v3/gw"
 	proto "github.com/golang/protobuf/proto"
 	math "math"
 )

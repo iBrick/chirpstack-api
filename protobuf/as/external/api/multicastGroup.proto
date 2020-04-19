@@ -2,15 +2,15 @@ syntax = "proto3";
 
 package api;
 
-option go_package = "github.com/brocaar/chirpstack-api/go/v3/as/external/api";
+option go_package = "github.com/iBrick/chirpstack-api/go/v3/as/external/api";
 
 import "google/api/annotations.proto";
 import "google/protobuf/timestamp.proto";
 import "google/protobuf/empty.proto";
 
-// MulticastGroupService - это сервис, управляющий групповыми рассылками.
+// MulticastGroupService - СЌС‚Рѕ СЃРµСЂРІРёСЃ, СѓРїСЂР°РІР»СЏСЋС‰РёР№ РіСЂСѓРїРїРѕРІС‹РјРё СЂР°СЃСЃС‹Р»РєР°РјРё.
 service MulticastGroupService {
-    // Create создает указанную мультикаст-группу.
+    // Create СЃРѕР·РґР°РµС‚ СѓРєР°Р·Р°РЅРЅСѓСЋ РјСѓР»СЊС‚РёРєР°СЃС‚-РіСЂСѓРїРїСѓ.
     rpc Create(CreateMulticastGroupRequest) returns (CreateMulticastGroupResponse) {
         option(google.api.http) = {
             post: "/api/multicast-groups"
@@ -18,14 +18,14 @@ service MulticastGroupService {
         };
     }
 
-    // Get возвращает мультикаст-группу по ID.
+    // Get РІРѕР·РІСЂР°С‰Р°РµС‚ РјСѓР»СЊС‚РёРєР°СЃС‚-РіСЂСѓРїРїСѓ РїРѕ ID.
     rpc Get(GetMulticastGroupRequest) returns (GetMulticastGroupResponse) {
         option(google.api.http) = {
             get: "/api/multicast-groups/{id}"
         };
     }
 
-    // Update обновляет указанную мультикаст-группу.
+    // Update РѕР±РЅРѕРІР»СЏРµС‚ СѓРєР°Р·Р°РЅРЅСѓСЋ РјСѓР»СЊС‚РёРєР°СЃС‚-РіСЂСѓРїРїСѓ.
     rpc Update(UpdateMulticastGroupRequest) returns (google.protobuf.Empty) {
         option(google.api.http) = {
             put: "/api/multicast-groups/{multicast_group.id}"
@@ -33,21 +33,21 @@ service MulticastGroupService {
         };
     }
 
-    // Delete удаляет указанную мультикаст-группу по ID.
+    // Delete СѓРґР°Р»СЏРµС‚ СѓРєР°Р·Р°РЅРЅСѓСЋ РјСѓР»СЊС‚РёРєР°СЃС‚-РіСЂСѓРїРїСѓ РїРѕ ID.
     rpc Delete(DeleteMulticastGroupRequest) returns (google.protobuf.Empty) {
         option(google.api.http) = {
             delete: "/api/multicast-groups/{id}"
         };
     }
 
-    // List возвращает доступные мультикаст-группы.
+    // List РІРѕР·РІСЂР°С‰Р°РµС‚ РґРѕСЃС‚СѓРїРЅС‹Рµ РјСѓР»СЊС‚РёРєР°СЃС‚-РіСЂСѓРїРїС‹.
     rpc List(ListMulticastGroupRequest) returns (ListMulticastGroupResponse) {
         option(google.api.http) = {
             get: "/api/multicast-groups"
         };
     }
 
-    // AddDevice добавляет устройство в мультикаст-группу.
+    // AddDevice РґРѕР±Р°РІР»СЏРµС‚ СѓСЃС‚СЂРѕР№СЃС‚РІРѕ РІ РјСѓР»СЊС‚РёРєР°СЃС‚-РіСЂСѓРїРїСѓ.
     rpc AddDevice(AddDeviceToMulticastGroupRequest) returns (google.protobuf.Empty) {
         option(google.api.http) = {
             post: "/api/multicast-groups/{multicast_group_id}/devices"
@@ -55,14 +55,14 @@ service MulticastGroupService {
         };
     }
 
-    // RemoveDevice удаляет устройство из мультикаст-группы.
+    // RemoveDevice СѓРґР°Р»СЏРµС‚ СѓСЃС‚СЂРѕР№СЃС‚РІРѕ РёР· РјСѓР»СЊС‚РёРєР°СЃС‚-РіСЂСѓРїРїС‹.
     rpc RemoveDevice(RemoveDeviceFromMulticastGroupRequest) returns (google.protobuf.Empty) {
         option(google.api.http) = {
             delete: "/api/multicast-groups/{multicast_group_id}/devices/{dev_eui}"
         };
     }
 
-    // Enqueue добавляет элемент в очередь мультикаст-группы.
+    // Enqueue РґРѕР±Р°РІР»СЏРµС‚ СЌР»РµРјРµРЅС‚ РІ РѕС‡РµСЂРµРґСЊ РјСѓР»СЊС‚РёРєР°СЃС‚-РіСЂСѓРїРїС‹.
     rpc Enqueue(EnqueueMulticastQueueItemRequest) returns (EnqueueMulticastQueueItemResponse) {
         option(google.api.http) = {
             post: "/api/multicast-groups/{multicast_queue_item.multicast_group_id}/queue"
@@ -70,14 +70,14 @@ service MulticastGroupService {
         };
     }
 
-    // FlushQueue очищает очередь мультикаст-группы.
+    // FlushQueue РѕС‡РёС‰Р°РµС‚ РѕС‡РµСЂРµРґСЊ РјСѓР»СЊС‚РёРєР°СЃС‚-РіСЂСѓРїРїС‹.
     rpc FlushQueue(FlushMulticastGroupQueueItemsRequest) returns (google.protobuf.Empty) {
         option(google.api.http) = {
             delete: "/api/multicast-groups/{multicast_group_id}/queue"
         };
     }
 
-    // ListQueue возвращает элементы очереди мультикаст-группы.
+    // ListQueue РІРѕР·РІСЂР°С‰Р°РµС‚ СЌР»РµРјРµРЅС‚С‹ РѕС‡РµСЂРµРґРё РјСѓР»СЊС‚РёРєР°СЃС‚-РіСЂСѓРїРїС‹.
     rpc ListQueue(ListMulticastGroupQueueItemsRequest) returns (ListMulticastGroupQueueItemsResponse) {
         option(google.api.http) = {
             get: "/api/multicast-groups/{multicast_group_id}/queue"
@@ -86,177 +86,177 @@ service MulticastGroupService {
 }
 
 enum MulticastGroupType {
-    // Класс-C.
+    // РљР»Р°СЃСЃ-C.
     CLASS_C = 0;
 
-    // Класс-B.
+    // РљР»Р°СЃСЃ-B.
     CLASS_B = 1;
 }
 
 message MulticastGroup {
-    // ID (строковый UUID).
-    // Будет сгенерировано автоматически при создании.
+    // ID (СЃС‚СЂРѕРєРѕРІС‹Р№ UUID).
+    // Р‘СѓРґРµС‚ СЃРіРµРЅРµСЂРёСЂРѕРІР°РЅРѕ Р°РІС‚РѕРјР°С‚РёС‡РµСЃРєРё РїСЂРё СЃРѕР·РґР°РЅРёРё.
     string id = 1;
 
-    // Название мультикаст-группы.
+    // РќР°Р·РІР°РЅРёРµ РјСѓР»СЊС‚РёРєР°СЃС‚-РіСЂСѓРїРїС‹.
     string name = 2;
 
-    // Адрес мультикаст (DevAddr в HEX).
+    // РђРґСЂРµСЃ РјСѓР»СЊС‚РёРєР°СЃС‚ (DevAddr РІ HEX).
     string mc_addr = 3;
 
-    // Ключ сетевой сессии мультикаст (ключ AES128 в HEX).
+    // РљР»СЋС‡ СЃРµС‚РµРІРѕР№ СЃРµСЃСЃРёРё РјСѓР»СЊС‚РёРєР°СЃС‚ (РєР»СЋС‡ AES128 РІ HEX).
     string mc_nwk_s_key = 4;
 
-    // Ключ сессии приложения мультикаст (ключ AES128 в HEX).
+    // РљР»СЋС‡ СЃРµСЃСЃРёРё РїСЂРёР»РѕР¶РµРЅРёСЏ РјСѓР»СЊС‚РёРєР°СЃС‚ (РєР»СЋС‡ AES128 РІ HEX).
     string mc_app_s_key = 5;
 
-    // Счетчик пакетов.
+    // РЎС‡РµС‚С‡РёРє РїР°РєРµС‚РѕРІ.
     uint32 f_cnt = 6;
 
-    // Тип мультикаст группы.
+    // РўРёРї РјСѓР»СЊС‚РёРєР°СЃС‚ РіСЂСѓРїРїС‹.
     MulticastGroupType group_type = 7;
 
-    // Скорость соединения.
+    // РЎРєРѕСЂРѕСЃС‚СЊ СЃРѕРµРґРёРЅРµРЅРёСЏ.
     uint32 dr = 8;
 
-    // Частота (Hz).
+    // Р§Р°СЃС‚РѕС‚Р° (Hz).
     uint32 frequency = 9;
 
-    // Период пинг-слота.
-    // Обязательно для групп мультикаст рассылки класса B.
+    // РџРµСЂРёРѕРґ РїРёРЅРі-СЃР»РѕС‚Р°.
+    // РћР±СЏР·Р°С‚РµР»СЊРЅРѕ РґР»СЏ РіСЂСѓРїРї РјСѓР»СЊС‚РёРєР°СЃС‚ СЂР°СЃСЃС‹Р»РєРё РєР»Р°СЃСЃР° B.
     uint32 ping_slot_period = 10;
 
-    // ID сервис-профиля.
-    // После создания это поле не может быть обновлено.
+    // ID СЃРµСЂРІРёСЃ-РїСЂРѕС„РёР»СЏ.
+    // РџРѕСЃР»Рµ СЃРѕР·РґР°РЅРёСЏ СЌС‚Рѕ РїРѕР»Рµ РЅРµ РјРѕР¶РµС‚ Р±С‹С‚СЊ РѕР±РЅРѕРІР»РµРЅРѕ.
     string service_profile_id = 11 [json_name = "serviceProfileID"];
 }
 
 message MulticastGroupListItem {
-    // ID (строковый UUID).
+    // ID (СЃС‚СЂРѕРєРѕРІС‹Р№ UUID).
     string id = 1;
 
-    // Название мультикаст-группы.
+    // РќР°Р·РІР°РЅРёРµ РјСѓР»СЊС‚РёРєР°СЃС‚-РіСЂСѓРїРїС‹.
     string name = 2;
 
-    // ID сервис-профиля (строковый UUID).
+    // ID СЃРµСЂРІРёСЃ-РїСЂРѕС„РёР»СЏ (СЃС‚СЂРѕРєРѕРІС‹Р№ UUID).
     string service_profile_id = 3 [json_name = "serviceProfileID"];
 
-    // Название сервис-профиля.
+    // РќР°Р·РІР°РЅРёРµ СЃРµСЂРІРёСЃ-РїСЂРѕС„РёР»СЏ.
     string service_profile_name = 4;
 }
 
 message CreateMulticastGroupRequest {
-    // Объект мультикаст-группы для создания.
+    // РћР±СЉРµРєС‚ РјСѓР»СЊС‚РёРєР°СЃС‚-РіСЂСѓРїРїС‹ РґР»СЏ СЃРѕР·РґР°РЅРёСЏ.
     MulticastGroup multicast_group = 1;
 }
 
 message CreateMulticastGroupResponse {
-    // ID созданной группы (строковый UUID).
+    // ID СЃРѕР·РґР°РЅРЅРѕР№ РіСЂСѓРїРїС‹ (СЃС‚СЂРѕРєРѕРІС‹Р№ UUID).
     string id = 1;
 }
 
 message GetMulticastGroupRequest {
-    // ID (строковый UUID).
+    // ID (СЃС‚СЂРѕРєРѕРІС‹Р№ UUID).
     string id = 1;
 }
 
 message GetMulticastGroupResponse {
-    // Объект мультикаст-группы.
+    // РћР±СЉРµРєС‚ РјСѓР»СЊС‚РёРєР°СЃС‚-РіСЂСѓРїРїС‹.
     MulticastGroup multicast_group = 1;
 
-    // Временная метка создания.
+    // Р’СЂРµРјРµРЅРЅР°СЏ РјРµС‚РєР° СЃРѕР·РґР°РЅРёСЏ.
     google.protobuf.Timestamp created_at = 2;
 
-    // Временная метка последнего обновления.
+    // Р’СЂРµРјРµРЅРЅР°СЏ РјРµС‚РєР° РїРѕСЃР»РµРґРЅРµРіРѕ РѕР±РЅРѕРІР»РµРЅРёСЏ.
     google.protobuf.Timestamp updated_at = 3;
 }
 
 message UpdateMulticastGroupRequest {
-    // Объект мультикаст-группы для обновления.
+    // РћР±СЉРµРєС‚ РјСѓР»СЊС‚РёРєР°СЃС‚-РіСЂСѓРїРїС‹ РґР»СЏ РѕР±РЅРѕРІР»РµРЅРёСЏ.
     MulticastGroup multicast_group = 1;
 }
 
 message DeleteMulticastGroupRequest {
-    // ID (строковый UUID).
+    // ID (СЃС‚СЂРѕРєРѕРІС‹Р№ UUID).
     string id = 1;
 }
 
 message AddDeviceToMulticastGroupRequest {
-    // ID мультикаст-группы (строковый UUID).
+    // ID РјСѓР»СЊС‚РёРєР°СЃС‚-РіСЂСѓРїРїС‹ (СЃС‚СЂРѕРєРѕРІС‹Р№ UUID).
     string multicast_group_id = 1 [json_name = "multicastGroupID"];
 
-    // EUI  устройства (в HEX).
-    // Устройство должно быть в том же сервис-профиле, что и мультикаст-группа.
+    // EUI  СѓСЃС‚СЂРѕР№СЃС‚РІР° (РІ HEX).
+    // РЈСЃС‚СЂРѕР№СЃС‚РІРѕ РґРѕР»Р¶РЅРѕ Р±С‹С‚СЊ РІ С‚РѕРј Р¶Рµ СЃРµСЂРІРёСЃ-РїСЂРѕС„РёР»Рµ, С‡С‚Рѕ Рё РјСѓР»СЊС‚РёРєР°СЃС‚-РіСЂСѓРїРїР°.
     string dev_eui = 2 [json_name = "devEUI"];
 }
 
 message RemoveDeviceFromMulticastGroupRequest {
-    // ID мультикаст-группы (строковый UUID).
+    // ID РјСѓР»СЊС‚РёРєР°СЃС‚-РіСЂСѓРїРїС‹ (СЃС‚СЂРѕРєРѕРІС‹Р№ UUID).
     string multicast_group_id = 1 [json_name = "multicastGroupID"];
 
-    // EUI устройства (в HEX).
+    // EUI СѓСЃС‚СЂРѕР№СЃС‚РІР° (РІ HEX).
     string dev_eui = 2 [json_name = "devEUI"];
 }
 
 message ListMulticastGroupRequest {
-    // Ограничить макс. число устройств в выдаче результатов.
+    // РћРіСЂР°РЅРёС‡РёС‚СЊ РјР°РєСЃ. С‡РёСЃР»Рѕ СѓСЃС‚СЂРѕР№СЃС‚РІ РІ РІС‹РґР°С‡Рµ СЂРµР·СѓР»СЊС‚Р°С‚РѕРІ.
     int64 limit = 1;
 
-    // Смещение в наборе результатов (для нумерации страниц).
+    // РЎРјРµС‰РµРЅРёРµ РІ РЅР°Р±РѕСЂРµ СЂРµР·СѓР»СЊС‚Р°С‚РѕРІ (РґР»СЏ РЅСѓРјРµСЂР°С†РёРё СЃС‚СЂР°РЅРёС†).
     int64 offset = 2;
 
-    // ID организации для применения фильтра.
+    // ID РѕСЂРіР°РЅРёР·Р°С†РёРё РґР»СЏ РїСЂРёРјРµРЅРµРЅРёСЏ С„РёР»СЊС‚СЂР°.
     int64 organization_id = 3 [json_name = "organizationID"];
 
-    // EUI устройства (в HEX ) для применения фильтра.
+    // EUI СѓСЃС‚СЂРѕР№СЃС‚РІР° (РІ HEX ) РґР»СЏ РїСЂРёРјРµРЅРµРЅРёСЏ С„РёР»СЊС‚СЂР°.
     string dev_eui = 4 [json_name = "devEUI"];
 
-    // ID сервис-профиля для применения фильтра.
+    // ID СЃРµСЂРІРёСЃ-РїСЂРѕС„РёР»СЏ РґР»СЏ РїСЂРёРјРµРЅРµРЅРёСЏ С„РёР»СЊС‚СЂР°.
     string service_profile_id = 5 [json_name = "serviceProfileID"];
 
-    // Поиск - может быть использован для поиска по названию мультикаст-группы.
+    // РџРѕРёСЃРє - РјРѕР¶РµС‚ Р±С‹С‚СЊ РёСЃРїРѕР»СЊР·РѕРІР°РЅ РґР»СЏ РїРѕРёСЃРєР° РїРѕ РЅР°Р·РІР°РЅРёСЋ РјСѓР»СЊС‚РёРєР°СЃС‚-РіСЂСѓРїРїС‹.
     string search = 6;
 }
 
 message ListMulticastGroupResponse {
-    // Общее число мультикаст-групп.
+    // РћР±С‰РµРµ С‡РёСЃР»Рѕ РјСѓР»СЊС‚РёРєР°СЃС‚-РіСЂСѓРїРї.
     int64 total_count = 1;
 
     repeated MulticastGroupListItem result = 2;
 }
 
 message MulticastQueueItem {
-    // ID мультикаст-группы (строковый UUID).
+    // ID РјСѓР»СЊС‚РёРєР°СЃС‚-РіСЂСѓРїРїС‹ (СЃС‚СЂРѕРєРѕРІС‹Р№ UUID).
     string multicast_group_id = 1 [json_name = "multicastGroupID"];
 
-    // Счетчик пакетов Downlink.
-    // Устанавливается автоматически при добавлении в очередь.
+    // РЎС‡РµС‚С‡РёРє РїР°РєРµС‚РѕРІ Downlink.
+    // РЈСЃС‚Р°РЅР°РІР»РёРІР°РµС‚СЃСЏ Р°РІС‚РѕРјР°С‚РёС‡РµСЃРєРё РїСЂРё РґРѕР±Р°РІР»РµРЅРёРё РІ РѕС‡РµСЂРµРґСЊ.
     uint32 f_cnt = 2;
 
-    // Используемый FPort (должен быть > 0).
+    // РСЃРїРѕР»СЊР·СѓРµРјС‹Р№ FPort (РґРѕР»Р¶РµРЅ Р±С‹С‚СЊ > 0).
     uint32 f_port = 3;
 
-    // Данные в Base64.
+    // Р”Р°РЅРЅС‹Рµ РІ Base64.
     bytes data = 4;
 }
 
 message EnqueueMulticastQueueItemRequest {
-    // Объект для добавления в очередь мультикаст-группы.
+    // РћР±СЉРµРєС‚ РґР»СЏ РґРѕР±Р°РІР»РµРЅРёСЏ РІ РѕС‡РµСЂРµРґСЊ РјСѓР»СЊС‚РёРєР°СЃС‚-РіСЂСѓРїРїС‹.
     MulticastQueueItem multicast_queue_item = 1;
 }
 
 message EnqueueMulticastQueueItemResponse {
-    // Счетчик пакетов для данных в очереди.
+    // РЎС‡РµС‚С‡РёРє РїР°РєРµС‚РѕРІ РґР»СЏ РґР°РЅРЅС‹С… РІ РѕС‡РµСЂРµРґРё.
     uint32 f_cnt = 1;
 }
 
 message FlushMulticastGroupQueueItemsRequest {
-    // ID мультикаст-группы (строковый UUID).
+    // ID РјСѓР»СЊС‚РёРєР°СЃС‚-РіСЂСѓРїРїС‹ (СЃС‚СЂРѕРєРѕРІС‹Р№ UUID).
     string multicast_group_id = 1 [json_name = "multicastGroupID"];
 }
 
 message ListMulticastGroupQueueItemsRequest {
-    // ID мультикаст-группы (строковый UUID).
+    // ID РјСѓР»СЊС‚РёРєР°СЃС‚-РіСЂСѓРїРїС‹ (СЃС‚СЂРѕРєРѕРІС‹Р№ UUID).
     string multicast_group_id = 1 [json_name = "multicastGroupID"];
 }
 

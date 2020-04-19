@@ -2,15 +2,15 @@ syntax = "proto3";
 
 package api;
 
-option go_package = "github.com/brocaar/chirpstack-api/go/v3/as/external/api";
+option go_package = "github.com/iBrick/chirpstack-api/go/v3/as/external/api";
 
 import "google/api/annotations.proto";
 import "google/protobuf/timestamp.proto";
 import "google/protobuf/empty.proto";
 
-// NetworkServerService - управление сетевыми серверами.
+// NetworkServerService - СѓРїСЂР°РІР»РµРЅРёРµ СЃРµС‚РµРІС‹РјРё СЃРµСЂРІРµСЂР°РјРё.
 service NetworkServerService {
-    // Create - создает указанный сетевой сервер.
+    // Create - СЃРѕР·РґР°РµС‚ СѓРєР°Р·Р°РЅРЅС‹Р№ СЃРµС‚РµРІРѕР№ СЃРµСЂРІРµСЂ.
     rpc Create(CreateNetworkServerRequest) returns (CreateNetworkServerResponse) {
         option(google.api.http) = {
             post: "/api/network-servers"
@@ -18,14 +18,14 @@ service NetworkServerService {
         };
     }
 
-    // Get возвращает сетевой сервер по указанному id.
+    // Get РІРѕР·РІСЂР°С‰Р°РµС‚ СЃРµС‚РµРІРѕР№ СЃРµСЂРІРµСЂ РїРѕ СѓРєР°Р·Р°РЅРЅРѕРјСѓ id.
     rpc Get(GetNetworkServerRequest) returns (GetNetworkServerResponse) {
         option(google.api.http) = {
             get: "/api/network-servers/{id}"
         };
     }
 
-    // Update обновляет указанный сетевой сервер.
+    // Update РѕР±РЅРѕРІР»СЏРµС‚ СѓРєР°Р·Р°РЅРЅС‹Р№ СЃРµС‚РµРІРѕР№ СЃРµСЂРІРµСЂ.
     rpc Update(UpdateNetworkServerRequest) returns (google.protobuf.Empty) {
         option(google.api.http) = {
             put: "/api/network-servers/{network_server.id}"
@@ -33,14 +33,14 @@ service NetworkServerService {
         };
     }
 
-    // Delete удаляет указанный сетевой сервер.
+    // Delete СѓРґР°Р»СЏРµС‚ СѓРєР°Р·Р°РЅРЅС‹Р№ СЃРµС‚РµРІРѕР№ СЃРµСЂРІРµСЂ.
     rpc Delete(DeleteNetworkServerRequest) returns (google.protobuf.Empty) {
         option(google.api.http) = {
             delete: "/api/network-servers/{id}"
         };
     };
 
-    // List выводит список доступных сетевых серверов.
+    // List РІС‹РІРѕРґРёС‚ СЃРїРёСЃРѕРє РґРѕСЃС‚СѓРїРЅС‹С… СЃРµС‚РµРІС‹С… СЃРµСЂРІРµСЂРѕРІ.
     rpc List(ListNetworkServerRequest) returns (ListNetworkServerResponse) {
         option(google.api.http) = {
             get: "/api/network-servers"
@@ -49,126 +49,126 @@ service NetworkServerService {
 }
 
 message NetworkServer {
-    // ID сетевого сервера.
+    // ID СЃРµС‚РµРІРѕРіРѕ СЃРµСЂРІРµСЂР°.
     int64 id = 1;
 
-    // Название сетевого сервера.
+    // РќР°Р·РІР°РЅРёРµ СЃРµС‚РµРІРѕРіРѕ СЃРµСЂРІРµСЂР°.
     string name = 2;
 
-    // Сетевой сервер.
-    // Формат: hostname:ip (напр. localhost:8000).
+    // РЎРµС‚РµРІРѕР№ СЃРµСЂРІРµСЂ.
+    // Р¤РѕСЂРјР°С‚: hostname:ip (РЅР°РїСЂ. localhost:8000).
     string server = 3;
 
-    // Сертификат CA (необязательное).
+    // РЎРµСЂС‚РёС„РёРєР°С‚ CA (РЅРµРѕР±СЏР·Р°С‚РµР»СЊРЅРѕРµ).
     string ca_cert = 4;
 
-    // Сертификат TLS (client) для подключения к сетевому серверу (необязательное).
+    // РЎРµСЂС‚РёС„РёРєР°С‚ TLS (client) РґР»СЏ РїРѕРґРєР»СЋС‡РµРЅРёСЏ Рє СЃРµС‚РµРІРѕРјСѓ СЃРµСЂРІРµСЂСѓ (РЅРµРѕР±СЏР·Р°С‚РµР»СЊРЅРѕРµ).
     string tls_cert = 5;
 
-    // Ключ сертификата TLS (client) для подключения к сетевому серверу (необязательное).
+    // РљР»СЋС‡ СЃРµСЂС‚РёС„РёРєР°С‚Р° TLS (client) РґР»СЏ РїРѕРґРєР»СЋС‡РµРЅРёСЏ Рє СЃРµС‚РµРІРѕРјСѓ СЃРµСЂРІРµСЂСѓ (РЅРµРѕР±СЏР·Р°С‚РµР»СЊРЅРѕРµ).
     string tls_key = 6;
 
-    // Routing-profile ca сертификат (используется сетевым сервером для подключения к серверу приложений)
-    // (необязательное).
+    // Routing-profile ca СЃРµСЂС‚РёС„РёРєР°С‚ (РёСЃРїРѕР»СЊР·СѓРµС‚СЃСЏ СЃРµС‚РµРІС‹Рј СЃРµСЂРІРµСЂРѕРј РґР»СЏ РїРѕРґРєР»СЋС‡РµРЅРёСЏ Рє СЃРµСЂРІРµСЂСѓ РїСЂРёР»РѕР¶РµРЅРёР№)
+    // (РЅРµРѕР±СЏР·Р°С‚РµР»СЊРЅРѕРµ).
     string routing_profile_ca_cert = 7 [json_name = "routingProfileCACert"];
 
-    // Routing-profile TLS сертификат (используется сетевым сервером для подключения к серверу приложений)
-    // (необязательное).
+    // Routing-profile TLS СЃРµСЂС‚РёС„РёРєР°С‚ (РёСЃРїРѕР»СЊР·СѓРµС‚СЃСЏ СЃРµС‚РµРІС‹Рј СЃРµСЂРІРµСЂРѕРј РґР»СЏ РїРѕРґРєР»СЋС‡РµРЅРёСЏ Рє СЃРµСЂРІРµСЂСѓ РїСЂРёР»РѕР¶РµРЅРёР№)
+    // (РЅРµРѕР±СЏР·Р°С‚РµР»СЊРЅРѕРµ).
     string routing_profile_tls_cert = 8 [json_name = "routingProfileTLSCert"];
 
-    // Routing-profile TLS ключ (используется сетевым сервером для подключения к серверу приложений)
-    //  (необязательное).
+    // Routing-profile TLS РєР»СЋС‡ (РёСЃРїРѕР»СЊР·СѓРµС‚СЃСЏ СЃРµС‚РµРІС‹Рј СЃРµСЂРІРµСЂРѕРј РґР»СЏ РїРѕРґРєР»СЋС‡РµРЅРёСЏ Рє СЃРµСЂРІРµСЂСѓ РїСЂРёР»РѕР¶РµРЅРёР№)
+    //  (РЅРµРѕР±СЏР·Р°С‚РµР»СЊРЅРѕРµ).
     string routing_profile_tls_key = 9 [json_name = "routingProfileTLSKey"];
 
-    // Включить обнаружение шлюзов.
+    // Р’РєР»СЋС‡РёС‚СЊ РѕР±РЅР°СЂСѓР¶РµРЅРёРµ С€Р»СЋР·РѕРІ.
     bool gateway_discovery_enabled = 10;
 
-    // Число 'ping' запросов в день на обнаружение шлюзов
+    // Р§РёСЃР»Рѕ 'ping' Р·Р°РїСЂРѕСЃРѕРІ РІ РґРµРЅСЊ РЅР° РѕР±РЅР°СЂСѓР¶РµРЅРёРµ С€Р»СЋР·РѕРІ
     // broadcasted per gateway.
     uint32 gateway_discovery_interval = 11;
 
-    // Частота (Hz) запросов 'ping' для обнаружения шлюзов.
+    // Р§Р°СЃС‚РѕС‚Р° (Hz) Р·Р°РїСЂРѕСЃРѕРІ 'ping' РґР»СЏ РѕР±РЅР°СЂСѓР¶РµРЅРёСЏ С€Р»СЋР·РѕРІ.
     uint32 gateway_discovery_tx_frequency = 12 [json_name = "gatewayDiscoveryTXFrequency"];
 
-    // DR запросов 'ping'.
+    // DR Р·Р°РїСЂРѕСЃРѕРІ 'ping'.
     uint32 gateway_discovery_dr = 13 [json_name = "gatewayDiscoveryDR"];
 }
 
 message NetworkServerListItem {
-    // ID сетевого сервера.
+    // ID СЃРµС‚РµРІРѕРіРѕ СЃРµСЂРІРµСЂР°.
     int64 id = 1;
 
-    // Название сетевого сервера.
+    // РќР°Р·РІР°РЅРёРµ СЃРµС‚РµРІРѕРіРѕ СЃРµСЂРІРµСЂР°.
     string name = 2;
 
-    // Сетевой сервер.
+    // РЎРµС‚РµРІРѕР№ СЃРµСЂРІРµСЂ.
     // Format: hostname:ip (e.g. localhost:8000).
     string server = 3;
 
-    // Временная метка создания.
+    // Р’СЂРµРјРµРЅРЅР°СЏ РјРµС‚РєР° СЃРѕР·РґР°РЅРёСЏ.
     google.protobuf.Timestamp created_at = 4;
 
-    // Временная метка последнего обновления.
+    // Р’СЂРµРјРµРЅРЅР°СЏ РјРµС‚РєР° РїРѕСЃР»РµРґРЅРµРіРѕ РѕР±РЅРѕРІР»РµРЅРёСЏ.
     google.protobuf.Timestamp updated_at = 5;
 }
 
 message CreateNetworkServerRequest {
-    // Объект сетевой сервер для создания.
+    // РћР±СЉРµРєС‚ СЃРµС‚РµРІРѕР№ СЃРµСЂРІРµСЂ РґР»СЏ СЃРѕР·РґР°РЅРёСЏ.
     NetworkServer network_server = 1;
 }
 
 message CreateNetworkServerResponse {
-    // ID сетевого сервера.
+    // ID СЃРµС‚РµРІРѕРіРѕ СЃРµСЂРІРµСЂР°.
     int64 id = 1;
 }
 
 message GetNetworkServerRequest {
-    // ID сетевого сервера.
+    // ID СЃРµС‚РµРІРѕРіРѕ СЃРµСЂРІРµСЂР°.
     int64 id = 1;
 }
 
 message GetNetworkServerResponse {
-    // Объект сетевой сервер.
+    // РћР±СЉРµРєС‚ СЃРµС‚РµРІРѕР№ СЃРµСЂРІРµСЂ.
     NetworkServer network_server = 1;
 
-    // Временная метка создания.
+    // Р’СЂРµРјРµРЅРЅР°СЏ РјРµС‚РєР° СЃРѕР·РґР°РЅРёСЏ.
     google.protobuf.Timestamp created_at = 2;
 
-    // Временная метка последнего обновления.
+    // Р’СЂРµРјРµРЅРЅР°СЏ РјРµС‚РєР° РїРѕСЃР»РµРґРЅРµРіРѕ РѕР±РЅРѕРІР»РµРЅРёСЏ.
     google.protobuf.Timestamp updated_at = 3;
 
-    // Версия LoRa сервера.
+    // Р’РµСЂСЃРёСЏ LoRa СЃРµСЂРІРµСЂР°.
     string version = 4;
 
-    // Сконфигурированный регион LoRa сервера.
+    // РЎРєРѕРЅС„РёРіСѓСЂРёСЂРѕРІР°РЅРЅС‹Р№ СЂРµРіРёРѕРЅ LoRa СЃРµСЂРІРµСЂР°.
     string region = 5;
 }
 
 message UpdateNetworkServerRequest {
-    // Объект сетевого сервера для обновления.
+    // РћР±СЉРµРєС‚ СЃРµС‚РµРІРѕРіРѕ СЃРµСЂРІРµСЂР° РґР»СЏ РѕР±РЅРѕРІР»РµРЅРёСЏ.
     NetworkServer network_server = 1;
 }
 
 message DeleteNetworkServerRequest {
-    // ID сетевого сервера.
+    // ID СЃРµС‚РµРІРѕРіРѕ СЃРµСЂРІРµСЂР°.
     int64 id = 1;
 }
 
 message ListNetworkServerRequest {
-    // Ограничить макс. число объектов в выдаче результатов..
+    // РћРіСЂР°РЅРёС‡РёС‚СЊ РјР°РєСЃ. С‡РёСЃР»Рѕ РѕР±СЉРµРєС‚РѕРІ РІ РІС‹РґР°С‡Рµ СЂРµР·СѓР»СЊС‚Р°С‚РѕРІ..
     int64 limit = 1;
 
-    // Смещение в наборе результатов (для нумерации страниц).
+    // РЎРјРµС‰РµРЅРёРµ РІ РЅР°Р±РѕСЂРµ СЂРµР·СѓР»СЊС‚Р°С‚РѕРІ (РґР»СЏ РЅСѓРјРµСЂР°С†РёРё СЃС‚СЂР°РЅРёС†).
     int64 offset = 2;
 
-    // ID организации для применения фильтра.
+    // ID РѕСЂРіР°РЅРёР·Р°С†РёРё РґР»СЏ РїСЂРёРјРµРЅРµРЅРёСЏ С„РёР»СЊС‚СЂР°.
     int64 organization_id = 3 [json_name = "organizationID"];
 }
 
 message ListNetworkServerResponse {
-    // Общее число сетевых серверов.
+    // РћР±С‰РµРµ С‡РёСЃР»Рѕ СЃРµС‚РµРІС‹С… СЃРµСЂРІРµСЂРѕРІ.
     int64 total_count = 1;
 
-    // Сетевые сервера.
+    // РЎРµС‚РµРІС‹Рµ СЃРµСЂРІРµСЂР°.
     repeated NetworkServerListItem result = 2;
 }

@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package api;
 
-option go_package = "github.com/brocaar/chirpstack-api/go/v3/as/external/api";
+option go_package = "github.com/iBrick/chirpstack-api/go/v3/as/external/api";
 
 import "google/api/annotations.proto";
 import "google/protobuf/timestamp.proto";
@@ -10,9 +10,9 @@ import "google/protobuf/empty.proto";
 import "as/external/api/profiles.proto";
 
 
-// ServiceProfileService - управление сервис-профилями.
+// ServiceProfileService - СѓРїСЂР°РІР»РµРЅРёРµ СЃРµСЂРІРёСЃ-РїСЂРѕС„РёР»СЏРјРё.
 service ServiceProfileService {
-    // Create создает указанный сервис-профиль.
+    // Create СЃРѕР·РґР°РµС‚ СѓРєР°Р·Р°РЅРЅС‹Р№ СЃРµСЂРІРёСЃ-РїСЂРѕС„РёР»СЊ.
     rpc Create(CreateServiceProfileRequest) returns (CreateServiceProfileResponse) {
         option(google.api.http) = {
             post: "/api/service-profiles"
@@ -20,14 +20,14 @@ service ServiceProfileService {
         };
     }
 
-    // Get возвращает сервис-профиль по указанному id.
+    // Get РІРѕР·РІСЂР°С‰Р°РµС‚ СЃРµСЂРІРёСЃ-РїСЂРѕС„РёР»СЊ РїРѕ СѓРєР°Р·Р°РЅРЅРѕРјСѓ id.
     rpc Get(GetServiceProfileRequest) returns (GetServiceProfileResponse) {
         option(google.api.http) = {
             get: "/api/service-profiles/{id}"
         };
     }
 
-    // Update обновляет указанный сервис-профиль.
+    // Update РѕР±РЅРѕРІР»СЏРµС‚ СѓРєР°Р·Р°РЅРЅС‹Р№ СЃРµСЂРІРёСЃ-РїСЂРѕС„РёР»СЊ.
     rpc Update(UpdateServiceProfileRequest) returns (google.protobuf.Empty) {
         option(google.api.http) = {
             put: "/api/service-profiles/{service_profile.id}"
@@ -35,14 +35,14 @@ service ServiceProfileService {
         };
     }
 
-    // Delete удаляет указанный сервис-профиль по id.
+    // Delete СѓРґР°Р»СЏРµС‚ СѓРєР°Р·Р°РЅРЅС‹Р№ СЃРµСЂРІРёСЃ-РїСЂРѕС„РёР»СЊ РїРѕ id.
     rpc Delete(DeleteServiceProfileRequest) returns (google.protobuf.Empty) {
         option(google.api.http) = {
             delete: "/api/service-profiles/{id}"
         };
     }
 
-    // List выводит список доступных сервис-профилей.
+    // List РІС‹РІРѕРґРёС‚ СЃРїРёСЃРѕРє РґРѕСЃС‚СѓРїРЅС‹С… СЃРµСЂРІРёСЃ-РїСЂРѕС„РёР»РµР№.
     rpc List(ListServiceProfileRequest) returns (ListServiceProfileResponse) {
         option(google.api.http) = {
             get: "/api/service-profiles"
@@ -51,74 +51,74 @@ service ServiceProfileService {
 }
 
 message CreateServiceProfileRequest {
-    // Объект сервис-профиль для создания.
+    // РћР±СЉРµРєС‚ СЃРµСЂРІРёСЃ-РїСЂРѕС„РёР»СЊ РґР»СЏ СЃРѕР·РґР°РЅРёСЏ.
     ServiceProfile service_profile = 1;
 }
 
 message CreateServiceProfileResponse{
-    // ID сервис-профиля (строка UUID).
+    // ID СЃРµСЂРІРёСЃ-РїСЂРѕС„РёР»СЏ (СЃС‚СЂРѕРєР° UUID).
     string id = 1;
 }
 
 message GetServiceProfileRequest{
-    // ID сервис-профиля (строка UUID).
+    // ID СЃРµСЂРІРёСЃ-РїСЂРѕС„РёР»СЏ (СЃС‚СЂРѕРєР° UUID).
     string id = 1;
 }
 
 message GetServiceProfileResponse{
-    // Объект сервис-профиля.
+    // РћР±СЉРµРєС‚ СЃРµСЂРІРёСЃ-РїСЂРѕС„РёР»СЏ.
     ServiceProfile service_profile = 1;
 
-    // Временная метка создания.
+    // Р’СЂРµРјРµРЅРЅР°СЏ РјРµС‚РєР° СЃРѕР·РґР°РЅРёСЏ.
     google.protobuf.Timestamp created_at = 2;
 
-    // Временная метка последнего обновления.
+    // Р’СЂРµРјРµРЅРЅР°СЏ РјРµС‚РєР° РїРѕСЃР»РµРґРЅРµРіРѕ РѕР±РЅРѕРІР»РµРЅРёСЏ.
     google.protobuf.Timestamp updated_at = 3;
 }
 
 message UpdateServiceProfileRequest{
-    // Объект сервис-профиль для обновления.
+    // РћР±СЉРµРєС‚ СЃРµСЂРІРёСЃ-РїСЂРѕС„РёР»СЊ РґР»СЏ РѕР±РЅРѕРІР»РµРЅРёСЏ.
     ServiceProfile service_profile = 1;
 }
 
 message DeleteServiceProfileRequest{
-    // ID сервис-профиля (строка UUID).
+    // ID СЃРµСЂРІРёСЃ-РїСЂРѕС„РёР»СЏ (СЃС‚СЂРѕРєР° UUID).
     string id = 1;
 }
 
 message ListServiceProfileRequest{
-    // Ограничить макс. число элементов в выдаче результатов.
+    // РћРіСЂР°РЅРёС‡РёС‚СЊ РјР°РєСЃ. С‡РёСЃР»Рѕ СЌР»РµРјРµРЅС‚РѕРІ РІ РІС‹РґР°С‡Рµ СЂРµР·СѓР»СЊС‚Р°С‚РѕРІ.
     int64 limit = 1;
 
-    // Смещение в наборе результатов (для нумерации страниц).
+    // РЎРјРµС‰РµРЅРёРµ РІ РЅР°Р±РѕСЂРµ СЂРµР·СѓР»СЊС‚Р°С‚РѕРІ (РґР»СЏ РЅСѓРјРµСЂР°С†РёРё СЃС‚СЂР°РЅРёС†).
     int64 offset = 2;
 
-    // ID организации для применения фильтра.
+    // ID РѕСЂРіР°РЅРёР·Р°С†РёРё РґР»СЏ РїСЂРёРјРµРЅРµРЅРёСЏ С„РёР»СЊС‚СЂР°.
     int64 organization_id = 3 [json_name = "organizationID"];
 }
 
 message ServiceProfileListItem {
-    // ID сервис-профиля (строка UUID).
+    // ID СЃРµСЂРІРёСЃ-РїСЂРѕС„РёР»СЏ (СЃС‚СЂРѕРєР° UUID).
     string id = 1;
 
-    // Название сервис-профиля.
+    // РќР°Р·РІР°РЅРёРµ СЃРµСЂРІРёСЃ-РїСЂРѕС„РёР»СЏ.
     string name = 2;
 
-    // ID организации для сервис-профиля.
+    // ID РѕСЂРіР°РЅРёР·Р°С†РёРё РґР»СЏ СЃРµСЂРІРёСЃ-РїСЂРѕС„РёР»СЏ.
     int64 organization_id = 3 [json_name = "organizationID"];
 
-    // ID сетевого сервера для сервис-профиля.
+    // ID СЃРµС‚РµРІРѕРіРѕ СЃРµСЂРІРµСЂР° РґР»СЏ СЃРµСЂРІРёСЃ-РїСЂРѕС„РёР»СЏ.
     int64 network_server_id = 4 [json_name = "networkServerID"];
 
-    // Временная метка создания.
+    // Р’СЂРµРјРµРЅРЅР°СЏ РјРµС‚РєР° СЃРѕР·РґР°РЅРёСЏ.
     google.protobuf.Timestamp created_at = 5;
 
-    // Временная метка последнего обновления.
+    // Р’СЂРµРјРµРЅРЅР°СЏ РјРµС‚РєР° РїРѕСЃР»РµРґРЅРµРіРѕ РѕР±РЅРѕРІР»РµРЅРёСЏ.
     google.protobuf.Timestamp updated_at = 6;
 }
 
 message ListServiceProfileResponse{
-    // Общее число сервис-профилей.
+    // РћР±С‰РµРµ С‡РёСЃР»Рѕ СЃРµСЂРІРёСЃ-РїСЂРѕС„РёР»РµР№.
     int64 total_count = 1;
 
     repeated ServiceProfileListItem result = 2;
