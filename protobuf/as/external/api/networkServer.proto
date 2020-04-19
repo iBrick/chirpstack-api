@@ -1,0 +1,174 @@
+syntax = "proto3";
+
+package api;
+
+option go_package = "github.com/brocaar/chirpstack-api/go/v3/as/external/api";
+
+import "google/api/annotations.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/empty.proto";
+
+// NetworkServerService - управление сетевыми серверами.
+service NetworkServerService {
+    // Create - создает указанный сетевой сервер.
+    rpc Create(CreateNetworkServerRequest) returns (CreateNetworkServerResponse) {
+        option(google.api.http) = {
+            post: "/api/network-servers"
+            body: "*"
+        };
+    }
+
+    // Get возвращает сетевой сервер по указанному id.
+    rpc Get(GetNetworkServerRequest) returns (GetNetworkServerResponse) {
+        option(google.api.http) = {
+            get: "/api/network-servers/{id}"
+        };
+    }
+
+    // Update обновляет указанный сетевой сервер.
+    rpc Update(UpdateNetworkServerRequest) returns (google.protobuf.Empty) {
+        option(google.api.http) = {
+            put: "/api/network-servers/{network_server.id}"
+            body: "*"
+        };
+    }
+
+    // Delete удаляет указанный сетевой сервер.
+    rpc Delete(DeleteNetworkServerRequest) returns (google.protobuf.Empty) {
+        option(google.api.http) = {
+            delete: "/api/network-servers/{id}"
+        };
+    };
+
+    // List выводит список доступных сетевых серверов.
+    rpc List(ListNetworkServerRequest) returns (ListNetworkServerResponse) {
+        option(google.api.http) = {
+            get: "/api/network-servers"
+        };
+    }
+}
+
+message NetworkServer {
+    // ID сетевого сервера.
+    int64 id = 1;
+
+    // Название сетевого сервера.
+    string name = 2;
+
+    // Сетевой сервер.
+    // Формат: hostname:ip (напр. localhost:8000).
+    string server = 3;
+
+    // Сертификат CA (необязательное).
+    string ca_cert = 4;
+
+    // Сертификат TLS (client) для подключения к сетевому серверу (необязательное).
+    string tls_cert = 5;
+
+    // Ключ сертификата TLS (client) для подключения к сетевому серверу (необязательное).
+    string tls_key = 6;
+
+    // Routing-profile ca сертификат (используется сетевым сервером для подключения к серверу приложений)
+    // (необязательное).
+    string routing_profile_ca_cert = 7 [json_name = "routingProfileCACert"];
+
+    // Routing-profile TLS сертификат (используется сетевым сервером для подключения к серверу приложений)
+    // (необязательное).
+    string routing_profile_tls_cert = 8 [json_name = "routingProfileTLSCert"];
+
+    // Routing-profile TLS ключ (используется сетевым сервером для подключения к серверу приложений)
+    //  (необязательное).
+    string routing_profile_tls_key = 9 [json_name = "routingProfileTLSKey"];
+
+    // Включить обнаружение шлюзов.
+    bool gateway_discovery_enabled = 10;
+
+    // Число 'ping' запросов в день на обнаружение шлюзов
+    // broadcasted per gateway.
+    uint32 gateway_discovery_interval = 11;
+
+    // Частота (Hz) запросов 'ping' для обнаружения шлюзов.
+    uint32 gateway_discovery_tx_frequency = 12 [json_name = "gatewayDiscoveryTXFrequency"];
+
+    // DR запросов 'ping'.
+    uint32 gateway_discovery_dr = 13 [json_name = "gatewayDiscoveryDR"];
+}
+
+message NetworkServerListItem {
+    // ID сетевого сервера.
+    int64 id = 1;
+
+    // Название сетевого сервера.
+    string name = 2;
+
+    // Сетевой сервер.
+    // Format: hostname:ip (e.g. localhost:8000).
+    string server = 3;
+
+    // Временная метка создания.
+    google.protobuf.Timestamp created_at = 4;
+
+    // Временная метка последнего обновления.
+    google.protobuf.Timestamp updated_at = 5;
+}
+
+message CreateNetworkServerRequest {
+    // Объект сетевой сервер для создания.
+    NetworkServer network_server = 1;
+}
+
+message CreateNetworkServerResponse {
+    // ID сетевого сервера.
+    int64 id = 1;
+}
+
+message GetNetworkServerRequest {
+    // ID сетевого сервера.
+    int64 id = 1;
+}
+
+message GetNetworkServerResponse {
+    // Объект сетевой сервер.
+    NetworkServer network_server = 1;
+
+    // Временная метка создания.
+    google.protobuf.Timestamp created_at = 2;
+
+    // Временная метка последнего обновления.
+    google.protobuf.Timestamp updated_at = 3;
+
+    // Версия LoRa сервера.
+    string version = 4;
+
+    // Сконфигурированный регион LoRa сервера.
+    string region = 5;
+}
+
+message UpdateNetworkServerRequest {
+    // Объект сетевого сервера для обновления.
+    NetworkServer network_server = 1;
+}
+
+message DeleteNetworkServerRequest {
+    // ID сетевого сервера.
+    int64 id = 1;
+}
+
+message ListNetworkServerRequest {
+    // Ограничить макс. число объектов в выдаче результатов..
+    int64 limit = 1;
+
+    // Смещение в наборе результатов (для нумерации страниц).
+    int64 offset = 2;
+
+    // ID организации для применения фильтра.
+    int64 organization_id = 3 [json_name = "organizationID"];
+}
+
+message ListNetworkServerResponse {
+    // Общее число сетевых серверов.
+    int64 total_count = 1;
+
+    // Сетевые сервера.
+    repeated NetworkServerListItem result = 2;
+}

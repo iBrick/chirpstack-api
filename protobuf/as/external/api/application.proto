@@ -1,0 +1,489 @@
+syntax = "proto3";
+
+package api;
+
+option go_package = "github.com/brocaar/chirpstack-api/go/v3/as/external/api";
+
+import "google/api/annotations.proto";
+import "google/protobuf/empty.proto";
+
+// ApplicationService - управление приложениями.
+service ApplicationService {
+	// Create - создает указанное приложение.
+	rpc Create(CreateApplicationRequest) returns (CreateApplicationResponse) {
+		option(google.api.http) = {
+			post: "/api/applications"
+			body: "*"
+		};
+	}
+
+	// Get - возвращает запрошенное приложение.
+	rpc Get(GetApplicationRequest) returns (GetApplicationResponse) {
+		option(google.api.http) = {
+			get: "/api/applications/{id}"
+		};
+	}
+
+	// Update - обновляет указанное приложение.
+	rpc Update(UpdateApplicationRequest) returns (google.protobuf.Empty) {
+		option(google.api.http) = {
+			put: "/api/applications/{application.id}"
+			body: "*"
+		};
+	}
+
+	// Delete - удаляет указанное приложение.
+	rpc Delete(DeleteApplicationRequest) returns (google.protobuf.Empty) {
+		option(google.api.http) = {
+			delete: "/api/applications/{id}"
+		};
+	}
+
+	// List - выводит список доступных приложений.
+	rpc List(ListApplicationRequest) returns (ListApplicationResponse) {
+		option(google.api.http) = {
+			get: "/api/applications"
+		};
+	}
+
+	// CreateHTTPIntegration создает HTTP интеграцию приложения.
+	rpc CreateHTTPIntegration(CreateHTTPIntegrationRequest) returns (google.protobuf.Empty) {
+		option(google.api.http) = {
+			post: "/api/applications/{integration.application_id}/integrations/http"
+			body: "*"
+		};
+	}
+
+	// GetHTTPIntegration возвращает приложения с HTTP-интеграцией.
+	rpc GetHTTPIntegration(GetHTTPIntegrationRequest) returns (GetHTTPIntegrationResponse) {
+		option(google.api.http) = {
+			get: "/api/applications/{application_id}/integrations/http"
+		};
+	}
+
+	// UpdateHTTPIntegration обновляет HTTP интеграцию приложения.
+	rpc UpdateHTTPIntegration(UpdateHTTPIntegrationRequest) returns (google.protobuf.Empty) {
+		option(google.api.http) = {
+			put: "/api/applications/{integration.application_id}/integrations/http"
+			body: "*"
+		};
+	}
+
+	// DeleteIntegration удаляет HTTP-интеграцию приложения.
+	rpc DeleteHTTPIntegration(DeleteHTTPIntegrationRequest) returns (google.protobuf.Empty) {
+		option(google.api.http) = {
+			delete: "/api/applications/{application_id}/integrations/http"
+		};
+	}
+
+	// CreateInfluxDBIntegration создает интеграцию приложения в InfluxDB.
+	rpc CreateInfluxDBIntegration(CreateInfluxDBIntegrationRequest) returns (google.protobuf.Empty) {
+		option(google.api.http) = {
+			post: "/api/applications/{integration.application_id}/integrations/influxdb"
+			body: "*"
+		};
+	}
+
+	// GetInfluxDBIntegration возвращает приложения с интеграцией в InfluxDB.
+	rpc GetInfluxDBIntegration(GetInfluxDBIntegrationRequest) returns (GetInfluxDBIntegrationResponse) {
+		option(google.api.http) = {
+			get: "/api/applications/{application_id}/integrations/influxdb"
+		};
+	}
+
+	// UpdateInfluxDBIntegration обновляет интеграцию приложения в InfluxDB.
+	rpc UpdateInfluxDBIntegration(UpdateInfluxDBIntegrationRequest) returns (google.protobuf.Empty) {
+		option(google.api.http) = {
+			put: "/api/applications/{integration.application_id}/integrations/influxdb"
+			body: "*"
+		};
+	}
+
+	// DeleteInfluxDBIntegration удаляет интеграцию InfluxDB приложения.
+	rpc DeleteInfluxDBIntegration(DeleteInfluxDBIntegrationRequest) returns (google.protobuf.Empty) {
+		option(google.api.http) = {
+			delete: "/api/applications/{application_id}/integrations/influxdb"
+		};
+	}
+
+    // CreateThingsBoardIntegration создает интеграцию приложения с Thingsbord.
+    rpc CreateThingsBoardIntegration(CreateThingsBoardIntegrationRequest) returns (google.protobuf.Empty) {
+        option(google.api.http) = {
+            post: "/api/applications/{integration.application_id}/integrations/thingsboard"
+            body: "*"
+        };
+    }
+
+    // GetThingsBoardIntegration возвращает приложения с интеграцией c Thingsboard.
+    rpc GetThingsBoardIntegration(GetThingsBoardIntegrationRequest) returns (GetThingsBoardIntegrationResponse) {
+        option(google.api.http) = {
+            get: "/api/applications/{application_id}/integrations/thingsboard"
+        };
+    }
+
+    // UpdateThingsBoardIntegration обновляет интеграцию приложения c Thingsbord.
+    rpc UpdateThingsBoardIntegration(UpdateThingsBoardIntegrationRequest) returns (google.protobuf.Empty) {
+        option(google.api.http) = {
+            put: "/api/applications/{integration.application_id}/integrations/thingsboard"
+            body: "*"
+        };
+    }
+
+    // DeleteThingsBoardIntegration удаляет интеграцию Thingsbord приложения.
+    rpc DeleteThingsBoardIntegration(DeleteThingsBoardIntegrationRequest) returns (google.protobuf.Empty) {
+        option(google.api.http) = {
+            delete: "/api/applications/{application_id}/integrations/thingsboard"
+        };
+    }
+
+    // CreateMyDevicesIntegration создает интеграцию приложения с MyDevices.
+    rpc CreateMyDevicesIntegration(CreateMyDevicesIntegrationRequest) returns (google.protobuf.Empty) {
+        option(google.api.http) = {
+            post: "/api/applications/{integration.application_id}/integrations/mydevices"
+            body: "*"
+        };
+    }
+
+    // GetMyDevicesIntegration rвозвращает приложения с интеграцией c MyDevices.
+    rpc GetMyDevicesIntegration(GetMyDevicesIntegrationRequest) returns (GetMyDevicesIntegrationResponse) {
+        option(google.api.http) = {
+            get: "/api/applications/{application_id}/integrations/mydevices"
+        };
+    }
+
+    // UpdateMyDevicesIntegration обновляет интеграцию приложения c MyDevices.
+    rpc UpdateMyDevicesIntegration(UpdateMyDevicesIntegrationRequest) returns (google.protobuf.Empty) {
+        option(google.api.http) = {
+            put: "/api/applications/{integration.application_id}/integrations/mydevices"
+            body: "*"
+        };
+    }
+
+    // DeleteMyDevicesIntegration удаляет интеграцию MyDevices приложения.
+    rpc DeleteMyDevicesIntegration(DeleteMyDevicesIntegrationRequest) returns (google.protobuf.Empty) {
+        option(google.api.http) = {
+            delete: "/api/applications/{application_id}/integrations/mydevices"
+        };
+    }
+
+
+	// ListIntegrations перечисляет все настроенные интеграции.
+	rpc ListIntegrations(ListIntegrationRequest) returns (ListIntegrationResponse) {
+		option(google.api.http) = {
+			get: "/api/applications/{application_id}/integrations"
+		};
+	}
+}
+
+enum IntegrationKind {
+	HTTP = 0;
+	INFLUXDB = 1;
+    THINGSBOARD = 2;
+    MYDEVICES = 3;
+}
+
+message Application {
+	// ID приложения.
+	// Будет автоматически назначено при создании.
+	int64 id = 1;
+
+	// Название приложения (должно быть уникально).
+	string name = 2;
+
+	// Описание приложения.
+	string description = 3;
+
+	// ID организации, к которой присвоено приложение.
+	int64 organization_id = 4 [json_name = "organizationID"];
+
+	// ID сервис-профиля.
+	string service_profile_id = 5 [json_name = "serviceProfileID"];
+
+	// Кодек данных. Deprecated. Перенесено в профиль устройства и будет удалено 
+в следующих релизах. Настройки из профиля устройств имеют больший приоритет.
+	string payload_codec = 6;
+
+	// Скрипт кодера данных. Deprecated. Перенесено в профиль устройства и будет удалено 
+в следующих релизах. Настройки из профиля устройств имеют больший приоритет.
+	string payload_encoder_script = 7;
+
+	// Скрипт декодера данных. Deprecated. Перенесено в профиль устройства и будет удалено 
+в следующих релизах. Настройки из профиля устройств имеют больший приоритет.
+	string payload_decoder_script = 8;
+}
+
+message ApplicationListItem {
+	// ID приложения.
+	int64 id = 1;
+
+	// Название приложения.
+	string name = 2;
+
+	// Описание приложения.
+	string description = 3;
+
+	// ID организации, которой присвоено приложение.
+	int64 organization_id = 4 [json_name = "organizationID"];
+
+	// ID сервис-профиля.
+	string service_profile_id = 5 [json_name = "serviceProfileID"];
+
+	// Название сервис-профиля.
+	string service_profile_name = 6;
+}
+
+
+message CreateApplicationRequest {
+	// Объект Приложения для создания.
+	Application application = 1;
+}
+
+message CreateApplicationResponse {
+	// ID приложения.
+	int64 id = 1;
+}
+
+message GetApplicationRequest {
+	// ID приложения.
+	int64 id = 1;
+}
+
+message GetApplicationResponse {
+	// Объект Приложение.
+	Application application = 1;
+}
+
+message UpdateApplicationRequest {
+	// Объект Приложение для обновления.
+	Application application = 1;
+}
+
+message DeleteApplicationRequest {
+	// ID приложения.
+	int64 id = 1;
+}
+
+message ListApplicationRequest {
+	// Ограничить максимальное число приложений в выдаче результатов.
+	int64 limit = 1;
+
+	// Смещение в наборе результатов (для нумерации страниц).
+	int64 offset = 2;
+
+	// ID приложения для применения фильтра.
+	int64 organization_id = 3 [json_name = "organizationID"];
+
+	// Поиск по названию (необязательно).
+	string search = 4;
+}
+
+message ListApplicationResponse {
+	// Общее число приложений в результатах.
+	int64 total_count = 1;
+	
+	// Приложения в результатах.
+	repeated ApplicationListItem result = 2;
+}
+
+message HTTPIntegrationHeader {
+	// Ключ
+	string key = 1;
+
+	// Значение
+	string value = 2;
+}
+
+message HTTPIntegration {
+	// ID приложения.
+	int64 application_id = 1 [json_name = "applicationID"];
+
+	// Заголовки для выполнения HTTP callback функций.
+	repeated HTTPIntegrationHeader headers = 2;
+
+	// URL для запроса восходящих данных.
+	string uplink_data_url = 3 [json_name = "uplinkDataURL"];
+
+	// URL для запроса join уведомлений.
+	string join_notification_url = 4 [json_name = "joinNotificationURL"];
+
+	// URL для запроса ACK уведомлений (для подтверждаемых downlink сообщений).
+	string ack_notification_url = 5 [json_name = "ackNotificationURL"];
+
+	// URL для запроса уведомлений об ошибках.
+	string error_notification_url = 6 [json_name = "errorNotificationURL"];
+
+	// URL для запроса уведомлений о состоянии устройств.
+	string status_notification_url = 7 [json_name = "statusNotificationURL"];
+
+	// URL для запроса уведомлений о местоположении.
+	string location_notification_url = 8 [json_name = "locationNotificationURL"];
+
+    // URL для запроса tx ack подтверждений (базовой станция подтвердила передачу downlink сообщения устройству).
+    string tx_ack_notification_url = 9 [json_name = "txAckNotificationURL"];
+}
+
+message CreateHTTPIntegrationRequest {
+	// Объект интеграции для создания.
+	HTTPIntegration integration = 1;
+}
+
+message GetHTTPIntegrationRequest {
+	// ID приложения.
+	int64 application_id = 1 [json_name = "applicationID"];
+}
+
+message GetHTTPIntegrationResponse {
+	// Объект интеграции.
+	HTTPIntegration integration = 1;
+}
+
+message UpdateHTTPIntegrationRequest {
+	// Объект интеграции для обновления.
+	HTTPIntegration integration = 1;
+}
+
+message DeleteHTTPIntegrationRequest {
+	// ID приложения.
+	int64 application_id = 1 [json_name = "applicationID"];
+}
+
+message ListIntegrationRequest {
+	//ID приложения.
+	int64 application_id = 1 [json_name = "applicationID"];
+}
+
+message IntegrationListItem {
+	// Тип интеграции.
+	IntegrationKind kind = 1;
+}
+
+message ListIntegrationResponse {
+	// Общее количество доступных интеграций в результатах.
+	int64 total_count = 1;
+
+	// Интеграции.
+	repeated IntegrationListItem result = 2;
+}
+
+enum InfluxDBPrecision {
+	NS = 0;
+	U = 1;
+	MS = 2;
+	S = 3;
+	M = 4;
+	H = 5;
+}
+
+message InfluxDBIntegration {
+	// ID приложения.
+	int64 application_id = 1 [json_name = "applicationID"];
+
+	// Конечная точка записи API InfluxDB (например http://localhost:8086/write).
+	string endpoint = 2;
+
+	// InfluxDB - название БД.
+	string db = 3;
+
+	// InfluxDB - имя пользователя.
+	string username = 4;
+
+	// InfluxDB - пароль.
+	string password = 5;
+
+	// InfluxDB - название retention policy.
+	string retention_policy_name = 6;
+
+	// Точность отметки времени InfluxDB.
+	InfluxDBPrecision precision = 7;
+}
+
+message CreateInfluxDBIntegrationRequest {
+	// Объект интеграции для создания.
+	InfluxDBIntegration integration = 1;
+}
+
+message GetInfluxDBIntegrationRequest {
+	// ID приложения.
+	int64 application_id = 1 [json_name = "applicationID"];
+}
+
+message GetInfluxDBIntegrationResponse {
+	// Объект интеграции.
+	InfluxDBIntegration integration = 1;
+}
+
+message UpdateInfluxDBIntegrationRequest {
+	// Объект интеграции.
+	InfluxDBIntegration integration = 1;
+}
+
+message DeleteInfluxDBIntegrationRequest {
+	// ID приложения.
+	int64 application_id = 1 [json_name = "applicationID"];
+}
+
+message ThingsBoardIntegration {
+	// Application ID.
+	int64 application_id = 1 [json_name = "applicationID"];
+
+    // ThingsBoard server endpoint, e.g. https://example.com
+    string server = 2;
+}
+
+message CreateThingsBoardIntegrationRequest {
+    // Integration object to create.
+    ThingsBoardIntegration integration = 1;
+}
+
+message GetThingsBoardIntegrationRequest {
+	// Application ID.
+	int64 application_id = 1 [json_name = "applicationID"];
+}
+
+message GetThingsBoardIntegrationResponse {
+    // Integration object.
+    ThingsBoardIntegration integration = 1;
+}
+
+message UpdateThingsBoardIntegrationRequest {
+    // Integration object.
+    ThingsBoardIntegration integration = 1;
+}
+
+message DeleteThingsBoardIntegrationRequest {
+	// Application ID.
+	int64 application_id = 1 [json_name = "applicationID"];
+}
+
+message MyDevicesIntegration {
+	// Application ID.
+	int64 application_id = 1 [json_name = "applicationID"];
+
+    // MyDevices API endpoint.
+    string endpoint = 2;
+}
+
+message CreateMyDevicesIntegrationRequest {
+    // Integration object to create.
+    MyDevicesIntegration integration = 1;
+}
+
+message GetMyDevicesIntegrationRequest {
+	// Application ID.
+	int64 application_id = 1 [json_name = "applicationID"];
+}
+
+message GetMyDevicesIntegrationResponse {
+    // Integration object.
+    MyDevicesIntegration integration = 1;
+}
+
+message UpdateMyDevicesIntegrationRequest {
+    // Integration object.
+    MyDevicesIntegration integration = 1;
+}
+
+message DeleteMyDevicesIntegrationRequest {
+	// Application ID.
+	int64 application_id = 1 [json_name = "applicationID"];
+}

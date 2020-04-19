@@ -1,0 +1,273 @@
+syntax = "proto3";
+
+package api;
+
+option go_package = "github.com/brocaar/chirpstack-api/go/v3/as/external/api";
+
+import "google/api/annotations.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/empty.proto";
+
+// OrganizationService - управление доступом организации.
+service OrganizationService {
+	// Get - возвращает список организаций.
+	rpc List(ListOrganizationRequest) returns (ListOrganizationResponse) {
+		option(google.api.http) = {
+			get: "/api/organizations"
+		};
+	}
+
+	// Get получает данные о указанной организации.
+	rpc Get(GetOrganizationRequest) returns (GetOrganizationResponse) {
+		option(google.api.http) = {
+			get: "/api/organizations/{id}"
+		};
+	}
+
+	// Create - создает новую организацию.
+	rpc Create(CreateOrganizationRequest) returns (CreateOrganizationResponse) {
+		option(google.api.http) = {
+			post: "/api/organizations"
+			body: "*"
+		};
+	}
+
+	// Update - обновляет существующую организацию.
+	rpc Update(UpdateOrganizationRequest) returns (google.protobuf.Empty) {
+		option(google.api.http) = {
+			put: "/api/organizations/{organization.id}"
+			body: "*"
+		};
+	}
+
+	// Delete - удаляет организацию.
+	rpc Delete(DeleteOrganizationRequest) returns (google.protobuf.Empty) {
+		option(google.api.http) = {
+			delete: "/api/organizations/{id}"
+		};
+	}
+
+	// Возвращает список пользователей организации.
+	rpc ListUsers(ListOrganizationUsersRequest) returns (ListOrganizationUsersResponse) {
+		option(google.api.http) = {
+			get: "/api/organizations/{organization_id}/users"
+		};
+	}
+
+	// Возвращает данные о пользователе.
+	rpc GetUser(GetOrganizationUserRequest) returns (GetOrganizationUserResponse) {
+		option(google.api.http) = {
+			get: "/api/organizations/{organization_id}/users/{user_id}"
+		};
+	}
+
+	// Добавляет нового пользователя.
+	rpc AddUser(AddOrganizationUserRequest) returns (google.protobuf.Empty) {
+		option(google.api.http) = {
+			post: "/api/organizations/{organization_user.organization_id}/users"
+			body: "*"
+		};
+	}
+
+	// Обновляет пользователя в организации.
+	rpc UpdateUser(UpdateOrganizationUserRequest) returns (google.protobuf.Empty) {
+		option(google.api.http) = {
+			put: "/api/organizations/{organization_user.organization_id}/users/{organization_user.user_id}"
+			body: "*"
+		};
+	}
+
+	// Удаляет пользователя из организации.
+	rpc DeleteUser(DeleteOrganizationUserRequest) returns (google.protobuf.Empty) {
+		option(google.api.http) = {
+			delete: "/api/organizations/{organization_id}/users/{user_id}"
+		};
+	}
+}
+
+message Organization {
+	// ID организации.
+	int64 id = 1;
+	
+	// Название организации (на латинице).
+	string name = 2;
+
+	// Отображаемое название организации.
+	string display_name = 3;
+
+	//Может ли организация создавать шлюзы?
+	bool can_have_gateways = 4;
+}
+
+message OrganizationListItem {
+	// ID организации.
+	int64 id = 1;
+	
+	// Название организации.
+	string name = 2;
+
+	// Отображаемое название организации.
+	string display_name = 3;
+
+	// Может ли организация создавать шлюзы?
+	bool can_have_gateways = 4;
+
+	// Временная метка создания.
+	google.protobuf.Timestamp created_at = 5;
+
+	// Временная метка последнего обновления.
+	google.protobuf.Timestamp updated_at = 6;
+}
+
+message GetOrganizationRequest {
+	// ID организации.
+	int64 id = 1;
+}
+
+message GetOrganizationResponse {
+	// Объект организация.
+	Organization organization = 1;
+
+	// Временная метка создания.
+	google.protobuf.Timestamp created_at = 2;
+
+	//Временная метка последнего обновления.
+	google.protobuf.Timestamp updated_at = 3;
+}
+
+message CreateOrganizationRequest {
+	// Объект организации для создания.
+	Organization organization = 1;
+}
+
+message CreateOrganizationResponse {
+	// ID организации.
+	int64 id = 1;
+}
+
+message UpdateOrganizationRequest {
+	// Объект организация для обновления.
+	Organization organization = 1;
+}
+
+message DeleteOrganizationRequest {
+	// ID организации.
+	int64 id = 1;
+}
+
+message ListOrganizationRequest {
+	// Ограничить макс. число организаций в выдаче результатов.
+	int64 limit = 1;
+
+	// Смещение в наборе результатов (для нумерации страниц).
+	int64 offset = 2;
+
+	// Когда заполнено, данная строка будет использоваться для поиска по отображаемому названию.
+	string search = 3;
+}
+
+message ListOrganizationResponse {
+	// Общее число организаций.
+	int64 total_count = 1;
+
+	repeated OrganizationListItem result = 2;
+}
+
+message OrganizationUser {
+	// ID организации.
+	int64 organization_id = 1 [json_name = "organizationID"];
+
+	// ID пользователя.
+	int64 user_id = 2 [json_name = "userID"];
+
+	// Пользователь является администратором в контексте организации.
+	bool is_admin = 3;
+
+    // Пользователь является администратором устройств.
+    bool is_device_admin = 5;
+
+    // Пользователь является администратором базовых станций.
+    bool is_gateway_admin = 6;
+
+	// Имя пользователя (используется только при get запросе).
+	string username = 4;
+}
+
+message OrganizationUserListItem {
+	// ID пользователя.
+	int64 user_id = 1 [json_name = "userID"];
+
+	// Имя пользователя.
+	string username = 2;
+
+	// Пользователь является администратором в контексте организации.
+	bool is_admin = 3;
+
+    // Пользователь является администратором устройств.
+    bool is_device_admin = 6;
+
+    // Пользователь является администратором базовых станций.
+    bool is_gateway_admin = 7;
+
+	// Created at timestamp.
+	google.protobuf.Timestamp created_at = 4;
+
+	// Временная метка последнего обновления.
+	google.protobuf.Timestamp updated_at = 5;
+}
+
+message AddOrganizationUserRequest {
+	// Объект пользователь организации для создания.
+	OrganizationUser organization_user = 1;
+}
+
+message UpdateOrganizationUserRequest {
+	// Объект пользователь организации для обновления.
+	OrganizationUser organization_user = 1;
+}
+
+message DeleteOrganizationUserRequest {
+	// ID организации.
+	int64 organization_id = 1 [json_name = "organizationID"];
+	
+	// ID пользователя.
+	int64 user_id = 2 [json_name = "userID"];
+}
+
+message ListOrganizationUsersRequest {
+	// ID организации.
+	int64 organization_id = 1 [json_name = "organizationID"];
+	
+	// Ограничить макс. число пользователей в выдаче результатов.
+	int32 limit = 2;
+
+	// Смещение в наборе результатов (для нумерации страниц).
+	int32 offset = 3;
+}
+
+message ListOrganizationUsersResponse {
+	// Общее число пользователей организации.
+	int64 total_count = 1;
+	
+	repeated OrganizationUserListItem result = 2;
+}
+
+message GetOrganizationUserRequest {
+	// ID организации.
+	int64 organization_id = 1 [json_name = "organizationID"];
+
+	// ID пользователя.
+	int64 user_id = 2 [json_name = "userID"];
+}
+
+// Ответ для пользователя в организации
+message GetOrganizationUserResponse {
+	// Объект - организация пользователя.
+	OrganizationUser organization_user = 1;
+
+	// Временная метка создания.
+	google.protobuf.Timestamp created_at = 2;
+
+	// Временная метка последнего обновления.
+	google.protobuf.Timestamp updated_at = 3;
+}

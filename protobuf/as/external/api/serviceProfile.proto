@@ -1,0 +1,125 @@
+syntax = "proto3";
+
+package api;
+
+option go_package = "github.com/brocaar/chirpstack-api/go/v3/as/external/api";
+
+import "google/api/annotations.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/empty.proto";
+import "as/external/api/profiles.proto";
+
+
+// ServiceProfileService - управление сервис-профилями.
+service ServiceProfileService {
+    // Create создает указанный сервис-профиль.
+    rpc Create(CreateServiceProfileRequest) returns (CreateServiceProfileResponse) {
+        option(google.api.http) = {
+            post: "/api/service-profiles"
+            body: "*"
+        };
+    }
+
+    // Get возвращает сервис-профиль по указанному id.
+    rpc Get(GetServiceProfileRequest) returns (GetServiceProfileResponse) {
+        option(google.api.http) = {
+            get: "/api/service-profiles/{id}"
+        };
+    }
+
+    // Update обновляет указанный сервис-профиль.
+    rpc Update(UpdateServiceProfileRequest) returns (google.protobuf.Empty) {
+        option(google.api.http) = {
+            put: "/api/service-profiles/{service_profile.id}"
+            body: "*"
+        };
+    }
+
+    // Delete удаляет указанный сервис-профиль по id.
+    rpc Delete(DeleteServiceProfileRequest) returns (google.protobuf.Empty) {
+        option(google.api.http) = {
+            delete: "/api/service-profiles/{id}"
+        };
+    }
+
+    // List выводит список доступных сервис-профилей.
+    rpc List(ListServiceProfileRequest) returns (ListServiceProfileResponse) {
+        option(google.api.http) = {
+            get: "/api/service-profiles"
+        };
+    }
+}
+
+message CreateServiceProfileRequest {
+    // Объект сервис-профиль для создания.
+    ServiceProfile service_profile = 1;
+}
+
+message CreateServiceProfileResponse{
+    // ID сервис-профиля (строка UUID).
+    string id = 1;
+}
+
+message GetServiceProfileRequest{
+    // ID сервис-профиля (строка UUID).
+    string id = 1;
+}
+
+message GetServiceProfileResponse{
+    // Объект сервис-профиля.
+    ServiceProfile service_profile = 1;
+
+    // Временная метка создания.
+    google.protobuf.Timestamp created_at = 2;
+
+    // Временная метка последнего обновления.
+    google.protobuf.Timestamp updated_at = 3;
+}
+
+message UpdateServiceProfileRequest{
+    // Объект сервис-профиль для обновления.
+    ServiceProfile service_profile = 1;
+}
+
+message DeleteServiceProfileRequest{
+    // ID сервис-профиля (строка UUID).
+    string id = 1;
+}
+
+message ListServiceProfileRequest{
+    // Ограничить макс. число элементов в выдаче результатов.
+    int64 limit = 1;
+
+    // Смещение в наборе результатов (для нумерации страниц).
+    int64 offset = 2;
+
+    // ID организации для применения фильтра.
+    int64 organization_id = 3 [json_name = "organizationID"];
+}
+
+message ServiceProfileListItem {
+    // ID сервис-профиля (строка UUID).
+    string id = 1;
+
+    // Название сервис-профиля.
+    string name = 2;
+
+    // ID организации для сервис-профиля.
+    int64 organization_id = 3 [json_name = "organizationID"];
+
+    // ID сетевого сервера для сервис-профиля.
+    int64 network_server_id = 4 [json_name = "networkServerID"];
+
+    // Временная метка создания.
+    google.protobuf.Timestamp created_at = 5;
+
+    // Временная метка последнего обновления.
+    google.protobuf.Timestamp updated_at = 6;
+}
+
+message ListServiceProfileResponse{
+    // Общее число сервис-профилей.
+    int64 total_count = 1;
+
+    repeated ServiceProfileListItem result = 2;
+}

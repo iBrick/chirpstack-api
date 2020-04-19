@@ -1,0 +1,220 @@
+syntax = "proto3";
+
+package api;
+
+option go_package = "github.com/brocaar/chirpstack-api/go/v3/as/external/api";
+
+import "google/api/annotations.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/duration.proto";
+import "as/external/api/multicastGroup.proto";
+
+// FUOTADeploymentService - сервис, управляющий обновлениями FUOTA.
+service FUOTADeploymentService {
+    // CreateForDevice - creates a deployment for the given DevEUI.
+    rpc CreateForDevice(CreateFUOTADeploymentForDeviceRequest) returns (CreateFUOTADeploymentForDeviceResponse) {
+        option(google.api.http) = {
+            post: "/api/devices/{dev_eui}/fuota-deployments"
+            body: "*"
+        };
+    }
+
+    // Get - возвращает Deployment FUOTA для данного идентификатора.
+    rpc Get(GetFUOTADeploymentRequest) returns (GetFUOTADeploymentResponse) {
+        option(google.api.http) = {
+            get: "/api/fuota-deployments/{id}"
+        };
+    }
+
+    // List - выводит список Deployment FUOTA.
+    rpc List(ListFUOTADeploymentRequest) returns (ListFUOTADeploymentResponse) {
+        option(google.api.http) = {
+            get: "/api/fuota-deployments"
+        };
+    }
+
+    // GetDeploymentDevice - возвращает устройство, для которого производится обновление.
+    rpc GetDeploymentDevice(GetFUOTADeploymentDeviceRequest) returns (GetFUOTADeploymentDeviceResponse) {
+        option(google.api.http) = {
+            get: "/api/fuota-deployments/{fuota_deployment_id}/devices/{dev_eui}"
+        };
+    }
+
+    // ListDeploymentDevices - выводит список устройств и статус обновлений для заданного процесса Deployment ID.
+    rpc ListDeploymentDevices(ListFUOTADeploymentDevicesRequest) returns (ListFUOTADeploymentDevicesResponse) {
+        option(google.api.http) = {
+            get: "/api/fuota-deployments/{fuota_deployment_id}/devices"
+        };
+    }
+}
+
+enum FUOTADeploymentDeviceState {
+    // Pending.
+    PENDING = 0;
+
+    // Success.
+    SUCCESS = 1;
+
+    // Error.
+    ERROR = 2;
+}
+
+message FUOTADeployment {
+    // ID процесса обновления Deployment (в формате строки UUID). Назначается автоматически.
+    string id = 1;
+
+    // Название процесса обновления.
+    string name = 2;
+
+    // Тип мультикаст. В текущием релизе поддерживается Class-C.
+    MulticastGroupType group_type = 3;
+
+    // Скорость соединения DR.
+    uint32 dr = 4;
+
+    // Частота (Hz).
+    uint32 frequency = 5;
+
+    // Данные.
+    bytes payload = 6;
+
+    // Избыточность (число пакетов).
+    uint32 redundancy = 7;
+
+    // Тайм-аут мультикаст передачи. Значение указано в спец-и Remote Multicast Setup и имеет разное значение для групп класса B и класса C
+    uint32 multicast_timeout = 8;
+
+    // Таймаут одноадресной рассылки. Устанавливается ожидаемое время пакета от устройства. Механизм FUOTA ждать в течение заданного времени, прежде чем перейти к следующим процессам.
+    google.protobuf.Duration unicast_timeout = 9;
+
+    // Состояние процесса обновления.
+    // Это значение автоматически установлено при создании.
+    string state = 10;
+
+    // Следующий процесс после обновления.
+    // Это значение автоматически установлено при создании.
+    google.protobuf.Timestamp next_step_after = 11;
+}
+
+message FUOTADeploymentListItem {
+    // ID процесса обновления (в формате строки UUID).
+    string id = 1;
+
+    // Временная метка создания.
+    google.protobuf.Timestamp created_at = 2;
+
+    // Временная метка последнего обновления.
+    google.protobuf.Timestamp updated_at = 3;
+
+    // Название процесса обновления.
+    string name = 4;
+
+    // Состояние процесса.
+    string state = 5;
+
+    // Следующий процесс после через заданное время.
+    google.protobuf.Timestamp next_step_after = 6;
+}
+
+message CreateFUOTADeploymentForDeviceRequest {
+    // Device EUI (в HEX).
+    string dev_eui = 1 [json_name = "devEUI"];
+
+    // Процесс FUOTA.
+    FUOTADeployment fuota_deployment = 2;
+}
+
+message CreateFUOTADeploymentForDeviceResponse {
+    // ID созданного процесса (в формате строки UUID).
+    string id = 1;
+}
+
+message GetFUOTADeploymentRequest {
+    // ID процесса (в формате строки UUID).
+    // Это значение автоматически установлено при создании.
+    string id = 1;
+}
+
+message GetFUOTADeploymentResponse {
+    FUOTADeployment fuota_deployment = 1;
+
+    // Временная метка создания.
+    google.protobuf.Timestamp created_at = 2;
+
+    // Временная метка последнего обновления.
+    google.protobuf.Timestamp updated_at = 3;
+}
+
+message ListFUOTADeploymentRequest {
+    // Ограничить число процессов в выдаче результатов.
+    int64 limit = 1;
+
+    // Offset in the result-set (for pagination).
+    int64 offset = 2;
+
+    // Application ID для применения фильтра (необязательное).
+    int64 application_id = 3 [json_name = "applicationID"];
+    
+    // Device EUI (в HEX) (необязательное).
+    string dev_eui = 4 [json_name = "devEUI"];
+}
+
+message ListFUOTADeploymentResponse {
+    // Total number of deployments available within the result-set.
+    int64 total_count = 1;
+
+    // Deployments within this result-set.
+    repeated FUOTADeploymentListItem result = 2;
+}
+
+message ListFUOTADeploymentDevicesRequest {
+    // ID процесса обновления (в формате строки UUID).
+    // Это значение автоматически установлено при создании.
+    string fuota_deployment_id = 1 [json_name = "fuotaDeploymentID"];
+
+    // Макс. число элементов в выдаче.
+    int64 limit = 2;
+
+    // Смещение в наборе результатов (для нумерации страниц).
+    int64 offset = 3;
+}
+
+message GetFUOTADeploymentDeviceRequest {
+    // ID процесса обновления (в формате строки UUID).
+    // Это значение автоматически установлено при создании.
+    string fuota_deployment_id = 1 [json_name = "fuotaDeploymentID"];
+
+    // Device EUI (в HEX ).
+    string dev_eui = 2 [json_name = "devEUI"];
+}
+
+message GetFUOTADeploymentDeviceResponse {
+    FUOTADeploymentDeviceListItem deployment_device = 1;
+}
+
+message ListFUOTADeploymentDevicesResponse {
+    // Общее число устройств для процесса FUOTA.
+    int64 total_count = 1;
+
+    repeated FUOTADeploymentDeviceListItem result = 2;
+}
+
+message FUOTADeploymentDeviceListItem {
+    // Device EUI (в HEX).
+    string dev_eui = 1 [json_name = "devEUI"];
+
+    // Название устройства.
+    string device_name = 2;
+
+    // Состояние устройства.
+    FUOTADeploymentDeviceState state = 3;
+
+    // Сообщение об ошибке (в случае ошибочного состояния).
+    string error_message = 4;
+
+    // Временная метка создания.
+    google.protobuf.Timestamp created_at = 5;
+
+    // Временная метка последнего изменения.
+    google.protobuf.Timestamp updated_at = 6;
+}

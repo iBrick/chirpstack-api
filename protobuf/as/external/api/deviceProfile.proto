@@ -1,0 +1,128 @@
+syntax = "proto3";
+
+package api;
+
+option go_package = "github.com/brocaar/chirpstack-api/go/v3/as/external/api";
+
+import "google/api/annotations.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/empty.proto";
+import "as/external/api/profiles.proto";
+
+
+// DeviceProfileService is the service managing device-profiles.
+service DeviceProfileService {
+    // Create - создает указанный профиль устройства.
+    rpc Create(CreateDeviceProfileRequest) returns (CreateDeviceProfileResponse) {
+        option(google.api.http) = {
+            post: "/api/device-profiles"
+            body: "*"
+        };
+    }
+
+    // Get - возвращает профиль устройства по указанному ID.
+    rpc Get(GetDeviceProfileRequest) returns (GetDeviceProfileResponse) {
+        option(google.api.http) = {
+            get: "/api/device-profiles/{id}"
+        };
+    }
+
+    // Update - обновляет указанный профиль устройства.
+    rpc Update(UpdateDeviceProfileRequest) returns (google.protobuf.Empty) {
+        option(google.api.http) = {
+            put: "/api/device-profiles/{device_profile.id}"
+            body: "*"
+        };
+    }
+
+    // Delete - удаляет профиль устройства по заданному ID.
+    rpc Delete(DeleteDeviceProfileRequest) returns (google.protobuf.Empty) {
+        option(google.api.http) = {
+            delete: "/api/device-profiles/{id}"
+        };
+    }
+
+    // List - возвращает список доступных профилей устройств.
+    rpc List(ListDeviceProfileRequest) returns (ListDeviceProfileResponse) {
+        option(google.api.http) = {
+            get: "/api/device-profiles"
+        };
+    }
+}
+
+message CreateDeviceProfileRequest {
+    // Профиль устройства для создания.
+    DeviceProfile device_profile = 1;
+}
+
+message CreateDeviceProfileResponse {
+    // ID профиля устройства (строка UUID).
+    string id = 1;
+}
+
+message GetDeviceProfileRequest {
+    // ID профиля устройства (строка UUID).
+    string id = 1;
+}
+
+message GetDeviceProfileResponse {
+    // Объект - Профиль устройства.
+    DeviceProfile device_profile = 1;
+
+    // Временная метка создания.
+    google.protobuf.Timestamp created_at = 2;
+
+    // Временная метка последнего обновления.
+    google.protobuf.Timestamp updated_at = 3;
+}
+
+message UpdateDeviceProfileRequest {
+    // Объект - Профиль устройства для обновления.
+    DeviceProfile device_profile = 1;
+}
+
+message DeleteDeviceProfileRequest {
+    // ID профиля устройства (строка UUID).
+    string id = 1;
+}
+
+message DeviceProfileListItem {
+    // ID профиля устройства (строка UUID).
+    string id = 1;
+
+    // Название профиля устройства.
+    string name = 2;
+
+    // ID организации, которой присваивается профиль устройства.
+    int64 organization_id = 3 [json_name = "organizationID"];
+
+    // ID сетевого сервера, на котором используется профиль устройства.
+    int64 network_server_id = 4 [json_name = "networkServerID"];
+
+    // Временная метка создания.
+    google.protobuf.Timestamp created_at = 5;
+
+    // Временная метка последнего обновления.
+    google.protobuf.Timestamp updated_at = 6;
+}
+
+message ListDeviceProfileRequest {
+    // Ограничивает число возвращаемых данных.
+    int64 limit = 1;
+
+    // Смещение в наборе результатов (для нумерации страниц).
+    int64 offset = 2;
+
+    // ID организации для применения фильтра.
+    int64 organization_id = 3 [json_name = "organizationID"];
+
+    // ID приложения для применения фильтра.
+    int64 application_id = 4 [json_name = "applicationID"];
+}
+
+message ListDeviceProfileResponse {
+    // Всего профилей устройств.
+    int64 total_count = 1;
+
+    repeated DeviceProfileListItem result = 2;
+}

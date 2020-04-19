@@ -1,0 +1,265 @@
+syntax = "proto3";
+
+package api;
+
+option go_package = "github.com/brocaar/chirpstack-api/go/v3/as/external/api";
+
+import "google/api/annotations.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/empty.proto";
+
+// MulticastGroupService - это сервис, управляющий групповыми рассылками.
+service MulticastGroupService {
+    // Create создает указанную мультикаст-группу.
+    rpc Create(CreateMulticastGroupRequest) returns (CreateMulticastGroupResponse) {
+        option(google.api.http) = {
+            post: "/api/multicast-groups"
+            body: "*"
+        };
+    }
+
+    // Get возвращает мультикаст-группу по ID.
+    rpc Get(GetMulticastGroupRequest) returns (GetMulticastGroupResponse) {
+        option(google.api.http) = {
+            get: "/api/multicast-groups/{id}"
+        };
+    }
+
+    // Update обновляет указанную мультикаст-группу.
+    rpc Update(UpdateMulticastGroupRequest) returns (google.protobuf.Empty) {
+        option(google.api.http) = {
+            put: "/api/multicast-groups/{multicast_group.id}"
+            body: "*"
+        };
+    }
+
+    // Delete удаляет указанную мультикаст-группу по ID.
+    rpc Delete(DeleteMulticastGroupRequest) returns (google.protobuf.Empty) {
+        option(google.api.http) = {
+            delete: "/api/multicast-groups/{id}"
+        };
+    }
+
+    // List возвращает доступные мультикаст-группы.
+    rpc List(ListMulticastGroupRequest) returns (ListMulticastGroupResponse) {
+        option(google.api.http) = {
+            get: "/api/multicast-groups"
+        };
+    }
+
+    // AddDevice добавляет устройство в мультикаст-группу.
+    rpc AddDevice(AddDeviceToMulticastGroupRequest) returns (google.protobuf.Empty) {
+        option(google.api.http) = {
+            post: "/api/multicast-groups/{multicast_group_id}/devices"
+            body: "*"
+        };
+    }
+
+    // RemoveDevice удаляет устройство из мультикаст-группы.
+    rpc RemoveDevice(RemoveDeviceFromMulticastGroupRequest) returns (google.protobuf.Empty) {
+        option(google.api.http) = {
+            delete: "/api/multicast-groups/{multicast_group_id}/devices/{dev_eui}"
+        };
+    }
+
+    // Enqueue добавляет элемент в очередь мультикаст-группы.
+    rpc Enqueue(EnqueueMulticastQueueItemRequest) returns (EnqueueMulticastQueueItemResponse) {
+        option(google.api.http) = {
+            post: "/api/multicast-groups/{multicast_queue_item.multicast_group_id}/queue"
+            body: "*"
+        };
+    }
+
+    // FlushQueue очищает очередь мультикаст-группы.
+    rpc FlushQueue(FlushMulticastGroupQueueItemsRequest) returns (google.protobuf.Empty) {
+        option(google.api.http) = {
+            delete: "/api/multicast-groups/{multicast_group_id}/queue"
+        };
+    }
+
+    // ListQueue возвращает элементы очереди мультикаст-группы.
+    rpc ListQueue(ListMulticastGroupQueueItemsRequest) returns (ListMulticastGroupQueueItemsResponse) {
+        option(google.api.http) = {
+            get: "/api/multicast-groups/{multicast_group_id}/queue"
+        };
+    }
+}
+
+enum MulticastGroupType {
+    // Класс-C.
+    CLASS_C = 0;
+
+    // Класс-B.
+    CLASS_B = 1;
+}
+
+message MulticastGroup {
+    // ID (строковый UUID).
+    // Будет сгенерировано автоматически при создании.
+    string id = 1;
+
+    // Название мультикаст-группы.
+    string name = 2;
+
+    // Адрес мультикаст (DevAddr в HEX).
+    string mc_addr = 3;
+
+    // Ключ сетевой сессии мультикаст (ключ AES128 в HEX).
+    string mc_nwk_s_key = 4;
+
+    // Ключ сессии приложения мультикаст (ключ AES128 в HEX).
+    string mc_app_s_key = 5;
+
+    // Счетчик пакетов.
+    uint32 f_cnt = 6;
+
+    // Тип мультикаст группы.
+    MulticastGroupType group_type = 7;
+
+    // Скорость соединения.
+    uint32 dr = 8;
+
+    // Частота (Hz).
+    uint32 frequency = 9;
+
+    // Период пинг-слота.
+    // Обязательно для групп мультикаст рассылки класса B.
+    uint32 ping_slot_period = 10;
+
+    // ID сервис-профиля.
+    // После создания это поле не может быть обновлено.
+    string service_profile_id = 11 [json_name = "serviceProfileID"];
+}
+
+message MulticastGroupListItem {
+    // ID (строковый UUID).
+    string id = 1;
+
+    // Название мультикаст-группы.
+    string name = 2;
+
+    // ID сервис-профиля (строковый UUID).
+    string service_profile_id = 3 [json_name = "serviceProfileID"];
+
+    // Название сервис-профиля.
+    string service_profile_name = 4;
+}
+
+message CreateMulticastGroupRequest {
+    // Объект мультикаст-группы для создания.
+    MulticastGroup multicast_group = 1;
+}
+
+message CreateMulticastGroupResponse {
+    // ID созданной группы (строковый UUID).
+    string id = 1;
+}
+
+message GetMulticastGroupRequest {
+    // ID (строковый UUID).
+    string id = 1;
+}
+
+message GetMulticastGroupResponse {
+    // Объект мультикаст-группы.
+    MulticastGroup multicast_group = 1;
+
+    // Временная метка создания.
+    google.protobuf.Timestamp created_at = 2;
+
+    // Временная метка последнего обновления.
+    google.protobuf.Timestamp updated_at = 3;
+}
+
+message UpdateMulticastGroupRequest {
+    // Объект мультикаст-группы для обновления.
+    MulticastGroup multicast_group = 1;
+}
+
+message DeleteMulticastGroupRequest {
+    // ID (строковый UUID).
+    string id = 1;
+}
+
+message AddDeviceToMulticastGroupRequest {
+    // ID мультикаст-группы (строковый UUID).
+    string multicast_group_id = 1 [json_name = "multicastGroupID"];
+
+    // EUI  устройства (в HEX).
+    // Устройство должно быть в том же сервис-профиле, что и мультикаст-группа.
+    string dev_eui = 2 [json_name = "devEUI"];
+}
+
+message RemoveDeviceFromMulticastGroupRequest {
+    // ID мультикаст-группы (строковый UUID).
+    string multicast_group_id = 1 [json_name = "multicastGroupID"];
+
+    // EUI устройства (в HEX).
+    string dev_eui = 2 [json_name = "devEUI"];
+}
+
+message ListMulticastGroupRequest {
+    // Ограничить макс. число устройств в выдаче результатов.
+    int64 limit = 1;
+
+    // Смещение в наборе результатов (для нумерации страниц).
+    int64 offset = 2;
+
+    // ID организации для применения фильтра.
+    int64 organization_id = 3 [json_name = "organizationID"];
+
+    // EUI устройства (в HEX ) для применения фильтра.
+    string dev_eui = 4 [json_name = "devEUI"];
+
+    // ID сервис-профиля для применения фильтра.
+    string service_profile_id = 5 [json_name = "serviceProfileID"];
+
+    // Поиск - может быть использован для поиска по названию мультикаст-группы.
+    string search = 6;
+}
+
+message ListMulticastGroupResponse {
+    // Общее число мультикаст-групп.
+    int64 total_count = 1;
+
+    repeated MulticastGroupListItem result = 2;
+}
+
+message MulticastQueueItem {
+    // ID мультикаст-группы (строковый UUID).
+    string multicast_group_id = 1 [json_name = "multicastGroupID"];
+
+    // Счетчик пакетов Downlink.
+    // Устанавливается автоматически при добавлении в очередь.
+    uint32 f_cnt = 2;
+
+    // Используемый FPort (должен быть > 0).
+    uint32 f_port = 3;
+
+    // Данные в Base64.
+    bytes data = 4;
+}
+
+message EnqueueMulticastQueueItemRequest {
+    // Объект для добавления в очередь мультикаст-группы.
+    MulticastQueueItem multicast_queue_item = 1;
+}
+
+message EnqueueMulticastQueueItemResponse {
+    // Счетчик пакетов для данных в очереди.
+    uint32 f_cnt = 1;
+}
+
+message FlushMulticastGroupQueueItemsRequest {
+    // ID мультикаст-группы (строковый UUID).
+    string multicast_group_id = 1 [json_name = "multicastGroupID"];
+}
+
+message ListMulticastGroupQueueItemsRequest {
+    // ID мультикаст-группы (строковый UUID).
+    string multicast_group_id = 1 [json_name = "multicastGroupID"];
+}
+
+message ListMulticastGroupQueueItemsResponse {
+    repeated MulticastQueueItem multicast_queue_items = 1;
+}

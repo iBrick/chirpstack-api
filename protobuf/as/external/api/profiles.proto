@@ -1,0 +1,184 @@
+syntax = "proto3";
+
+package api;
+
+option go_package = "github.com/brocaar/chirpstack-api/go/v3/as/external/api";
+
+
+enum RatePolicy {
+    // Drop
+    DROP = 0;
+
+    // Mark
+    MARK = 1;
+}
+
+message ServiceProfile {
+    // ID Сервис-профиля (строка UUID).
+    // Автоматически заполняется при создании.
+    string id = 1;
+
+    // Название Сервис-профиля.
+    string name = 21;
+
+    // ID организации, которой присваивается Сервис-профиль.
+    int64 organization_id = 22 [json_name = "organizationID"];
+
+    // ID сетевого сервера, для которого настроен Сервис-профиль.
+    int64 network_server_id = 23 [json_name = "networkServerID"];
+    
+    // Token bucket filling rate, включая ACK (пакетов в час).
+    uint32 ul_rate = 2;
+    
+    // Token bucket burst size.
+    uint32 ul_bucket_size = 3;
+    
+    // Отбрасывать или помечать при превышении ULRate.
+    RatePolicy ul_rate_policy = 4;
+    
+    // Token bucket filling rate, включая ACK (пакетов в час).
+    uint32 dl_rate = 5;
+    
+    // Token bucket burst size.
+    uint32 dl_bucket_size = 6;
+    
+    // Отбрасывать или помечать при превышении DLRate.
+    RatePolicy dl_rate_policy = 7;
+    
+    // Метаданные шлюза (RSSI, SNR, GW геолок., др.) добавлять к пакету, отправляемому на AS.
+    bool add_gw_metadata = 8 [json_name = "addGWMetaData"];
+    
+    // Частота для инициирования запроса статуса конечного устройства (запросов в день).
+    uint32 dev_status_req_freq = 9;
+    
+    // Отправлять информацию о заряде батарейки на AS.
+    bool report_dev_status_battery = 10;
+    
+    // Отправлять информацию о уровне сигнала на AS.
+    bool report_dev_status_margin = 11;
+    
+    // Минимальная скорость соединения. Используется для ADR.
+    uint32 dr_min = 12;
+    
+    // Максимальная скорость соединения. Используется для ADR.
+    uint32 dr_max = 13;
+    
+    // Маска канала. Информационное поле для NS.
+    bytes channel_mask = 14;
+    
+    // Пассивный роуминг разрешен.
+    bool pr_allowed = 15;
+    
+    // Хэндовер в роуминге разрешен.
+    bool hr_allowed = 16;
+    
+    // Активация в роуминге разрешена.
+    bool ra_allowed = 17;
+    
+    // Активировать сервис геолокации.
+    bool nwk_geo_loc = 18;
+    
+    // Целевое значение Packet Error Rate.
+    uint32 target_per = 19 [json_name = "targetPER"];
+    
+    // Минимальное число получающих шлюзов (для информации).
+    uint32 min_gw_diversity = 20 [json_name = "minGWDiversity"];
+
+}
+
+message DeviceProfile {
+    // ID Профиля устройства (строка UUID).
+    string id = 1;
+
+    // Название профиля устройства.
+    string name = 21;
+
+    // ID организации, которой назначается сервис-профиль.
+    int64 organization_id = 22 [json_name = "organizationID"];
+
+    // ID сетевого сервера, для которого используется сервис-профиль.
+    int64 network_server_id = 23 [json_name = "networkServerID"];
+    
+    // Конечное устройство поддерживает класс B.
+    bool supports_class_b = 2;
+    
+    // Максимальная задержка для конечного устройства, чтобы ответить на запрос MAC или подтвердить DL пакет (обязательно, если поддерживается режим класса B).
+    uint32 class_b_timeout = 3;
+    
+    // Обязательно, если поддерживается класс B.
+    uint32 ping_slot_period = 4;
+    
+    // Обязательно, если поддерживается класс B.
+    uint32 ping_slot_dr = 5 [json_name = "pingSlotDR"];
+    
+    // Обязательно, если поддерживается класс B.
+    uint32 ping_slot_freq = 6;
+    
+    // Конечное устройство поддерживает класс C.
+    bool supports_class_c = 7;
+    
+    // Максимальная задержка для конечного устройства, чтобы ответить на запрос MAC или подтвердить DL пакет (обязательно, если поддерживается режим класса С).
+    uint32 class_c_timeout = 8;
+    
+    // Версия LoRaWAN, поддерживаемая конечным устройством.
+    string mac_version = 9;
+    
+    // Ревизия документа Regional Parameters, поддерживаемая конечным устройством.
+    string reg_params_revision = 10;
+    
+    // Задержка RX1 для класса A (обязательно для ABP).
+    uint32 rx_delay_1 = 11;
+    
+    // RX1 смещение скорости передачи данных (обязательно для ABP).
+    uint32 rx_dr_offset_1 = 12 [json_name = "rxDROffset1"];
+    
+    // Скорость канала RX2 (DR) (обязательно для ABP).
+    uint32 rx_datarate_2 = 13 [json_name = "rxDataRate2"];
+    
+    // Частота канала RX2  (обязательно для ABP).
+    uint32 rx_freq_2 = 14;
+    
+    // Список заводских предустановок частот (обязательно для ABP).
+    repeated uint32 factory_preset_freqs = 15;
+    
+    // Максимальное значение EIRP, поддерживаемое конечным устройством.
+    uint32 max_eirp = 16 [json_name = "maxEIRP"];
+    
+    // Максимальный рабочий цикл, поддерживаемый конечным устройством.
+    uint32 max_duty_cycle = 17;
+    
+    // Конечное устройство активируется по OTAA или нет (ABP).
+    bool supports_join = 18;
+    
+    // RF название региона.
+    string rf_region = 19;
+    
+    // Конечное устройство использует 32-битное значение FCnt (обязательно для конечного устройства LoRaWAN 1.0).
+    bool supports_32bit_f_cnt = 20 [json_name = "supports32BitFCnt"];
+
+    // Payload codec.
+    // Leave blank to disable the codec feature.
+    string payload_codec = 24;
+
+    // Payload encoder script.
+    // Depending the codec, it is possible to provide a script which implements
+    // the encoder function.
+    string payload_encoder_script = 25;
+
+    // Payload decoder script.
+    // Depending the codec, it is possible to provide a script which implements
+    // the decoder function.
+    string payload_decoder_script = 26;
+
+    // TTL (в секундах) буфера геолокации.
+    // Если значение > 0, uplink RX метаданные будут сохранятся в буфере
+    // для того, чтобы при использовать несколько значений метаданных пакетов для геолокации.
+    uint32 geoloc_buffer_ttl = 27 [json_name = "geolocBufferTTL"];
+
+    // Минимальный размер буфера геолокациии.
+    // Если значение  > 0, геолокация будет выполняться только, когда в буфере достаточно значений.
+    uint32 geoloc_min_buffer_size = 28;
+
+    // Тэги, определяемые пользователем.
+    map<string, string> tags = 29;
+}

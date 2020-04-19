@@ -1,0 +1,90 @@
+syntax = "proto3";
+
+package api;
+
+option go_package = "github.com/brocaar/chirpstack-api/go/v3/as/external/api";
+
+import "google/api/annotations.proto";
+import "google/protobuf/empty.proto";
+
+
+// DeviceQueueService - сервис, управляющий очередью на отправку сообщений downlink.
+service DeviceQueueService {
+    // Enqueue - добавляет указанный элемент в очередь устройства.
+    rpc Enqueue(EnqueueDeviceQueueItemRequest) returns (EnqueueDeviceQueueItemResponse) {
+        option(google.api.http) = {
+            post: "/api/devices/{device_queue_item.dev_eui}/queue"
+            body: "*"
+        };
+    }
+
+    // Flush обнуляет очередь устройства.
+    rpc Flush(FlushDeviceQueueRequest) returns (google.protobuf.Empty) {
+        option(google.api.http) = {
+            delete: "/api/devices/{dev_eui}/queue"
+        };
+    }
+
+    // List - выводит элементы в очереди устройств.
+    rpc List(ListDeviceQueueItemsRequest) returns (ListDeviceQueueItemsResponse) {
+        option(google.api.http) = {
+            get: "/api/devices/{dev_eui}/queue"
+        };
+    }
+}
+
+message DeviceQueueItem {
+    // EUI устройства (в HEX).
+    string dev_eui = 1 [json_name = "devEUI"];
+
+    // Установите для этого параметра значение true, если требуется подтверждение от устройства.
+    // Не является гарантией доставки сообщения.
+    bool confirmed = 2;
+
+    // Счетчик Downlink пакетов.
+    // Будет автоматически установлено при добавлении в очередь.
+    uint32 f_cnt = 6;
+
+    // Значение FPort (должно быть > 0)
+    uint32 f_port = 3;
+
+    // Данные в Base64.
+    // Или используйте поле json_object, когда кодек приложения настроен.
+    bytes data = 4;
+
+    // JSON объект (string).
+    // Используйте это тогда, когда настроен кодек приложения, преобразующий этот объект в 
+    // бинарную форму.
+    string json_object = 5;
+}
+
+message EnqueueDeviceQueueItemRequest {
+    // Объект Queue-item для добавления в очередь.
+    DeviceQueueItem device_queue_item = 1;
+}
+
+message EnqueueDeviceQueueItemResponse {
+    // Счетчик пакетов для отправки данных в очередь.
+    uint32 f_cnt = 1;
+}
+
+message FlushDeviceQueueRequest {
+    // EUI устройства (в HEX).
+    string dev_eui = 1 [json_name = "devEUI"];
+}
+
+message ListDeviceQueueItemsRequest {
+    // EUI устройства (в HEX).
+    string dev_eui = 1 [json_name = "devEUI"];
+
+    // Вернуть только количество, а не полный набор результатов.
+    bool count_only = 2;
+}
+
+message ListDeviceQueueItemsResponse {
+    // Элементы очереди на отправку устройству.
+    repeated DeviceQueueItem device_queue_items = 1;
+
+    // Общее число элементов в очереди.
+    uint32 total_count = 2;
+}

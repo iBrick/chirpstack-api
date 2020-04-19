@@ -1,0 +1,306 @@
+syntax = "proto3";
+
+package api;
+
+option go_package = "github.com/brocaar/chirpstack-api/go/v3/as/external/api";
+
+import "google/api/annotations.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/empty.proto";
+import "common/common.proto";
+import "as/external/api/frameLog.proto";
+
+
+// GatewayService - сервис, управляющий базовыми станциями.
+service GatewayService {
+	// Create - создает указанную базовую станцию.
+	rpc Create(CreateGatewayRequest) returns (google.protobuf.Empty) {
+		option(google.api.http) = {
+			post: "/api/gateways"
+			body: "*"
+		};
+	}
+
+	// Get - возвращает базовую станцию по указанному MAC-адресу.
+	rpc Get(GetGatewayRequest) returns (GetGatewayResponse) {
+		option (google.api.http) = {
+			get: "/api/gateways/{id}"
+		};
+	}
+
+	// Update - обновляет базовую станцию, соответствующий указанному mac-адресу.
+	rpc Update(UpdateGatewayRequest) returns (google.protobuf.Empty) {
+		option (google.api.http) = {
+			put: "/api/gateways/{gateway.id}"
+			body: "*"
+		};
+	}
+	
+	// Delete - удаляет базовую станцию по указанному MAC-адресу.
+	rpc Delete(DeleteGatewayRequest) returns (google.protobuf.Empty) {
+		option (google.api.http) = {
+			delete: "/api/gateways/{id}"
+		};
+	}
+
+	// List - возвращает список базовых станций.
+	rpc List(ListGatewayRequest) returns (ListGatewayResponse) {
+		option (google.api.http) = {
+			get: "/api/gateways"
+		};
+	}
+
+	// GetStats - возвращает статистику по базовой станции, в соответствии с заданными параметрами запроса.
+	rpc GetStats(GetGatewayStatsRequest) returns (GetGatewayStatsResponse) {
+		option (google.api.http) = {
+			get: "/api/gateways/{gateway_id}/stats"
+		};
+	}
+
+	// GetLastPing - возвращает последний отправленный ping запрос и базовые станции, получившие этот ping.
+	rpc GetLastPing(GetLastPingRequest) returns (GetLastPingResponse) {
+		option (google.api.http) = {
+			get: "/api/gateways/{gateway_id}/pings/last"
+		};
+	}
+
+    // StreamFrameLogs - выдает поток восходящих и нисходящих пакетов для указанного ID базовой станции.
+	// Примечание:
+	//   * Это зашифрованные LoRaWAN пакеты в том виде, в каком их получает базовая станция.
+	//   * Не работает через веб-браузер.
+    rpc StreamFrameLogs(StreamGatewayFrameLogsRequest) returns (stream StreamGatewayFrameLogsResponse) {
+        option (google.api.http) = {
+            get: "/api/gateways/{gateway_id}/frames"
+        };
+	}
+}
+
+message Gateway {
+	// ID базовой станции (в HEX).
+	string id = 1;
+
+	// Название шлюза.
+	string name = 2;
+	
+	// Описание базовой станции.
+	string description = 3;
+
+	// Местоположение базовой станции.
+	common.Location location = 4;
+
+	// ID организации, которой принадлежит базовая станция.
+	// Этот параметр невозможно изменить после создания.
+	int64 organization_id = 5 [json_name = "organizationID"];
+
+	// Установите в true для активации обнаружения шлюзов.
+	bool discovery_enabled = 6;
+
+	// ID сетевого сервера, на котором создается базовая станция.
+	int64 network_server_id = 7 [json_name = "networkServerID"];
+
+	// ID профиля базовой станции (строка UUID, необязательное).
+	string gateway_profile_id = 8 [json_name = "gatewayProfileID"];
+
+	// Конфигурация плат базовой станции (необязательное).
+    // Это необходимо только тогда, когда базовая станция поддерживает метку точного времени
+    // , и вы хотите добавить идентификатор FPGA в метаданные базовой станции или
+	// хотите, чтобы сервер LoRa расшифровал метку точного времени.
+	repeated GatewayBoard boards = 9;
+
+    // Тэги (определямые пользователем).
+    map<string, string> tags = 10;
+
+    // Метаданные (с базовой станции).
+    map<string, string> metadata = 11;
+}
+
+message GatewayBoard {
+    // FPGA ID базовой станции (в HEX) (необязательное).
+    string fpga_id = 1 [json_name = "fpgaID"];
+
+    // Ключ AES дешифрования точной временной метки (в HEX) (необязательное).
+    string fine_timestamp_key = 2;
+}
+
+message CreateGatewayRequest {
+	// Объект - базовая станция для создания.
+	Gateway gateway = 1;
+}
+
+message GetGatewayRequest {
+	// ID базовой станции (в HEX).
+	string id = 1;
+}
+
+message GetGatewayResponse {
+	// Объект - базовая станция.
+	Gateway gateway = 1;
+	
+	// Временная метка создания.
+	google.protobuf.Timestamp created_at = 2;
+	
+	// Временная метка последнего обновления.
+	google.protobuf.Timestamp updated_at = 3;
+	
+	// Первая активность на отметке времени.
+	google.protobuf.Timestamp first_seen_at = 4;
+	
+	// Последний раз был активен на отметке времени.
+	google.protobuf.Timestamp last_seen_at = 5;
+};
+
+message DeleteGatewayRequest {
+	// ID базовой станции (в HEX).
+	string id = 1;
+}
+
+message ListGatewayRequest {
+	// Ограничить макс. число базовых станций в выдаче результатов.
+	int32 limit = 1;
+
+	// Смещение в наборе результатов (для нумерации страниц).
+	int32 offset = 2;
+
+	// ID организации для применения фильтра. Если не заполнять, 
+	// запрос вернет все базовые станции, доступные пользователю.
+	int64 organization_id = 3 [json_name = "organizationID"];
+
+	// Поиск по названию или MAC адресу (необязательное).
+	string search = 4;
+}
+
+message GatewayListItem {
+	// ID базовой станции (в HEX).
+	string id = 1;
+	
+	// Название базовой станции
+	string name = 2;
+	
+	// Описание базовой станции
+	string description = 3;
+
+	// Временная метка создания.
+	google.protobuf.Timestamp created_at = 4;
+	
+	// Временная метка последнего обновления.
+	google.protobuf.Timestamp updated_at = 5;
+
+    // Время первого подключения.
+    google.protobuf.Timestamp first_seen_at = 8;
+
+    // Время последнего подключения.
+    google.protobuf.Timestamp last_seen_at = 9;
+
+	// ID организации.
+	int64 organization_id = 6 [json_name = "organizationID"];
+
+	// ID сетевого сервера.
+	int64 network_server_id = 7 [json_name = "networkServerID"];
+
+    // Местонахождение.
+    common.Location location = 10;
+}
+
+message ListGatewayResponse {
+	// Общее число результатов
+	int64 total_count = 1;
+
+	// Базовые станции в результатах запроса.
+	repeated GatewayListItem result = 2;
+}
+
+
+message UpdateGatewayRequest {
+	// Объект - базовая станция для обновления.
+	Gateway gateway = 1;
+}
+
+message GatewayStats {
+	// Временная метка (агрегированного) измерения.
+	google.protobuf.Timestamp timestamp = 1;
+
+	// Пакеты, полученные базовой станцией.
+	int32 rx_packets_received = 2;
+
+	// Пакеты, полученные базовой станцией, которые прошли проверку CRC.
+	int32 rx_packets_received_ok = 3 [json_name = "rxPacketsReceivedOK"];
+
+	// Пакеты, полученные базовой станцией для передачи нисходящих сообщений.
+	int32 tx_packets_received = 4;
+
+	// Пакеты, отправленные базовой станцией.
+	int32 tx_packets_emitted = 5;
+}
+
+message GetGatewayStatsRequest {
+	// ID базовой станции (в HEX).
+	string gateway_id = 1 [json_name = "gatewayID"];
+
+	// Интервал агрегации.  Одно значение из "second", "minute", "hour", "day", "week",
+	// "month", "quarter", "year".  Без учета регистра.
+	string interval = 2;
+
+	// Временная метка начала (от).
+	google.protobuf.Timestamp start_timestamp = 3;
+
+	// Временная метка конца (до).
+	google.protobuf.Timestamp end_timestamp = 4;
+}
+
+message GetGatewayStatsResponse {
+	repeated GatewayStats result = 1;
+}
+
+message PingRX {
+	// ID базовой станции (в HEX).
+	string gateway_id = 1 [json_name = "gatewayID"];
+
+	// RSSI.
+	int32 rssi = 2;
+
+	// LoRa SNR.
+	double lora_snr = 3 [json_name = "loRaSNR"];
+
+	// Широта базовой станции -90.0 to 90.0.
+	double latitude = 4;
+	
+	// Долгота базовой станции -180.0 to 180.0.
+	double longitude = 5;
+	
+	// Высота базовой станции в метрах.
+	double altitude = 6;
+}
+
+message GetLastPingRequest {
+	// ID базовой станции (в HEX).
+	string gateway_id = 1 [json_name = "gatewayID"];
+}
+
+message GetLastPingResponse {
+	// Временная метка создания.
+	google.protobuf.Timestamp created_at = 1;
+
+	// Частота (Hz).
+	uint32 frequency = 2;
+
+	// Скорость соединения.
+	uint32 dr = 3;
+
+	// Базовые станции и метаданные приема.
+	repeated PingRX ping_rx = 4 [json_name = "pingRX"];
+}
+
+message StreamGatewayFrameLogsRequest {
+	// ID базовой станции (в HEX).
+	string gateway_id = 1 [json_name = "gatewayID"];
+}
+
+message StreamGatewayFrameLogsResponse {
+    oneof frame {
+        // Содержит uplink пакет.
+        UplinkFrameLog uplink_frame = 1;
+
+        // Содержит downlink пакет.
+        DownlinkFrameLog downlink_frame = 2;
+    }
+}
